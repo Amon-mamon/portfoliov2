@@ -18,6 +18,9 @@ export const metadata: Metadata = {
   title: "Vince | Web Developer | Creating User-Friendly Websites", // Global title
   description:
     "Welcome to my portfolio! I'm Vince, a passionate web developer specializing in creating responsive, accessible, and interactive web applications.",
+    verification: {
+    google: "wN764yalHKrGK0gm2uuXTx9hhZPxgTLijiVJuk1ARqM", 
+  },
   openGraph: {
     type:"website",
     title: "Vince | Web Developer | Creating User-Friendly Websites",
@@ -34,8 +37,8 @@ export const metadata: Metadata = {
     url: "https://v-devs.vercel.app",
   },
   robots: {
-    index: false,
-    follow: false,
+    index: true,
+    follow: true,
   },
   alternates: {
     canonical: "https://v-devs.vercel.app",

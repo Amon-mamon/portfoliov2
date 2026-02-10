@@ -1,6 +1,5 @@
 // src/components/Hero.tsx
 import Link from 'next/link';
-
 const Home = () => {
   return (
     <div className="flex min-h-screen flex-col md:flex-row justify-center items-center gap-16  px-6 py-12 bg-gray-950 text-white border-b border-gray-800">
