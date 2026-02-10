@@ -13,7 +13,7 @@ export const metadata: Metadata = {
       "Welcome to my portfolio! I'm Vince, a passionate web developer specializing in creating responsive, accessible, and interactive web applications.",
     images: [
       {
-        url: "https://v-devs.vercel.app", // Example Open Graph image
+        url: "https://v-devs.vercel.app/image.png", // Example Open Graph image
         width: 1200,
         height: 630,
         alt: "Vince's Portfolio",
@@ -22,8 +22,8 @@ export const metadata: Metadata = {
     url: "https://v-devs.vercel.app",
   },
   robots: {
-    index: true,
-    follow: true,
+    index: false,
+    follow: false,
   },
   alternates: {
     canonical: "https://v-devs.vercel.app",
