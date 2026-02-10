@@ -10,7 +10,7 @@ const Home = () => {
         <img
           src="/1X1.png" // <-- Put image in /public folder
           alt="Vince Profile"
-          className="relative rounded-full w-120 h-120 object-cover border-4 border-gray-900 shadow-2xl"
+          className="relative rounded-full w-120 h-120 object-cover border-4 border-gray-900 shadow-2xl select-none pointer-events-none "
         />
       </div>
 
