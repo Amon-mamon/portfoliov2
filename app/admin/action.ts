@@ -7,6 +7,7 @@ import { createClient } from "../lib/supabaseServer";
 export async function addProjectAction(prevState: any, formData: FormData) {
   const title = formData.get("title") as string;
   const stack = formData.get("stack") as string;
+  const type = formData.get("stack") as string;
   const description = formData.get("description") as string;
   // 1. Get the file from FormData
   const imageFile = formData.get("projectImage") as File;
@@ -39,6 +40,7 @@ export async function addProjectAction(prevState: any, formData: FormData) {
 
   // 4. Insert data into database
   const { error: dbError } = await supabase.from("project_table").insert({
+    project_type:type,
     project_title:title,
     project_stack:stack,
     project_description:description,

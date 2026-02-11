@@ -47,6 +47,10 @@ const Page = () => {
       
       {/* 1. Ensure the form has encType set for file uploads */}
       <form action={action} className="space-y-4" encType="multipart/form-data">
+       <div>
+          <label htmlFor="type" className="block text-sm font-medium">Project Type</label>
+          <input id="type" type="text" name="type" required className="mt-1 block w-full border border-gray-300 rounded-md p-2"/>
+        </div>
         <div>
           <label htmlFor="title" className="block text-sm font-medium">Project Title</label>
           <input id="title" type="text" name="title" required className="mt-1 block w-full border border-gray-300 rounded-md p-2"/>

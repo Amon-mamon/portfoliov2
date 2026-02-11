@@ -52,6 +52,9 @@ const Project = async () => {
                 <h3 className="text-3xl font-bold tracking-tight mb-3 text-white group-hover:text-blue-300 transition-colors">
                   {project.project_title}
                 </h3>
+                    <div className="flex justif-start w-full">
+                <p className=" text-white border border-blue-200 py px-4 rounded bg-blue-600 mb-2">{project.project_type}</p>
+                  </div>
                 <p className="text-gray-400 text-base leading-relaxed mb-6 grow">
                   {project.project_description}
                 </p>
@@ -87,6 +90,7 @@ const Project = async () => {
                   >
                     Source Code
                   </a>
+              
                 </div>
               </div>
             ))}
