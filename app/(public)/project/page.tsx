@@ -32,7 +32,7 @@ const Project = async () => {
           </p>
         </div>
         <div className="flex justify-center items-center w-full">
-          <div className="w-1/2">
+          <div className="w-5/12">
             {projects?.map((project) => (
               <div
                 key={project.id}

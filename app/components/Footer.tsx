@@ -29,8 +29,8 @@ const Footer = () => {
           {/* Column 3: Social/Copyright */}
           <div className="flex flex-col items-center md:items-end gap-2 text-sm">
             <div className="flex gap-4">
-              <a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GitHub</a>
-              <a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LinkedIn</a>
+              <a href="https://github.com/Amon-mamon" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GitHub</a>
+              <a href="https://www.linkedin.com/in/vince-stephen-david-ab72292a0/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LinkedIn</a>
             </div>
             <p className="text-xs text-gray-600">
               &copy; {currentYear} Vince. All rights reserved.

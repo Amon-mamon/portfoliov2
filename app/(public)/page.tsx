@@ -30,7 +30,7 @@ const Home = () => {
         </h1>
 
         <p className="text-xl text-gray-400 mb-10 leading-relaxed">
-          I build high-performance web experiences using <span className="text-gray-100">React</span>, <span className="text-gray-100">Tailwind</span>, and <span className="text-gray-100">Supabase</span>. Let's build something functional and beautiful.
+         I build high-performance web experiences that focus on speed and user experience. Let's build something great together.
         </p>
 
         {/* CTA Buttons */}
