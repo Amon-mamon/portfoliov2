@@ -1,12 +1,10 @@
 // app/projects/page.tsx (or wherever your display page is)
 import { createClient } from "@/app/lib/supabaseServer"; // Adjust path if needed
 
-// 1. Make the component async
 const Project = async () => {
-  // 2. Fetch data directly inside the component
   const supabase = createClient();
   const { data: projects, error } = await supabase
-    .from("project_table") // Replace with your actual table name
+    .from("project_table") 
     .select("*");
 
   if (error) {
@@ -31,12 +29,12 @@ const Project = async () => {
             applications.
           </p>
         </div>
-        <div className="flex justify-center items-center w-full">
-          <div className="w-5/12">
+        <div className="flex justify-center items-center">
+          <div className="w-full flex gap-2">
             {projects?.map((project) => (
               <div
                 key={project.id}
-                className="group relative bg-gray-900 rounded-3xl border border-gray-800 p-6 flex flex-col hover:border-blue-900 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-950/30"
+                className="group relative bg-gray-900 rounded-3xl w-2xl border border-gray-800 p-6 flex flex-col hover:border-blue-900 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-950/30"
               >
                 {/* Image Container with Glow */}
                 <div className="relative rounded-2xl overflow-hidden mb-6 h-60">
