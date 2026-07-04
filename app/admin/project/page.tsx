@@ -38,6 +38,22 @@ const Page = () => {
       await signOutAction()
   }
 
+  const handleDelete = async (id: number) => {
+    console.log(id);
+  const { error } = await supabase
+    .from("project_table")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    console.error("Delete failed:", error.message);
+  } else {
+    console.log("Project deleted");
+  }
+
+  fetchProjects()
+};
+
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -159,6 +175,7 @@ const Page = () => {
                   </a>
               
                 </div>
+                <button onClick={() => handleDelete(project.id)}>Delete</button>
               </div>
             ))}
 
