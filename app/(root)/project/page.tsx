@@ -12,6 +12,8 @@ const Project = async () => {
     return <div className="text-white">Error loading projects.</div>;
   }
 
+
+
   // 3. Render the fetched data
   return (
     <div className="min-h-screen bg-gray-950  text-white px-6 py-16 bg-[linear-gradient(to_right,#1f2937_1px,transparent_1px),linear-gradient(to_bottom,#1f2937_1px,transparent_1px)] bg-size[4rem_4rem]">

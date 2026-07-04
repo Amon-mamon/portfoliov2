@@ -10,10 +10,11 @@ import { redirect } from "next/navigation";
 const Page = () => {
   const [state, action, isPending] = useActionState(addProjectAction, null);
   const [isLoading, setIsLoading] = useState(true);
-  
+  const [projects, setProjects] = useState<any | null[]>(null)
+   const supabase = createClient();
   useEffect(() => {
     const checkUser = async () => {
-      const supabase = createClient();
+     
       const { data: { session } } = await supabase.auth.getSession();
       
       if (!session) {
@@ -24,11 +25,19 @@ const Page = () => {
     checkUser();
   }, []);
 
+  const fetchProjects = async () => {
+    const {data:projects} = await supabase.from("project_table").select("*")
+    setProjects(projects)
 
-  // useEffect(() =>  {
-  //   const fetchProjectys =  async () => {
-  //     const supabase = createClient();
-  // },[]);
+  }
+  useEffect(() => {
+    fetchProjects()
+  },[])
+
+  const handleLogout = async () => {
+      await signOutAction()
+  }
+
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -44,11 +53,9 @@ const Page = () => {
         </p>
       )}
       
-      <form action={signOutAction}>
-        <button type="submit" className="text-sm text-red-600 hover:text-red-800">
+        <button onClick={() => handleLogout()} type="submit" className="text-sm text-red-600 hover:text-red-800">
           Sign Out
         </button>
-      </form>
       
       {/* 1. Ensure the form has encType set for file uploads */}
       <form action={action} className="space-y-4" encType="multipart/form-data">
@@ -92,6 +99,69 @@ const Page = () => {
           {isPending ? "Adding..." : "Add Project"}
         </button>
       </form>
+
+      {projects?.map((project:any) => (
+              <div
+                key={project.id}
+                className="group relative bg-gray-900 rounded-3xl w-2xl border border-gray-800 p-6 flex flex-col hover:border-blue-900 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-950/30"
+              >
+                {/* Image Container with Glow */}
+                <div className="relative rounded-2xl overflow-hidden mb-6 h-60">
+                  <div className="absolute inset-0 bg-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl"></div>
+                  <img
+                    src={project.project_image} // Mapped from DB
+                    alt={project.project_title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+
+                {/* Title and Description */}
+                <h3 className="text-3xl font-bold tracking-tight mb-3 text-white group-hover:text-blue-300 transition-colors">
+                  {project.project_title}
+                </h3>
+                    <div className="flex justif-start w-full">
+                <p className=" text-white border border-blue-200 py px-4 rounded bg-blue-600 mb-2">{project.project_type}</p>
+                  </div>
+                <p className="text-gray-400 text-base leading-relaxed mb-6 grow">
+                  {project.project_description}
+                </p>
+
+                {/* Tech Stack */}
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {/* Assuming project_stack is a comma-separated string in DB */}
+                  {project.project_stack?.split(",").map((tag: string) => (
+                    <span
+                      key={tag}
+                      className="bg-gray-950 text-blue-300 text-xs font-semibold px-3 py-1 rounded-full border border-gray-800"
+                    >
+                      {tag.trim()}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Links - Add hrefs here based on your DB columns */}
+                <div className="flex gap-4 mt-auto">
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-sm text-gray-300 hover:text-white bg-gray-800 px-4 py-2 rounded-full transition-colors"
+                  >
+                    Live Demo
+                  </a>
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-sm text-gray-300 hover:text-white hover:bg-gray-800 px-4 py-2 rounded-full transition-colors"
+                  >
+                    Source Code
+                  </a>
+              
+                </div>
+              </div>
+            ))}
+
     </div>
   );
 };
