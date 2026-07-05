@@ -12,7 +12,7 @@ export async function addProjectAction(prevState: any, formData: FormData) {
   // 1. Get the file from FormData
   const imageFile = formData.get("projectImage") as File;
 
-  const supabase = createClient();
+  const supabase = await createClient();
 
   let imageUrl = "";
 

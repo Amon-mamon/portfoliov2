@@ -24,7 +24,7 @@ const Page = () => {
   }, []);
 
    const fetchData = async () => {
-    const res = await fetch('api/project')
+    const res = await fetch('/api/project')
 
     const result = await res.json()
     if(!res.ok){
@@ -76,7 +76,7 @@ const Page = () => {
         </button>
       
       {/* 1. Ensure the form has encType set for file uploads */}
-      <form action={action} className="space-y-4" encType="multipart/form-data">
+      <form action={action} className="space-y-4" >
        <div>
           <label htmlFor="type" className="block text-sm font-medium">Project Type</label>
           <input id="type" type="text" name="type" required className="mt-1 block w-full border border-gray-300 rounded-md p-2"/>
