@@ -1,17 +1,22 @@
-// app/projects/page.tsx (or wherever your display page is)
+"use client"
 import { createClient } from "@/app/lib/supabaseServer"; // Adjust path if needed
+import { useEffect, useState } from "react";
 
-const Project = async () => {
-  const supabase = createClient();
-  const { data: projects, error } = await supabase
-    .from("project_table") 
-    .select("*");
+const Project = () => {
+  const[projects, setProjects] = useState<any | null[]>(null)
 
-  if (error) {
-    console.error("Error fetching projects:", error.message);
-    return <div className="text-white">Error loading projects.</div>;
-  }
-
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch('api/project')
+      
+      const result = await res.json()
+      if(!res.ok){
+        throw new Error( result.message || 'Error Fetching')
+      }
+      setProjects(result)
+     }
+     fetchData()
+  },[])
 
 
   // 3. Render the fetched data
@@ -33,7 +38,7 @@ const Project = async () => {
         </div>
         <div className="flex justify-center items-center">
           <div className="w-full flex gap-2">
-            {projects?.map((project) => (
+            {projects?.map((project:any) => (
               <div
                 key={project.id}
                 className="group relative bg-gray-900 rounded-3xl w-2xl border border-gray-800 p-6 flex flex-col hover:border-blue-900 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-950/30"

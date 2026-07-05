@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY;
 
-export const createClient = () => {
+export async function createClient () {
   // 1. cookies() is a function that returns a Promise in Next.js 15+
   const cookieStore = cookies();
 

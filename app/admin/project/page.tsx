@@ -1,6 +1,4 @@
-// app/admin/project/page.tsx
-"use client";
-
+"use client"
 import { useActionState, useEffect, useState } from "react";
 import { signOutAction } from "@/app/actions";
 import { addProjectAction } from "../action";
@@ -25,14 +23,19 @@ const Page = () => {
     checkUser();
   }, []);
 
-  const fetchProjects = async () => {
-    const {data:projects} = await supabase.from("project_table").select("*")
-    setProjects(projects)
+   const fetchData = async () => {
+    const res = await fetch('api/project')
 
-  }
-  useEffect(() => {
-    fetchProjects()
-  },[])
+    const result = await res.json()
+    if(!res.ok){
+      throw new Error(result.message || 'Error fetching data')
+    }
+    setProjects(result)
+   }
+
+   useEffect(() =>{
+    fetchData()
+   },[])
 
   const handleLogout = async () => {
       await signOutAction()
@@ -51,7 +54,6 @@ const Page = () => {
     console.log("Project deleted");
   }
 
-  fetchProjects()
 };
 
 
