@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import ComingSoonModal from "./components/ComingSoonBanner";
 
 
 const geistSans = Geist({
@@ -56,6 +57,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <ComingSoonModal/>
         {children}
       </body>
     </html>
