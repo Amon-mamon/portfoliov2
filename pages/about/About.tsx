@@ -10,7 +10,7 @@ const About = () => {
         
         {/* Creative Header */}
         <div className="flex flex-col items-center text-center mb-20">
-          <span className="text-7xl mb-6 animate-bounce">🧠</span>
+          <span className="text-7xl mb-6 ">🧠</span>
           <h1 className="text-6xl md:text-7xl font-extrabold tracking-tighter mb-4">
             The <span className="bg-linear-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">Mind</span> Behind the Code.
           </h1>

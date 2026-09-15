@@ -1,4 +1,5 @@
 "use client"
+import { Lens } from "@/components/ui/lens";
 import { useEffect, useState } from "react";
 
 const Project = () => {
@@ -45,11 +46,13 @@ const Project = () => {
                 {/* Image Container with Glow */}
                 <div className="relative rounded-2xl overflow-hidden mb-6 h-60">
                   <div className="absolute inset-0 bg-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-xl"></div>
-                  <img
-                    src={project.project_image} // Mapped from DB
-                    alt={project.project_title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
+                    <Lens defaultPosition={{ x: 260, y: 150 }}>
+                        <img
+                          src={project.project_image} // Mapped from DB
+                          alt={project.project_title}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                    </Lens>
                 </div>
 
                 {/* Title and Description */}
