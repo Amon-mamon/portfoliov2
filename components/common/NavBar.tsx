@@ -12,7 +12,7 @@ const FileIcon = () => (
 
 // Same section ids used by page.tsx's SECTION_IDS and Sidebar's TREE_ID_TO_SECTION values
 const TABS = [
-  { id: 'home', label: 'home.tsx' },
+  { id: 'home', label: 'Hero.tsx' },
   { id: 'about', label: 'About.tsx' },
   { id: 'project', label: 'Project.tsx' },
   { id: 'contact', label: 'Contact.tsx' },
