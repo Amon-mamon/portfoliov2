@@ -5,7 +5,7 @@ const About = () => {
   ];
 
   return (
-    <div className="px-6 py-16 bg-gray-950 text-white border-b border-gray-800">
+    <div className="px-6 py-16 bg-[#121314] text-white">
       <div className="max-w-6xl mx-auto">
         
         {/* Creative Header */}

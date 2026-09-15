@@ -3,7 +3,7 @@
 
 import { useState } from 'react';
 
-export default function ContactPage() {
+export default function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
@@ -34,7 +34,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="w-full mx-auto px-6 py-16 bg-gray-950 text-white border-b border-gray-800">
+    <div className="w-full mx-auto px-6 py-16  text-white">
       <h1 className="text-5xl font-extrabold tracking-tighter mb-4 text-white text-center">
         Get in <span className="text-blue-500">Touch</span>.
       </h1>

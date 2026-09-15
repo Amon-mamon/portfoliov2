@@ -2,7 +2,7 @@
 import { useActionState, useEffect, useState } from "react";
 import { signOutAction } from "@/app/actions";
 import { addProjectAction } from "../action";
-import { createClient } from "@/app/lib/supabaseClient";
+import { createClient } from "@/lib/supabaseClient";
 import { redirect } from "next/navigation";
 
 const Page = () => {

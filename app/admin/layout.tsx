@@ -8,7 +8,7 @@ export default function AdminLayout({
 }) {
   return (
     // Only wrap children, do not add Header or Footer here!
-    <section >
+    <section>
       {children}
     </section>
   );

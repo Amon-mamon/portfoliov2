@@ -1,11 +1,12 @@
 import Link from "next/link";
+import { LinkPreview } from "../ui/link-preview";
 
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gray-950 text-gray-400 border-t border-gray-800">
+    <footer className=" text-gray-400 border-t border-gray-200/5">
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center text-center md:text-left">
           
@@ -29,8 +30,14 @@ const Footer = () => {
           {/* Column 3: Social/Copyright */}
           <div className="flex flex-col items-center md:items-end gap-2 text-sm">
             <div className="flex gap-4">
-              <a href="https://github.com/Amon-mamon" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GitHub</a>
-              <a href="https://www.linkedin.com/in/vince-stephen-david-ab72292a0/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LinkedIn</a>
+              <LinkPreview 
+              url="https://github.com/Amon-mamon"  
+              className="text-white transition-colors">GitHub</LinkPreview>
+              <LinkPreview
+              isStatic
+              url="https://www.linkedin.com/in/vince-stephen-david-ab72292a0/"
+              imageSrc="/linkedin-preview.png" 
+              className="text-white transition-colors">LinkedIn</LinkPreview>
             </div>
             <p className="text-xs text-gray-600">
               &copy; {currentYear} Vince. All rights reserved.

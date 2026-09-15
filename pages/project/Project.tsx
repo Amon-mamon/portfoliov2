@@ -1,5 +1,4 @@
 "use client"
-import { createClient } from "@/app/lib/supabaseServer"; // Adjust path if needed
 import { useEffect, useState } from "react";
 
 const Project = () => {
@@ -21,7 +20,7 @@ const Project = () => {
 
   // 3. Render the fetched data
   return (
-    <div className="min-h-screen bg-gray-950  text-white px-6 py-16 bg-[linear-gradient(to_right,#1f2937_1px,transparent_1px),linear-gradient(to_bottom,#1f2937_1px,transparent_1px)] bg-size[4rem_4rem]">
+    <div className="min-h-screen bg-[#121314] text-white px-6 py-16">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-20">
