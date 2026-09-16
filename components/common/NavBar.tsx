@@ -2,6 +2,7 @@
 import React from 'react'
 import { IoCloseOutline } from 'react-icons/io5'
 import { useSectionStore } from '@/store/useSectionStore' // adjust path to wherever this actually lives
+import { FileText, FileType2 } from 'lucide-react'
 
 const FileIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 32 32" fill="none">
@@ -12,10 +13,12 @@ const FileIcon = () => (
 
 // Same section ids used by page.tsx's SECTION_IDS and Sidebar's TREE_ID_TO_SECTION values
 const TABS = [
-  { id: 'home', label: 'home.tsx' },
+  { id: 'home', label: 'Hero.tsx' },
   { id: 'about', label: 'About.tsx' },
   { id: 'project', label: 'Project.tsx' },
   { id: 'contact', label: 'Contact.tsx' },
+  { id: 'utils', label: 'utils.tsx' },
+  { id: 'resume', label: 'resume.pdf' },
 ]
 
 const NavBar = () => {
@@ -52,7 +55,11 @@ const NavBar = () => {
                     isActive ? 'bg-gray-600 text-green-300' : 'text-gray-300 hover:text-white'
                   }`}
                 >
-                  <FileIcon />
+                  {
+                    tab.label.endsWith(".pdf") ?
+                      <FileText size={15}/>
+                     : <FileIcon />
+                  }
                   {tab.label}
                   <IoCloseOutline className='text-lg'/>
                 </li>

@@ -8,11 +8,24 @@ import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 import { SmoothCursor } from '@/components/ui/smooth-cursor';
 import { useSectionStore } from '@/store/useSectionStore';
+import Particles from '@/components/ui/background-particles';
 
 const Home = () => {
   return (
   <>
-      <div id='home' className=" min-h-screen relative bg-[#121314] flex flex-col">
+      <div id='home' className=" relative flex flex-col">
+          <Particles
+              className='w-full h-screen absolute'
+              particleColors={["#a2a0a0"]}
+              particleCount={300}
+              particleSpread={10}
+              speed={0.3}
+              particleBaseSize={100}
+              moveParticlesOnHover={false}
+              alphaParticles={false}
+              disableRotation={true}
+              pixelRatio={1}
+          />
           <div className='text-white sticky top-0 z-1000'>
             <p className='flex gap-3 items-center bg-[#121314]'>const Hero <span><HiOutlineEquals/></span> ( ) <span className='flex gap-1 items-center'><HiOutlineEquals/> <MdKeyboardDoubleArrowRight className='text-xl'/></span> {'{'}</p>
           </div>
