@@ -1,8 +1,13 @@
 import { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/common/Header";
 
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains-mono", // exposes it as a CSS variable
+  weight: ["400", "500", "700"], // pick whichever weights you'll actually use
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -55,7 +60,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-hidden`}
+        className={`max-w-[2000px] mx-auto ${geistSans.variable} ${geistMono.variable} ${jetbrainsMono.variable} antialiased overflow-hidden`}
       >
         {children}
       </body>

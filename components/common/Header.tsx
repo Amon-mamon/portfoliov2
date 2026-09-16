@@ -3,9 +3,11 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { LuMessageSquareDot } from "react-icons/lu";
+import Clock from './Clock';
 
 const Header = () => {
   const pathname = usePathname();
+
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -59,7 +61,7 @@ const Header = () => {
   //   </header>
   // );
   return (
-      <header>
+      <header className='flex justify-between items-center px-3'>
         <div className='flex gap-6 py-2 bg-[#121314]'>
             <h2 className='text-blue-500'>VD</h2>
               <ul className='flex gap-2 items-center text-white'>
@@ -71,9 +73,10 @@ const Header = () => {
               </ul>
               <div className='w-1/2 px-3 flex items-center gap-1 border border-gray-100/5 rounded '>
                 <input type="text" className='outline-none w-full border-r border-gray-300' />
-                <LuMessageSquareDot className='text-lg text-gray-400'/>
+                 <LuMessageSquareDot className='text-lg text-gray-400'/>
               </div>
         </div>
+        <Clock/>
       </header>
   )
 

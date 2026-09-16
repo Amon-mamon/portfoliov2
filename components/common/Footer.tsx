@@ -6,10 +6,19 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className=" text-gray-400 border-t border-gray-200/5 min-h-screen">
-      <div className="max-w-7xl mx-auto px-6 py-12">
+    <footer className=" text-gray-400 border-t border-gray-200/5 h-screen w-full">
+      <div className="mx-auto px-6 py-2">
+        <div className="flex items-center gap-6">
+          <p className="text-gray-400">Header</p>
+          <p className="text-gray-400">Sidebar</p>
+          <p className="text-gray-400">Navbar</p>
+          <p className="text-gray-400">Home</p>
+          <p className="text-gray-400">About</p>
+          <p className="text-gray-400">Project</p>
+          <p className="text-gray-400">Contact</p>
+          <p className="text-white border-b border-blue-500">Footer</p>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center text-center md:text-left">
-          
           {/* Column 1: Brand */}
           <div className="flex flex-col items-center md:items-start gap-2">
             <Link href="/" className="text-2xl font-bold text-white tracking-tighter">

@@ -42,7 +42,7 @@ const NavBar = () => {
   }
 
   return (
-    <div className='flex flex-col px-3 py-2 w-full'>
+    <div className='flex flex-col px-3 py-2 w-full bg-[#121314]'>
         <nav>
           <ul className='flex gap-1'>
             {TABS.map((tab) => {
