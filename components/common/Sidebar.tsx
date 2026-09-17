@@ -169,6 +169,11 @@ const Sidebar = () => {
             isSelectable: true,
             name: "layout.tsx",
           },
+          {
+            id: "globals.css",
+            isSelectable: true,
+            name: "globals.css",
+          },
         ],
       },
       {
@@ -233,6 +238,18 @@ const Sidebar = () => {
         isSelectable: true,
         name: "lib",
         children: [
+          {
+            id: "supabaseClient.ts",
+            isSelectable: true,
+            name: "supabaseclient.ts",
+            serviceIcon:<BiLogoTypescript className='text-blue-400' size={"15"}/>
+          },
+          {
+            id: "supabaseServer",
+            isSelectable: true,
+            name: "supabaseServer.ts",
+            serviceIcon:<BiLogoTypescript className='text-blue-400' size={"15"}/>
+          },
           {
             id: "utils",
             isSelectable: true,
@@ -303,10 +320,16 @@ const Sidebar = () => {
           },
         ],
       },
-      
-      
+      {
+        id: ".env",
+        type: "file",
+        isSelectable: true,
+        name: ".env",
+      }
     ],
+    
   },
+
 ]
   return (
       <div className="flex-col items-center justify-center overflow-hidden h-full rounded-lg border border-gray-200/5">
