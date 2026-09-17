@@ -21,7 +21,6 @@ const SECTION_TO_TREE_ID: Record<string, string> = Object.fromEntries(
 )
 
 const Sidebar = () => {
-  const [isCollapsed, setIsCollapsed] = useState<Boolean>(false)
   const activeSection = useSectionStore((state) => state.activeSection)
   const setActiveSection = useSectionStore((state) => state.setActiveSection)
 
@@ -100,6 +99,67 @@ const Sidebar = () => {
         name: "app",
         children: [
           {
+            id: "root",
+            type: "folder",
+            isSelectable: true,
+            name: "(root)",
+            children: [
+              {
+                id: "hero",
+                type:"folder",
+                isSelectable: true,
+                name: "home",
+                children: [
+                  {
+                    id: "hero",
+                    isSelectable:true,
+                    name:"page.tsx"
+                  }
+                ]
+              },
+              {
+                id: "about",
+                type:"folder",
+                isSelectable: true,
+                name: "about",
+                children: [
+                  {
+                    id: "about",
+                    isSelectable:true,
+                    name:"page.tsx"
+                  }
+                ]
+              },
+              {
+                id: "project",
+                type:"folder",
+                isSelectable: true,
+                name: "project",
+                children: [
+                  {
+                    id: "project",
+                    isSelectable:true,
+                    name:"page.tsx"
+                  }
+                ]
+              },
+              {
+                id: "contact",
+                type:"folder",
+                isSelectable: true,
+                name: "contact",
+                children: [
+                  {
+                    id: "contact",
+                    isSelectable:true,
+                    name:"page.tsx"
+                  }
+                ]
+              },
+             
+            ] 
+          },
+          {
             id: "page",
             isSelectable: true,
             name: "page.tsx",
@@ -118,14 +178,26 @@ const Sidebar = () => {
         name: "components",
         children: [
           {
-            id: "header",
-            isSelectable: false,
-            name: "header.tsx",
-          },
-          {
-            id: "sidebar",
-            isSelectable: false,
-            name: "sidebar.tsx",
+             id: "common",
+            isSelectable: true,
+            name: "common",
+            children: [
+              {
+                id: "header",
+                isSelectable: false,
+                name: "header.tsx",
+              },
+              {
+                id: "sidebar",
+                isSelectable: false,
+                name: "sidebar.tsx",
+              },
+              {
+                id: "footer",
+                isSelectable: true,
+                name: "footer.tsx",
+              },
+            ]
           },
           {
             id: "hero",
@@ -152,11 +224,7 @@ const Sidebar = () => {
             isSelectable: true,
             name: "feedback.tsx",
           },
-          {
-            id: "footer",
-            isSelectable: true,
-            name: "footer.tsx",
-          },
+         
         ],
       },
       {
@@ -169,6 +237,7 @@ const Sidebar = () => {
             id: "utils",
             isSelectable: true,
             name: "utils.ts",
+            serviceIcon:<BiLogoTypescript className='text-blue-400' size={"15"}/>
           },
         ],
       },
@@ -182,6 +251,40 @@ const Sidebar = () => {
             id: "service.ts",
             isSelectable: true,
             name: "service.ts",
+            serviceIcon:<BiLogoTypescript className='text-blue-400' size={"15"}/>
+          },
+        ],
+      },
+      {
+        id: "hooks",
+        type: "folder",
+        isSelectable: true,
+        name: "hooks",
+        children: [
+          {
+            id: "useFooterShortcut.ts",
+            isSelectable: true,
+            name: "useFooterShortcut.ts",
+            serviceIcon:<BiLogoTypescript className='text-blue-400' size={"15"}/>
+          },
+          {
+            id: "useSidebarShortcut.ts",
+            isSelectable: true,
+            name: "useSidebarShortcut.ts",
+            serviceIcon:<BiLogoTypescript className='text-blue-400' size={"15"}/>
+          },
+        ],
+      },
+      {
+        id: "store",
+        type: "folder",
+        isSelectable: true,
+        name: "store",
+        children: [
+          {
+            id: "useSectionStore.ts",
+            isSelectable: true,
+            name: "useSectionStore.ts",
             serviceIcon:<BiLogoTypescript className='text-blue-400' size={"15"}/>
           },
         ],
@@ -206,9 +309,9 @@ const Sidebar = () => {
   },
 ]
   return (
-      <div className={`bg-[#121314] h-full flex ${isCollapsed ? "w-[60px]" : "w-[300px]"} flex-col items-center justify-center overflow-hidden rounded-lg border border-gray-200/5`}>
+      <div className="flex-col items-center justify-center overflow-hidden h-full rounded-lg border border-gray-200/5">
             <h1 className='p-1 w-full text-white'>
-               <button onClick={() => setIsCollapsed(!isCollapsed)}>
+               <button>
                 portfolio
                 </button>
             </h1>

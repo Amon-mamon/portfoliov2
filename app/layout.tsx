@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { Geist, Geist_Mono, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/common/Header";
+import Particles from "@/components/ui/background-particles";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -60,8 +61,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`max-w-[2000px] mx-auto ${geistSans.variable} ${geistMono.variable} ${jetbrainsMono.variable} antialiased overflow-hidden`}
+        className={`max-w-[2000px] mx-auto relative ${geistSans.variable} ${geistMono.variable} ${jetbrainsMono.variable} antialiased overflow-hidden`}
       >
+           <Particles
+          className='w-full h-screen absolute'
+          particleColors={["#a2a0a0"]}
+          particleCount={600}
+          particleSpread={10}
+          speed={0.3}
+          particleBaseSize={100}
+          moveParticlesOnHover={false}
+          alphaParticles={false}
+          disableRotation={true}
+          pixelRatio={1}
+        />
+        
         {children}
       </body>
     </html>

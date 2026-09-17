@@ -6,6 +6,9 @@ type SectionStore = {
     isFooterOpen: boolean
     toggleFooter: () => void
     closeFooter: () => void
+    isSidebarOpen: boolean
+    toggleSidebar: () => void
+    closeSidebar: () => void
 }
 
 export const useSectionStore = create<SectionStore>((set) => ({
@@ -14,4 +17,7 @@ export const useSectionStore = create<SectionStore>((set) => ({
         isFooterOpen:false,
         toggleFooter: () => set((state) => ({ isFooterOpen: !state.isFooterOpen })),
         closeFooter: () => set({ isFooterOpen: false }),
+        isSidebarOpen: true,
+        toggleSidebar: () => set((state) => ({isSidebarOpen: !state.isSidebarOpen})),
+        closeSidebar: () => set({ isSidebarOpen: false})
 }))

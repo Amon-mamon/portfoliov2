@@ -6,24 +6,12 @@ import { HiOutlineEquals } from "react-icons/hi2";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 import Particles from '@/components/ui/background-particles';
+import { useSectionStore } from '@/store/useSectionStore';
 
 const Home = () => {
   return (
     <>
       <div id='home' className="relative flex flex-col w-full">
-        <Particles
-          className='w-full h-screen absolute'
-          particleColors={["#a2a0a0"]}
-          particleCount={300}
-          particleSpread={10}
-          speed={0.3}
-          particleBaseSize={100}
-          moveParticlesOnHover={false}
-          alphaParticles={false}
-          disableRotation={true}
-          pixelRatio={1}
-        />
-
         {/* Scoped animations for hero content only */}
         <style jsx>{`
           @keyframes hero-gradient-shift {
@@ -104,19 +92,19 @@ const Home = () => {
         <div className='text-white sticky top-0 z-1000'>
           <p className='flex gap-3 items-center '>const Hero <span><HiOutlineEquals /></span> ( ) <span className='flex gap-1 items-center'><HiOutlineEquals /> <MdKeyboardDoubleArrowRight className='text-xl' /></span> {'{'}</p>
         </div>
-        <p className='pl-12 text-white pt-2'>return {'('}</p>
-        <div className='text-white pl-24'>
+        <p className='pl-16 text-white pt-2'>return {'('}</p>
+        <div className='text-white pl-28'>
           <p className='flex items-center gap-1'><IoIosArrowBack /> main <IoIosArrowForward /></p>
         </div>
 
-        <div className='flex flex-col md:flex-row h-[500px] justify-center items-center'>
+        <div className='flex flex-col md:flex-row h-full justify-center items-center'>
           {/* Profile Image Container */}
           <div className="relative group">
             <div className="absolute -inset-2 rounded-full bg-linear-to-r group-hover:opacity-100 transition-opacity duration-500"></div>
           </div>
 
           {/* Text Container */}
-          <div className="text-center md:text-left w-full">
+          <div className="text-center md:text-left w-full h-full">
             <span className="hero-badge hero-fade-up hero-delay-1 inline-flex items-center rounded-full bg-blue-950 px-4 py-1.5 text-sm font-semibold text-blue-300 ring-1 ring-inset ring-blue-700/50 mb-6">
               <span className="relative flex h-2 w-2 mr-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
@@ -138,9 +126,33 @@ const Home = () => {
             <p className="hero-paragraph hero-fade-up hero-delay-3 text-xl text-gray-400 leading-relaxed">
               I craft fast, intuitive web experiences — from pixel-perfect interfaces to the systems that power them. Let's build something great together.
             </p>
+            <p className="hero-paragraph hero-fade-up hero-delay-3 text-xl text-gray-400 leading-relaxed">
+              I craft fast, intuitive web experiences — from pixel-perfect interfaces to the systems that power them. Let's build something great together.
+            </p>
+            <p className="hero-paragraph hero-fade-up hero-delay-3 text-xl text-gray-400 leading-relaxed">
+              I craft fast, intuitive web experiences — from pixel-perfect interfaces to the systems that power them. Let's build something great together.
+            </p>
+            <p className="hero-paragraph hero-fade-up hero-delay-3 text-xl text-gray-400 leading-relaxed">
+              I craft fast, intuitive web experiences — from pixel-perfect interfaces to the systems that power them. Let's build something great together.
+            </p>
+            <p className="hero-paragraph hero-fade-up hero-delay-3 text-xl text-gray-400 leading-relaxed">
+              I craft fast, intuitive web experiences — from pixel-perfect interfaces to the systems that power them. Let's build something great together.
+            </p>
+            <p className="hero-paragraph hero-fade-up hero-delay-3 text-xl text-gray-400 leading-relaxed">
+              I craft fast, intuitive web experiences — from pixel-perfect interfaces to the systems that power them. Let's build something great together.
+            </p>
+            <p className="hero-paragraph hero-fade-up hero-delay-3 text-xl text-gray-400 leading-relaxed">
+              I craft fast, intuitive web experiences — from pixel-perfect interfaces to the systems that power them. Let's build something great together.
+            </p>
+            <p className="hero-paragraph hero-fade-up hero-delay-3 text-xl text-gray-400 leading-relaxed">
+              I craft fast, intuitive web experiences — from pixel-perfect interfaces to the systems that power them. Let's build something great together.
+            </p>
+            <p className="hero-paragraph hero-fade-up hero-delay-3 text-xl text-gray-400 leading-relaxed">
+              I craft fast, intuitive web experiences — from pixel-perfect interfaces to the systems that power them. Let's build something great together.
+            </p>
 
             {/* CTA Buttons — untouched */}
-            <div className="flex gap-4 justify-center md:justify-start hero-fade-up hero-delay-4">
+            {/* <div className="flex gap-4 justify-center md:justify-start hero-fade-up hero-delay-4">
               <a
                 href="/DAVID_VINCE_STEPHEN_CV.pdf"
                 download="DAVID_VINCE_STEPHEN_CV.pdf"
@@ -155,11 +167,11 @@ const Home = () => {
               >
                 Get in touch
               </Link>
-            </div>
+            </div> */}
           </div>
         </div>
 
-        <div className='text-white pl-24'>
+        <div className='text-white pl-28 mt-12'>
           <p className='flex items-center gap-1'><IoIosArrowBack /> / main <IoIosArrowForward /></p>
         </div>
         <div className='text-white'>

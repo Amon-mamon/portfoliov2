@@ -48,7 +48,7 @@ const page = () => {
 
   return (
     <>
-    <div ref={scrollContainerRef} id="page-scroll-container" className='bg-[#121314]  px-2 h-screen  overflow-y-auto'>
+    <div ref={scrollContainerRef} id="page-scroll-container" className='bg-[#121314]  px-2  overflow-y-hidden'>
      {/* <div className='text-white px-6'>
         <p>1</p>
         <p>2</p>
