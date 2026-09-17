@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import { Tree, TreeViewElement } from '../ui/file-tree'
-import { FileText } from 'lucide-react'
+import { Container, FileText } from 'lucide-react'
 import { FaFilePdf } from "react-icons/fa";
 import { BiLogoTypescript } from "react-icons/bi";
 import { useSectionStore } from '@/store/useSectionStore' // adjust path to wherever this actually lives
@@ -205,6 +205,18 @@ const Sidebar = () => {
             ]
           },
           {
+            id: "feedback",
+            isSelectable: true,
+            name: "feedback.tsx",
+          },
+        ],
+      },
+      {
+        id: "pages",
+        type: "folder",
+        name:"pages",
+        children: [
+          {
             id: "hero",
             isSelectable: true,
             name: "hero.tsx",
@@ -224,13 +236,7 @@ const Sidebar = () => {
             isSelectable: true,
             name: "contact.tsx",
           },
-          {
-            id: "feedback",
-            isSelectable: true,
-            name: "feedback.tsx",
-          },
-         
-        ],
+        ]
       },
       {
         id: "lib",
@@ -240,19 +246,19 @@ const Sidebar = () => {
         children: [
           {
             id: "supabaseClient.ts",
-            isSelectable: true,
+            isSelectable: false,
             name: "supabaseclient.ts",
             serviceIcon:<BiLogoTypescript className='text-blue-400' size={"15"}/>
           },
           {
             id: "supabaseServer",
-            isSelectable: true,
+            isSelectable: false,
             name: "supabaseServer.ts",
             serviceIcon:<BiLogoTypescript className='text-blue-400' size={"15"}/>
           },
           {
             id: "utils",
-            isSelectable: true,
+            isSelectable: false,
             name: "utils.ts",
             serviceIcon:<BiLogoTypescript className='text-blue-400' size={"15"}/>
           },
@@ -325,6 +331,7 @@ const Sidebar = () => {
         type: "file",
         isSelectable: true,
         name: ".env",
+        envIcon: <Container size={15}/>
       }
     ],
     

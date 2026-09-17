@@ -25,6 +25,7 @@ type TreeViewElement = {
   pdfIcon?: React.ReactNode 
   fileIcon?: React.ReactNode
   serviceIcon?: React.ReactNode
+  envIcon?: any
 }
 
 type TreeSortMode =
@@ -147,6 +148,7 @@ const renderTreeElements = (
         pdfIcon={element.pdfIcon}
         fileIcon={element.fileIcon}
         serviceIcon={element.serviceIcon}
+        envIcon={element.envIcon}
       >
         <span>{element.name}</span>
       </File>
@@ -422,6 +424,7 @@ const File = forwardRef<
     pdfIcon?:React.ReactNode
     fileIcon?: React.ReactNode
     serviceIcon?:React.ReactNode
+    envIcon?:React.ReactNode
   } & React.ButtonHTMLAttributes<HTMLButtonElement>
 >(
   (
@@ -435,6 +438,7 @@ const File = forwardRef<
       fileIcon,
       pdfIcon,
       serviceIcon,
+      envIcon,
       children,
       ...props
     },
@@ -447,6 +451,7 @@ const File = forwardRef<
       if (pdfIcon) return pdfIcon
       if (fileIcon) return fileIcon
       if (serviceIcon) return serviceIcon
+      if (envIcon) return envIcon
       return (
         <svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 32 32" fill="none">
           <path d="M18.6789 15.9759C18.6789 14.5415 17.4796 13.3785 16 13.3785C14.5206 13.3785 13.3211 14.5415 13.3211 15.9759C13.3211 17.4105 14.5206 18.5734 16 18.5734C17.4796 18.5734 18.6789 17.4105 18.6789 15.9759Z" fill="#53C1DE"/>
