@@ -16,6 +16,7 @@ export async function loginAction(formData: FormData) {
   });
 
   if (error) {
+    console.log(error);
     return { error: error.message };
   }
 

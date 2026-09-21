@@ -49,17 +49,21 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('loading');
-
+    // ozyt earf bdjj ysuj 
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, inquiryType }),
+        body: JSON.stringify({ ...formData, inquiryType}),
       });
+
+      console.log(response);
 
       if (response.ok) {
         setStatus('success');
         setFormData({ name: '', email: '', message: '' });
+        console.log(response);
+
       } else {
         setStatus('error');
       }

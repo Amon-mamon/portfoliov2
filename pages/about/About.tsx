@@ -16,7 +16,7 @@ const About = () => {
     <section id="about" className="relative flex flex-col w-full bg-[#121314] text-[#d4d4d4] font-mono select-none p-4 md:p-8">
       
       {/* ── Editor Body Content ─────────────────────────── */}
-      <div className="pt-4 pb-12 overflow-x-auto text-xs sm:text-sm leading-relaxed">
+      <div className="pb-12 overflow-x-auto text-xs sm:text-sm leading-relaxed">
 
         {/* Line 3: Component Signature */}
         <div className="flex items-center">
@@ -44,7 +44,7 @@ const About = () => {
 
         {/* ── Actual Rendered Section Visual ────────────── */}
         <div className="my-8 mx-3 sm:mx-8 md:mx-16 p-6 sm:p-10 bg-[#181818] rounded-xl border border-[#2b2b2b] shadow-2xl">
-          <div className="max-w-5xl mx-auto space-y-12">
+          <div className="max-w-4xl mx-auto space-y-12">
 
             {/* Title Header Block */}
             <div className="space-y-4">
