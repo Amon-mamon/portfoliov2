@@ -1,188 +1,138 @@
-// src/components/Hero.tsx
+"use client";
+
 import Link from 'next/link';
 import { FaDownload } from "react-icons/fa6";
-import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { HiOutlineEquals } from "react-icons/hi2";
-import { IoIosArrowBack } from "react-icons/io";
-import { IoIosArrowForward } from "react-icons/io";
-import Particles from '@/components/ui/background-particles';
-import { useSectionStore } from '@/store/useSectionStore';
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { MdKeyboardDoubleArrowRight } from "react-icons/md";
+import { VscTerminal, VscCode, VscSparkle } from "react-icons/vsc";
 
 const Home = () => {
   return (
-    <>
-      <div id='home' className="relative flex flex-col w-full">
-        {/* Scoped animations for hero content only */}
-        <style jsx>{`
-          @keyframes hero-gradient-shift {
-            0%, 100% { background-position: 0% 50%; }
-            50%      { background-position: 100% 50%; }
-          }
-          @keyframes hero-shimmer {
-            0%   { background-position: -200% center; }
-            100% { background-position: 200% center; }
-          }
-          @keyframes hero-fade-up {
-            from { opacity: 0; transform: translateY(14px); }
-            to   { opacity: 1; transform: translateY(0); }
-          }
-          @keyframes hero-pulse-glow {
-            0%, 100% { text-shadow: 0 0 18px rgba(59,130,246,0.35), 0 0 40px rgba(34,211,238,0.15); }
-            50%      { text-shadow: 0 0 28px rgba(59,130,246,0.65), 0 0 60px rgba(34,211,238,0.35); }
-          }
-          @keyframes hero-underline-sweep {
-            0%   { transform: scaleX(0); }
-            100% { transform: scaleX(1); }
-          }
-          @keyframes hero-badge-glow {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(56,189,248,0.35); }
-            50%      { box-shadow: 0 0 20px 2px rgba(56,189,248,0.35); }
-          }
+    <div id="home" className="relative flex flex-col w-full text-xs sm:text-sm font-mono text-[#d4d4d4] select-none p-4 md:p-8">
+      
+      {/* ── Scoped Animation & VS Code Utility Styles ────── */}
+      <style jsx>{`
+        @keyframes hero-fade-up {
+          from { opacity: 0; transform: translateY(12px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes glow-pulse {
+          0%, 100% { filter: drop-shadow(0 0 12px rgba(86,156,214,0.4)); }
+          50%      { filter: drop-shadow(0 0 24px rgba(86,156,214,0.7)); }
+        }
+        .hero-fade-up { animation: hero-fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+        .hero-delay-1 { animation-delay: 0.1s; }
+        .hero-delay-2 { animation-delay: 0.2s; }
+        .hero-delay-3 { animation-delay: 0.3s; }
+        .glow-effect { animation: glow-pulse 4s ease-in-out infinite; }
+      `}</style>
 
-          .hero-fade-up { animation: hero-fade-up 0.9s cubic-bezier(0.22,1,0.36,1) both; }
-          .hero-delay-1 { animation-delay: 0.1s; }
-          .hero-delay-2 { animation-delay: 0.25s; }
-          .hero-delay-3 { animation-delay: 0.4s; }
-          .hero-delay-4 { animation-delay: 0.55s; }
+      {/* ── File Export & Declaration Line ────────────── */}
+      <div className="sticky top-0 z-20  backdrop-blur-sm py-2 text-[#569cd6] flex items-center gap-2">
+        <span className="text-[#c586c0]">const</span>
+        <span className="text-[#4ec9b0] font-bold">Home</span>
+        <span className="text-[#d4d4d4]"><HiOutlineEquals /></span>
+        <span className="text-[#d4d4d4]">( )</span>
+        <span className="text-[#c586c0] flex items-center gap-1">
+          <HiOutlineEquals /> <MdKeyboardDoubleArrowRight className="text-lg" />
+        </span>
+        <span className="text-[#ffd700]">{'{'}</span>
+      </div>
 
-          .hero-badge {
-            animation: hero-badge-glow 3s ease-in-out infinite;
-          }
+      {/* ── Component Return Block ──────────────────────── */}
+      <div className="pl-4 sm:pl-8 text-[#c586c0] pt-4">
+        return <span className="text-[#da70d6]">(</span>
+      </div>
 
-          .hero-gradient-text {
-            background-size: 220% auto;
-            animation: hero-gradient-shift 6s ease-in-out infinite,
-                       hero-pulse-glow 4s ease-in-out infinite;
-          }
+      <div className="pl-8 sm:pl-16 pt-2">
+        <p className="flex items-center gap-1 text-[#808080]">
+          <IoIosArrowBack /><span className="text-[#569cd6]">main</span> <IoIosArrowForward />
+        </p>
+      </div>
 
-          /* Vince: animated underline that sweeps on hover */
-          .hero-name {
-            position: relative;
-            transition: filter 0.4s ease;
-          }
-          .hero-name::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            bottom: -6px;
-            height: 3px;
-            width: 100%;
-            border-radius: 999px;
-            background: linear-gradient(90deg, #3b82f6, #22d3ee, #3b82f6);
-            background-size: 200% auto;
-            transform: scaleX(0);
-            transform-origin: left center;
-            transition: transform 0.45s cubic-bezier(0.22,1,0.36,1);
-            animation: hero-gradient-shift 4s linear infinite;
-            opacity: 0.9;
-          }
-          .hero-name:hover::after { transform: scaleX(1); }
-          .hero-name:hover { filter: drop-shadow(0 0 14px rgba(34,211,238,0.55)); }
+      {/* ── Inner Hero Content / Screen ───────────────── */}
+      <div className="my-6 pl-8 sm:pl-20 border-l-2 border-[#2d2d2d] ml-8 sm:ml-20">
+        <div className="flex flex-col gap-6 max-w-4xl">
 
-          /* Paragraph subtle shimmer on hover */
-          .hero-paragraph {
-            transition: color 0.4s ease, letter-spacing 0.4s ease;
-          }
-          .hero-paragraph:hover {
-            color: #d1d5db;
-            letter-spacing: 0.005em;
-          }
-        `}</style>
-
-        <div className='text-white sticky top-0 z-1000'>
-          <p className='flex gap-3 items-center '>const Hero <span><HiOutlineEquals /></span> ( ) <span className='flex gap-1 items-center'><HiOutlineEquals /> <MdKeyboardDoubleArrowRight className='text-xl' /></span> {'{'}</p>
-        </div>
-        <p className='pl-16 text-white pt-2'>return {'('}</p>
-        <div className='text-white pl-28'>
-          <p className='flex items-center gap-1'><IoIosArrowBack /> main <IoIosArrowForward /></p>
-        </div>
-
-        <div className='flex flex-col md:flex-row h-full justify-center items-center'>
-          {/* Profile Image Container */}
-          <div className="relative group">
-            <div className="absolute -inset-2 rounded-full bg-linear-to-r group-hover:opacity-100 transition-opacity duration-500"></div>
+          {/* Status Badge */}
+          <div className="hero-fade-up hero-delay-1 inline-flex items-center gap-2 self-start rounded-md bg-[#1e293b] px-3 py-1.5 text-xs text-[#38bdf8] border border-[#0284c7]/40">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
+            </span>
+            <span className="font-semibold">// Available for full-time opportunities</span>
           </div>
 
-          {/* Text Container */}
-          <div className="text-center md:text-left w-full h-full">
-            <span className="hero-badge hero-fade-up hero-delay-1 inline-flex items-center rounded-full bg-blue-950 px-4 py-1.5 text-sm font-semibold text-blue-300 ring-1 ring-inset ring-blue-700/50 mb-6">
-              <span className="relative flex h-2 w-2 mr-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
-              </span>
-              Available for opportunities
-            </span>
-
-            <h1 className="hero-fade-up hero-delay-2 text-4xl xl:text-7xl 2xl:text-8xl w-full font-extrabold tracking-tighter mb-6 leading-tight">
-              Hi, I'm{' '}
-              <span className="hero-name font-mono bg-linear-to-r from-blue-400 via-cyan-300 to-blue-400 bg-clip-text text-transparent">
+          {/* Headline */}
+          <div className="hero-fade-up hero-delay-2 space-y-2">
+            <p className="text-[#6a9955] italic text-xs sm:text-sm">/** Developer Profile Info */</p>
+            <h1 className="text-3xl sm:text-5xl lg:text-7xl font-bold tracking-tight text-[#d4d4d4] leading-tight">
+              Hi, I&apos;m{" "}
+              <span className="text-[#4ec9b0] font-mono glow-effect underline decoration-[#007acc] decoration-wavy underline-offset-8">
                 Vince
               </span>
               .
-              <br className="hidden md:block" />
-              <span className="text-white/90"> A Web Developer.</span>
             </h1>
-
-            <p className="hero-paragraph hero-fade-up hero-delay-3 text-xl text-gray-400 leading-relaxed">
-              I craft fast, intuitive web experiences — from pixel-perfect interfaces to the systems that power them. Let's build something great together.
-            </p>
-            <p className="hero-paragraph hero-fade-up hero-delay-3 text-xl text-gray-400 leading-relaxed">
-              I craft fast, intuitive web experiences — from pixel-perfect interfaces to the systems that power them. Let's build something great together.
-            </p>
-            <p className="hero-paragraph hero-fade-up hero-delay-3 text-xl text-gray-400 leading-relaxed">
-              I craft fast, intuitive web experiences — from pixel-perfect interfaces to the systems that power them. Let's build something great together.
-            </p>
-            <p className="hero-paragraph hero-fade-up hero-delay-3 text-xl text-gray-400 leading-relaxed">
-              I craft fast, intuitive web experiences — from pixel-perfect interfaces to the systems that power them. Let's build something great together.
-            </p>
-            <p className="hero-paragraph hero-fade-up hero-delay-3 text-xl text-gray-400 leading-relaxed">
-              I craft fast, intuitive web experiences — from pixel-perfect interfaces to the systems that power them. Let's build something great together.
-            </p>
-            <p className="hero-paragraph hero-fade-up hero-delay-3 text-xl text-gray-400 leading-relaxed">
-              I craft fast, intuitive web experiences — from pixel-perfect interfaces to the systems that power them. Let's build something great together.
-            </p>
-            <p className="hero-paragraph hero-fade-up hero-delay-3 text-xl text-gray-400 leading-relaxed">
-              I craft fast, intuitive web experiences — from pixel-perfect interfaces to the systems that power them. Let's build something great together.
-            </p>
-            <p className="hero-paragraph hero-fade-up hero-delay-3 text-xl text-gray-400 leading-relaxed">
-              I craft fast, intuitive web experiences — from pixel-perfect interfaces to the systems that power them. Let's build something great together.
-            </p>
-            <p className="hero-paragraph hero-fade-up hero-delay-3 text-xl text-gray-400 leading-relaxed">
-              I craft fast, intuitive web experiences — from pixel-perfect interfaces to the systems that power them. Let's build something great together.
-            </p>
-
-            {/* CTA Buttons — untouched */}
-            {/* <div className="flex gap-4 justify-center md:justify-start hero-fade-up hero-delay-4">
-              <a
-                href="/DAVID_VINCE_STEPHEN_CV.pdf"
-                download="DAVID_VINCE_STEPHEN_CV.pdf"
-                className="group relative inline-flex items-center bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition-all duration-300 shadow-lg shadow-blue-950/30"
-              >
-                Download CV
-                <span className="ml-2 group-hover:animate-bounce"><FaDownload /></span>
-              </a>
-              <Link
-                href="/contact"
-                className="bg-gray-800 text-white px-8 py-3 rounded-full font-semibold hover:bg-gray-700 transition-colors"
-              >
-                Get in touch
-              </Link>
-            </div> */}
+            <h2 className="text-xl sm:text-3xl text-[#ce9178] font-semibold">
+              Full-Stack & Web Developer
+            </h2>
           </div>
-        </div>
 
-        <div className='text-white pl-28 mt-12'>
-          <p className='flex items-center gap-1'><IoIosArrowBack /> / main <IoIosArrowForward /></p>
-        </div>
-        <div className='text-white'>
-          <p className='pl-12'>{');'}</p>
-          <p>{'};'}</p>
+          {/* Paragraphs Styled as a Code Block / Comments */}
+          <div className="hero-fade-up hero-delay-3 bg-[#181818] border border-[#2b2b2b] rounded-md p-4 text-[#9cdcfe] space-y-3 font-mono text-xs sm:text-sm">
+            <p className="flex items-start gap-2">
+              <span>I craft fast, intuitive web applications — from responsive front-end interfaces to robust backend architectures.</span>
+            </p>
+            <p className="text-[#6a9955] italic">
+              &#47;&#47; Specialized in React, Next.js, TypeScript, and modern API integration.
+            </p>
+          </div>
+
+          {/* CTA Interactive Buttons */}
+          <div className="hero-fade-up hero-delay-3 flex flex-wrap gap-4 pt-4">
+            <a
+              href="/DAVID_VINCE_STEPHEN_CV.pdf"
+              download="DAVID_VINCE_STEPHEN_CV.pdf"
+              className="group flex items-center gap-2 bg-[#007acc] hover:bg-[#0062a3] text-white px-5 py-2.5 rounded-md font-mono text-xs transition-all shadow-md active:scale-95"
+            >
+              <FaDownload className="group-hover:translate-y-0.5 transition-transform" />
+              <span>download_cv.pdf</span>
+            </a>
+
+            <Link
+              href="/contact"
+              className="flex items-center gap-2 bg-[#2d2d2d] hover:bg-[#3c3c3c] border border-[#3c3c3c] text-[#cccccc] hover:text-white px-5 py-2.5 rounded-md font-mono text-xs transition-all active:scale-95"
+            >
+              <VscTerminal className="text-[#4ec9b0]" />
+              <span>./get-in-touch.sh</span>
+            </Link>
+          </div>
+
         </div>
       </div>
-      <div className='text-white'>
-        <p>export default Hero;</p>
+
+      {/* ── Closing Tag Blocks ─────────────────────────── */}
+      <div className="pl-8 sm:pl-16">
+        <p className="flex items-center gap-1 text-[#808080]">
+          <IoIosArrowBack /><span className="text-[#569cd6]">/main</span> <IoIosArrowForward />
+        </p>
       </div>
-    </>
+
+      <div className="pl-4 sm:pl-8 text-[#da70d6]">
+        <p><span className="text-[#da70d6]">)</span>;</p>
+      </div>
+
+      <div className="text-[#ffd700]">
+        <p><span className="text-[#ffd700]">{'}'}</span>;</p>
+      </div>
+
+      <div className="pt-4 text-[#c586c0] flex items-center gap-2">
+        <VscCode className="text-[#569cd6]" />
+        <span>export default</span> <span className="text-[#4ec9b0]">Home</span>;
+      </div>
+
+    </div>
   );
 };
 

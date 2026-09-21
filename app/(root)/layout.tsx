@@ -17,7 +17,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
   useSidebarShortcut();
   return (
     <div className="bg-[#121314] h-screen overflow-hidden flex flex-col">
-      <SmoothCursor />
+      {/* <SmoothCursor /> */}
       <Header />
       <div className="flex gap-2 flex-1 min-h-0">
         <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isSidebarOpen ? "w-96" : "w-0"}`}>
@@ -26,7 +26,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
         </div>
         <div className="flex flex-col w-full min-h-0 border-t border-l border-gray-200/5 rounded-t-md">
           <NavBar />
-          <div id="page-scroll-container" className="flex-1 min-h-0 overflow-y-auto w-full">
+          <div id="page-scroll-container" className="flex-1 min-h-0 px-2 overflow-y-auto w-full">
             {children}
           </div>
           <div

@@ -1,85 +1,80 @@
-'use client'; // Required for usePathname
+'use client';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { 
+  VscCode, 
+  VscSearch, 
+  VscSourceControl, 
+  VscChromeMinimize, 
+  VscChromeMaximize, 
+  VscChromeClose,
+  VscTerminal
+} from 'react-icons/vsc';
 import { LuMessageSquareDot } from "react-icons/lu";
 import Clock from './Clock';
 
 const Header = () => {
-  const pathname = usePathname();
-
-
-  const navLinks = [
-    { name: "Home", href: "/" },
-    { name: "About", href: "/about" },
-    { name: "Projects", href: "/project" }, 
-    // { name: "Services", href: "/services" }, 
-  ];
-
-  // return (
-  //   <header className="sticky top-0 z-50 bg-gray-950 text-white border-b border-gray-800">
-  //     <div className="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
-     
-  //       {/* Modern Logo Style */}
-  //       <Link href="/" className="text-2xl font-bold tracking-tighter text-white">
-  //         vince<span className="text-blue-500">dev</span>
-  //       </Link>
-        
-  //       <nav>
-  //         <ul className="flex items-center gap-8">
-  //           {navLinks.map((link) => {
-  //             const isActive = pathname === link.href;
-              
-  //             return (
-  //               <li key={link.href}>
-  //                 <Link
-  //                   href={link.href}
-  //                   className={`transition-colors duration-200 text-base tracking-wide ${
-  //                     isActive 
-  //                       ? "text-blue-400 font-semibold" 
-  //                       : "text-gray-300 hover:text-white"
-  //                   }`}
-  //                 >
-  //                   {link.name}
-  //                 </Link>
-  //               </li>
-  //             );
-  //           })}
-            
-  //           {/* Call to Action Button */}
-  //           <li>
-  //             <Link 
-  //               href="/contact"
-  //               className=" text-gray-300 px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-200 transition-colors"
-  //             >
-  //               Contact
-  //             </Link>
-  //           </li>
-  //         </ul>
-  //       </nav> 
-  //     </div>
-  //   </header>
-  // );
   return (
-      <header className='flex justify-between items-center px-3'>
-        <div className='flex gap-6 py-2 bg-[#121314]'>
-            <h2 className='text-blue-500'>VD</h2>
-              <ul className='flex gap-2 items-center text-white'>
-                <li>File</li>
-                <li>Edit</li>
-                <li>Theme</li>
-                <li></li>
-                <li></li>
-              </ul>
-              <div className='w-1/2 px-3 flex items-center gap-1 border border-gray-100/5 rounded '>
-                <input type="text" className='outline-none w-full border-r border-gray-300' />
-                 <LuMessageSquareDot className='text-lg text-gray-400'/>
-              </div>
-        </div>
-        <Clock/>
-      </header>
-  )
+    <header className="sticky top-0 z-50 w-full bg-[#1e1e1e] border-b border-[#2b2b2b] text-[#cccccc] font-mono text-xs select-none">
+      
+      {/* ── Top IDE Title Bar ────────────────────────────── */}
+      <div className="flex items-center justify-between px-3 py-1.5 bg-[#181818] border-b border-[#2b2b2b] text-[11px]">
+        
+        {/* Left: Brand Logo & IDE Menu */}
+        <div className="flex items-center gap-4">
+          <Link href="/" className="flex items-center gap-1.5 font-bold text-white hover:text-[#007acc] transition-colors">
+            <span className="bg-[#007acc] text-white p-1 rounded">
+              <VscCode className="text-xs" />
+            </span>
+            <span className="tracking-tight text-xs">vincedev<span className="text-[#569cd6]">.ide</span></span>
+          </Link>
 
+          <ul className="hidden md:flex items-center gap-3 text-[#808080]">
+            <li className="hover:text-white cursor-pointer transition-colors">File</li>
+            <li className="hover:text-white cursor-pointer transition-colors">Edit</li>
+            <li className="hover:text-white cursor-pointer transition-colors">Selection</li>
+            <li className="hover:text-white cursor-pointer transition-colors">View</li>
+            <li className="hover:text-white cursor-pointer transition-colors">Go</li>
+            <li className="hover:text-white cursor-pointer transition-colors">Terminal</li>
+          </ul>
+        </div>
+
+        {/* Center: Command Palette / Search Input */}
+        <div className="flex-1 max-w-md mx-4">
+          <div className="flex items-center gap-2 bg-[#252526] border border-[#3c3c3c] focus-within:border-[#007acc] px-2.5 py-1 rounded text-[#808080] transition-colors">
+            <VscSearch className="text-sm shrink-0" />
+            <input 
+              type="text" 
+              placeholder="vincedev-portfolio (Workspace) — Search files..."
+              className="w-full bg-transparent outline-none text-[#cccccc] text-[11px] placeholder-[#808080]"
+            />
+            <div className="flex items-center gap-1 shrink-0 border-l border-[#3c3c3c] pl-2">
+              <Link href="/contact" title="Open Discussion / Contact">
+                <LuMessageSquareDot className="text-sm text-[#808080] hover:text-[#4ec9b0] cursor-pointer transition-colors" />
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* Right: Clock & Window Controls */}
+        <div className="flex items-center gap-4">
+          <div className="hidden sm:block text-[#808080]">
+            <Clock />
+          </div>
+
+          {/* VS Code Window Controls */}
+          <div className="flex items-center gap-2.5 text-[#808080] ml-2">
+            <VscChromeMinimize className="hover:text-white cursor-pointer" />
+            <VscChromeMaximize className="hover:text-white cursor-pointer" />
+            <VscChromeClose className="hover:text-[#f14c4c] cursor-pointer" />
+          </div>
+        </div>
+      </div>
+
+      {/* ── Editor Open Tabs Bar (Navigation Links) ──────── */}
+    </header>
+  );
 };
 
 export default Header;

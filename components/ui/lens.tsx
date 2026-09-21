@@ -29,10 +29,12 @@ interface LensProps {
   lensColor?: string
   /** The aria label of the lens */
   ariaLabel?: string
+  containerClassname?:string
 }
 
 export function Lens({
   children,
+  containerClassname,
   zoomFactor = 1.3,
   lensSize = 170,
   isStatic = false,
@@ -110,7 +112,7 @@ export function Lens({
   return (
     <div
       ref={containerRef}
-      className="relative z-20 overflow-hidden rounded-xl"
+      className={`${containerClassname} relative z-20 overflow-hidden rounded-xl`}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
       onMouseMove={handleMouseMove}

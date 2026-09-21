@@ -48,7 +48,7 @@ const page = () => {
 
   return (
     <>
-    <div ref={scrollContainerRef} id="page-scroll-container" className='bg-[#121314]  px-2  overflow-y-hidden'>
+    <div ref={scrollContainerRef} id="page-scroll-container" className='bg-[#121314] overflow-y-hidden'>
      {/* <div className='text-white px-6'>
         <p>1</p>
         <p>2</p>
@@ -63,7 +63,7 @@ const page = () => {
         <p>11</p>
      </div> */}
       {/* <div className='w-full'> */}
-        <SmoothCursor/>
+        {/* <SmoothCursor/> */}
           <div id="home"><Home/></div>
           {/* <div id="about"><About/></div>
           <div id="project"><Project/></div>

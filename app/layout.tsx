@@ -63,7 +63,7 @@ export default function RootLayout({
       <body
         className={`max-w-[2000px] mx-auto relative ${geistSans.variable} ${geistMono.variable} ${jetbrainsMono.variable} antialiased overflow-hidden`}
       >
-           <Particles
+           {/* <Particles
           className='w-full h-screen absolute'
           particleColors={["#a2a0a0"]}
           particleCount={600}
@@ -74,7 +74,7 @@ export default function RootLayout({
           alphaParticles={false}
           disableRotation={true}
           pixelRatio={1}
-        />
+        /> */}
         
         {children}
       </body>

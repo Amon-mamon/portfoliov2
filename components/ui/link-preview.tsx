@@ -1,8 +1,8 @@
 "use client";
 import * as HoverCardPrimitive from "@radix-ui/react-hover-card";
-
 import { encode } from "qss";
 import React from "react";
+import Image from "next/image";
 import {
   AnimatePresence,
   motion,
@@ -10,7 +10,6 @@ import {
   useSpring,
 } from "motion/react";
 import { cn } from "@/lib/utils";
-
 
 type LinkPreviewProps = {
   children: React.ReactNode;
@@ -36,7 +35,7 @@ export const LinkPreview = ({
   isStatic = false,
   imageSrc = "",
 }: LinkPreviewProps) => {
-  let src;
+  let src: string;
   if (!isStatic) {
     const params = encode({
       url,
@@ -55,7 +54,6 @@ export const LinkPreview = ({
   }
 
   const [isOpen, setOpen] = React.useState(false);
-
   const [isMounted, setIsMounted] = React.useState(false);
 
   React.useEffect(() => {
@@ -64,28 +62,30 @@ export const LinkPreview = ({
 
   const springConfig = { stiffness: 100, damping: 15 };
   const x = useMotionValue(0);
-
   const translateX = useSpring(x, springConfig);
 
-  const handleMouseMove = (event: any) => {
-    const targetRect = event.target.getBoundingClientRect();
+  const handleMouseMove = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    const targetRect = event.currentTarget.getBoundingClientRect();
     const eventOffsetX = event.clientX - targetRect.left;
-    const offsetFromCenter = (eventOffsetX - targetRect.width / 2) / 2; // Reduce the effect to make it subtle
+    const offsetFromCenter = (eventOffsetX - targetRect.width / 2) / 2;
     x.set(offsetFromCenter);
   };
 
   return (
     <>
-      {isMounted ? (
+      {/* Hidden preloader to cache image */}
+      {isMounted && (
         <div className="hidden">
-          <img
+          <Image
             src={src}
             width={width}
             height={height}
-            alt="hidden image"
+            alt="hidden preloader"
+            quality={quality}
+            priority
           />
         </div>
-      ) : null}
+      )}
 
       <HoverCardPrimitive.Root
         openDelay={50}
@@ -96,55 +96,63 @@ export const LinkPreview = ({
       >
         <HoverCardPrimitive.Trigger
           onMouseMove={handleMouseMove}
-          className={cn("text-black dark:text-white", className)}
+          className={cn("text-black dark:text-white cursor-pointer select-text", className)}
           href={url}
+          target="_blank"
+          rel="noopener noreferrer"
         >
           {children}
         </HoverCardPrimitive.Trigger>
 
-        <HoverCardPrimitive.Content
-          className="[transform-origin:var(--radix-hover-card-content-transform-origin)]"
-          side="top"
-          align="center"
-          sideOffset={10}
-        >
-          <AnimatePresence>
-            {isOpen && (
-              <motion.div
-                initial={{ opacity: 0, y: 20, scale: 0.6 }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                  scale: 1,
-                  transition: {
-                    type: "spring",
-                    stiffness: 260,
-                    damping: 20,
-                  },
-                }}
-                exit={{ opacity: 0, y: 20, scale: 0.6 }}
-                className="shadow-xl rounded-xl"
-                style={{
-                  x: translateX,
-                }}
-              >
-                <a
-                  href={url}
-                  className="block p-1 bg-white border-2 border-transparent shadow rounded-xl hover:border-neutral-200 dark:hover:border-neutral-800"
-                  style={{ fontSize: 0 }}
+        <HoverCardPrimitive.Portal>
+          <HoverCardPrimitive.Content
+            className="z-[9999] [transform-origin:var(--radix-hover-card-content-transform-origin)] pointer-events-auto"
+            side="top"
+            align="center"
+            sideOffset={10}
+          >
+            <AnimatePresence>
+              {isOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10, scale: 0.8 }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    transition: {
+                      type: "spring",
+                      stiffness: 260,
+                      damping: 20,
+                    },
+                  }}
+                  exit={{ opacity: 0, y: 10, scale: 0.8 }}
+                  className="shadow-2xl rounded-xl z-[9999]"
+                  style={{
+                    x: translateX,
+                  }}
                 >
-                  <img
-                    src={isStatic ? imageSrc : src}
-                    width={width}
-                    height={height}
-                    className="rounded-lg"
-                    alt="preview image"
-                  />
-                </a>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </HoverCardPrimitive.Content>
+                  <a
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block p-1 bg-[#1e1e1e] border border-[#3c3c3c] shadow-2xl rounded-xl hover:border-gray-500 transition-colors"
+                    style={{ fontSize: 0 }}
+                  >
+                    <Image
+                      src={isStatic ? imageSrc : src}
+                      width={width}
+                      height={height}
+                      className="rounded-lg object-cover"
+                      alt="preview image"
+                      quality={quality}
+                      unoptimized={!isStatic}
+                    />
+                  </a>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </HoverCardPrimitive.Content>
+        </HoverCardPrimitive.Portal>
       </HoverCardPrimitive.Root>
     </>
   );
