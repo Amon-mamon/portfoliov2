@@ -3,6 +3,7 @@ import { Container, FileText } from 'lucide-react'
 import { FaFilePdf } from "react-icons/fa";
 import { BiLogoTypescript } from "react-icons/bi";
 import { FaCss3Alt } from "react-icons/fa6";
+import { CgReadme } from "react-icons/cg";
 export const ELEMENTS: TreeViewElement[] = [
     {
       id: "src",
@@ -74,6 +75,19 @@ export const ELEMENTS: TreeViewElement[] = [
                     }
                   ]
                 },
+                {
+                  id: "readme",
+                  type:"folder",
+                  isSelectable: true,
+                  name: "readme",
+                  children: [
+                    {
+                      id: "readme",
+                      isSelectable:true,
+                      name:"page.tsx"
+                    }
+                  ]
+                },
                
               ] 
             },
@@ -124,19 +138,41 @@ export const ELEMENTS: TreeViewElement[] = [
               ]
             },
             {
-              id: "feedback",
+               id: "reusable",
               isSelectable: true,
+              name: "reusable",
+              children: [
+                {
+                  id: "variabledeclaration",
+                  isSelectable: false,
+                  name: "var-declaration.tsx",
+                },
+                {
+                  id: "clock",
+                  isSelectable: false,
+                  name: "clock.tsx",
+                },
+              ]
+            },
+            {
+              id: "feedback",
+              isSelectable: false,
               name: "feedback.tsx",
             },
             {
               id: "card",
-              isSelectable: true,
+              isSelectable: false,
               name: "card.tsx",
             },
             {
               id: "tech-stack",
-              isSelectable: true,
-              name: "techStack.tsx",
+              isSelectable: false,
+              name: "tech-stack.tsx",
+            },
+            {
+              id: "github-activty",
+              isSelectable: false,
+              name: "github-activity.tsx",
             },
           ],
         },
@@ -174,7 +210,7 @@ export const ELEMENTS: TreeViewElement[] = [
           children: [
             {
               id: "service.ts",
-              isSelectable: true,
+              isSelectable: false,
               name: "service.ts",
               serviceIcon:<BiLogoTypescript className='text-blue-400' size={"15"}/>
             },
@@ -188,13 +224,13 @@ export const ELEMENTS: TreeViewElement[] = [
           children: [
             {
               id: "useFooterShortcut.ts",
-              isSelectable: true,
+              isSelectable: false,
               name: "useFooterShortcut.ts",
               serviceIcon:<BiLogoTypescript className='text-blue-400' size={"15"}/>
             },
             {
               id: "useSidebarShortcut.ts",
-              isSelectable: true,
+              isSelectable: false,
               name: "useSidebarShortcut.ts",
               serviceIcon:<BiLogoTypescript className='text-blue-400' size={"15"}/>
             },
@@ -234,6 +270,13 @@ export const ELEMENTS: TreeViewElement[] = [
           isSelectable: true,
           name: ".env",
           envIcon: <Container size={15}/>
+        },
+        {
+          id: "readme",
+          type: "file",
+          isSelectable: true,
+          name: "readme.md",
+          readmeIcon: <CgReadme size={15}/>
         }
       ],
     },

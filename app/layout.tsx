@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/common/Header";
 import Particles from "@/components/ui/background-particles";
+import FooterToolbar from "@/components/footer-toolbar";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],

@@ -1,4 +1,3 @@
-// hooks/useFooterShortcut.ts
 "use client";
 import { useEffect } from "react";
 import { useSectionStore } from "@/store/useSectionStore";
@@ -16,10 +15,18 @@ export function useSidebarShortcut() {
         target.isContentEditable;
       if (isTyping) return;
 
-      // Ctrl + ` — matches VS Code's toggle terminal shortcut (Mac uses Ctrl even though Cmd is the usual modifier)
+      // Ctrl + B — matches VS Code's toggle primary sidebar shortcut
       if (e.ctrlKey && e.key === "b") {
-        e.preventDefault(); // stops the browser from doing anything weird with backtick
+        e.preventDefault();
         toggleSidebar();
+
+        // Dispatch immediately when transition starts
+        window.dispatchEvent(new Event("resize"));
+
+        // Dispatch again when the 300ms width transition finishes
+        setTimeout(() => {
+          window.dispatchEvent(new Event("resize"));
+        }, 310);
       }
     };
 

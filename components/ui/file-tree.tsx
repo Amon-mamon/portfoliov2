@@ -14,7 +14,10 @@ import { IoLogoReact } from "react-icons/io5";
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
+import { CgReadme } from "react-icons/cg";
 
+
+// this can be optimize just one props icon?:React.ReactNode im just lazy
 type TreeViewElement = {
   id: string
   name: string
@@ -26,6 +29,7 @@ type TreeViewElement = {
   serviceIcon?: React.ReactNode
   globalCssIcon?: React.ReactNode
   envIcon?: React.ReactNode
+  readmeIcon?:React.ReactNode
 }
 
 type TreeSortMode =
@@ -150,6 +154,7 @@ const renderTreeElements = (
         serviceIcon={element.serviceIcon}
         envIcon={element.envIcon}
         globalCssIcon={element.globalCssIcon}
+        readmeIcon={element.readmeIcon}
       >
         <span>{element.name}</span>
       </File>
@@ -179,7 +184,13 @@ type TreeViewProps = {
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Root>,
   "defaultValue" | "onValueChange" | "type" | "value"
 >
-
+const useHasMounted = () => {
+  const [hasMounted, setHasMounted] = useState(false);
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+  return hasMounted;
+};
 const Tree = forwardRef<HTMLDivElement, TreeViewProps>(
   (
     {
@@ -199,6 +210,7 @@ const Tree = forwardRef<HTMLDivElement, TreeViewProps>(
     },
     ref
   ) => {
+    const hasMounted = useHasMounted()
     const [uncontrolledSelectedId, setUncontrolledSelectedId] = useState<
       string | undefined
     >(initialSelectedId)
@@ -274,6 +286,10 @@ const Tree = forwardRef<HTMLDivElement, TreeViewProps>(
     const direction = dir === "rtl" ? "rtl" : "ltr"
     const treeChildren =
       children ?? (elements ? renderTreeElements(elements, sort) : null)
+
+    if (!hasMounted) {
+      return <div className={cn("size-full min-h-[100px]", className)}/>
+    }
 
     return (
       <TreeContext.Provider
@@ -427,6 +443,7 @@ const File = forwardRef<
     serviceIcon?:React.ReactNode
     envIcon?:React.ReactNode
     globalCssIcon?:React.ReactNode
+    readmeIcon?:React.ReactNode
   } & React.ButtonHTMLAttributes<HTMLButtonElement>
 >(
   (
@@ -442,6 +459,7 @@ const File = forwardRef<
       serviceIcon,
       globalCssIcon,
       envIcon,
+      readmeIcon,
       children,
       ...props
     },
@@ -456,6 +474,7 @@ const File = forwardRef<
       if (serviceIcon) return serviceIcon
       if (envIcon) return envIcon
       if (globalCssIcon) return globalCssIcon
+      if (readmeIcon) return readmeIcon
       return (
         <svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 32 32" fill="none">
           <path d="M18.6789 15.9759C18.6789 14.5415 17.4796 13.3785 16 13.3785C14.5206 13.3785 13.3211 14.5415 13.3211 15.9759C13.3211 17.4105 14.5206 18.5734 16 18.5734C17.4796 18.5734 18.6789 17.4105 18.6789 15.9759Z" fill="#53C1DE"/>

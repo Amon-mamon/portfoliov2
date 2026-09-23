@@ -10,7 +10,7 @@ export async function POST(request: Request) {
     service: 'gmail',
     auth: {
       user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASSWORD,
+      pass: process.env.EMAIL_PASSWORD || process.env.EMAIL_PASSWORD2,
     },
   });
 

@@ -6,6 +6,8 @@ export const ID_TO_PATH: Record<string, string> = {
   about: '/about',
   project: '/project',
   contact: '/contact',
+  resume: '/resume',
+  readme: '/readme'
 }
 
 // URL path -> tree/file id (reverse of above)

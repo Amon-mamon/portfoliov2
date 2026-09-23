@@ -26,6 +26,7 @@ interface ProjectItem {
   project_description: string;
   project_stack?: string;
   project_image: string;
+  project_images?: string[]; // Array of multiple screenshot URLs
   live_url?: string;
   github_url?: string;
 }
@@ -129,7 +130,7 @@ const Page = () => {
     }));
   };
 
-  // Execute Edit Update in Supabase
+  // Execute Edit Update in Supabase (Supports Multiple Uploads)
   const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!editingProject) return;
@@ -140,26 +141,36 @@ const Page = () => {
     try {
       const formEl = e.currentTarget;
       const data = new FormData(formEl);
-      const file = data.get("projectImage") as File;
+      const files = data.getAll("projectImage") as File[];
 
-      let imageUrl = editingProject.project_image;
+      let updatedImages: string[] = editingProject.project_images || [editingProject.project_image];
 
-      // Handle optional new image upload
-      if (file && file.size > 0) {
-        const fileExt = file.name.split('.').pop();
-        const fileName = `${Date.now()}.${fileExt}`;
-        const { error: uploadError } = await supabase.storage
-          .from('project-images')
-          .upload(fileName, file);
+      // Handle uploading multiple new files
+      const validFiles = files.filter((f) => f && f.size > 0);
+      if (validFiles.length > 0) {
+        const uploadedUrls: string[] = [];
 
-        if (uploadError) throw uploadError;
+        for (const file of validFiles) {
+          const fileExt = file.name.split('.').pop();
+          const fileName = `${Date.now()}_${Math.random().toString(36).substring(2, 7)}.${fileExt}`;
+          
+          const { error: uploadError } = await supabase.storage
+            .from('project-images')
+            .upload(fileName, file);
 
-        const { data: publicUrlData } = supabase.storage
-          .from('project-images')
-          .getPublicUrl(fileName);
+          if (uploadError) throw uploadError;
 
-        imageUrl = publicUrlData.publicUrl;
+          const { data: publicUrlData } = supabase.storage
+            .from('project-images')
+            .getPublicUrl(fileName);
+
+          uploadedUrls.push(publicUrlData.publicUrl);
+        }
+
+        updatedImages = uploadedUrls;
       }
+
+      const finalImagesArray = Array.isArray(updatedImages) ? updatedImages.flat() : [updatedImages];
 
       // Update Database Entry
       const { error: updateError } = await supabase
@@ -169,13 +180,14 @@ const Page = () => {
           project_type: formData.type,
           project_stack: formData.stack,
           project_description: formData.description,
-          project_image: imageUrl,
+          project_image: [finalImagesArray[0] || ""],
+          project_images: finalImagesArray,
         })
         .eq("id", editingProject.id);
 
       if (updateError) throw updateError;
 
-      // Optimistically Update Local UI State
+      // Update Local UI State
       setProjects((prev) =>
         prev.map((proj) =>
           proj.id === editingProject.id
@@ -185,7 +197,8 @@ const Page = () => {
                 project_type: formData.type,
                 project_stack: formData.stack,
                 project_description: formData.description,
-                project_image: imageUrl,
+                project_image: updatedImages[0] || proj.project_image,
+                project_images: updatedImages,
               }
             : proj
         )
@@ -209,7 +222,7 @@ const Page = () => {
   }
 
   return (
-    <div className="w-full bg-black h-screen mx-auto p-4 sm:p-6 text-[#d4d4d4] font-mono text-xs sm:text-sm select-none space-y-6">
+    <div className="w-full bg-black min-h-screen mx-auto p-4 sm:p-6 text-[#d4d4d4] font-mono text-xs sm:text-sm select-none space-y-6">
       
       {/* ── IDE Header ───────────────────────────────── */}
       <div className="bg-[#252526] border border-[#2b2b2b] rounded-lg p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -220,13 +233,13 @@ const Page = () => {
               <span>admin_control_panel.config</span>
               <span className="text-[10px] bg-[#007acc] text-white px-2 py-0.5 rounded font-mono">AUTH: ACTIVE</span>
             </h1>
-            <p className="text-[#808080] text-[11px]">// Manage repository projects and database records</p>
+            <p className="text-[#808080] text-[11px]">// Manage repository projects and screenshot assets</p>
           </div>
         </div>
 
         <button
           onClick={handleLogout}
-          className="flex items-center gap-2 bg-[#f14c4c]/10 border border-[#f14c4c]/40 hover:bg-[#f14c4c] text-[#f14c4c] hover:text-white px-4 py-2 rounded text-xs font-semibold transition-all duration-200"
+          className="flex items-center gap-2 bg-[#f14c4c]/10 border border-[#f14c4c]/40 hover:bg-[#f14c4c] text-[#f14c4c] hover:text-white px-4 py-2 rounded text-xs font-semibold transition-all duration-200 cursor-pointer"
         >
           <VscSignOut className="text-sm" />
           <span>signOut()</span>
@@ -247,7 +260,7 @@ const Page = () => {
               <button
                 type="button"
                 onClick={cancelEdit}
-                className="text-[#808080] hover:text-white flex items-center gap-1 text-[11px]"
+                className="text-[#808080] hover:text-white flex items-center gap-1 text-[11px] cursor-pointer"
               >
                 <VscClose /> Cancel
               </button>
@@ -336,18 +349,32 @@ const Page = () => {
               />
             </div>
 
-            {/* Field: Image Upload */}
+            {/* Field: Multi-Image Upload */}
             <div className="space-y-1">
-              <label htmlFor="projectImage" className="flex items-center gap-1.5 text-[#9cdcfe]">
-                <VscCloudUpload className="text-[#569cd6]" />
-                <span>&quot;project_image&quot; {editingProject && "(Optional for update)"}:</span>
+              <label htmlFor="projectImage" className="flex items-center justify-between text-[#9cdcfe]">
+                <span className="flex items-center gap-1.5">
+                  <VscCloudUpload className="text-[#569cd6]" />
+                  <span>&quot;project_images&quot;:</span>
+                </span>
+                <span className="text-[10px] text-[#808080]">// Multiple files allowed</span>
               </label>
-              <input
+             <input
                 id="projectImage"
                 type="file"
                 name="projectImage"
                 accept="image/*"
+                multiple
                 required={!editingProject}
+                onChange={(e) => {
+                  const files = Array.from(e.target.files || []);
+                  const totalSize = files.reduce((acc, file) => acc + file.size, 0);
+                  const maxTotalMB = 8; // Keep slightly below 10mb limit
+
+                  if (totalSize > maxTotalMB * 1024 * 1024) {
+                    alert(`Total size of selected images (${(totalSize / (1024 * 1024)).toFixed(1)}MB) exceeds the ${maxTotalMB}MB limit. Please select fewer or smaller images.`);
+                    e.target.value = ""; // Reset input
+                  }
+                }}
                 className="w-full text-xs text-[#808080] file:mr-3 file:py-1.5 file:px-3 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-[#007acc] file:text-white hover:file:bg-[#0062a3] cursor-pointer bg-[#1e1e1e] border border-[#3c3c3c] rounded p-1"
               />
             </div>
@@ -356,7 +383,7 @@ const Page = () => {
             <button
               type="submit"
               disabled={isPending || isUpdating}
-              className={`w-full flex items-center justify-center gap-2 py-2.5 rounded font-semibold transition-colors disabled:bg-[#3c3c3c] disabled:cursor-not-allowed mt-2 text-white ${
+              className={`w-full flex items-center justify-center gap-2 py-2.5 rounded font-semibold transition-colors disabled:bg-[#3c3c3c] disabled:cursor-not-allowed mt-2 text-white cursor-pointer ${
                 editingProject ? 'bg-[#e5c07b] hover:bg-[#c8a661] text-black font-bold' : 'bg-[#0e639c] hover:bg-[#1177bb]'
               }`}
             >
@@ -394,69 +421,82 @@ const Page = () => {
 
           {/* Projects List View */}
           <div className="space-y-4">
-            {projects?.map((project: ProjectItem) => (
-              <div
-                key={project.id}
-                className={`bg-[#181818] border rounded-lg p-4 flex flex-col sm:flex-row gap-4 items-start transition-all ${
-                  editingProject?.id === project.id ? 'border-[#e5c07b] bg-[#1e1e1e]' : 'border-[#2b2b2b] hover:border-[#3c3c3c]'
-                }`}
-              >
-                {/* Thumbnail Preview */}
-                <div className="w-full sm:w-32 h-24 bg-[#1e1e1e] rounded overflow-hidden shrink-0 border border-[#3c3c3c]">
-                  <img
-                    src={project.project_image}
-                    alt={project.project_title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+            {projects?.map((project: ProjectItem) => {
+              const imageList = project.project_images?.length 
+                ? project.project_images 
+                : [project.project_image];
 
-                {/* Details */}
-                <div className="flex-1 space-y-2 min-w-0 w-full">
-                  <div className="flex items-center justify-between gap-2">
-                    <h3 className="font-bold text-white text-sm truncate">
-                      {project.project_title}
-                    </h3>
-                    <span className="bg-[#252526] text-[#569cd6] border border-[#3c3c3c] text-[10px] px-2 py-0.5 rounded shrink-0">
-                      {project.project_type}
-                    </span>
-                  </div>
-
-                  <p className="text-[#808080] text-xs line-clamp-2 leading-relaxed">
-                    {project.project_description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-1">
-                    {project.project_stack?.split(",").map((tag) => (
-                      <span
-                        key={tag}
-                        className="bg-[#1e1e1e] text-[#9cdcfe] text-[10px] px-1.5 py-0.5 rounded border border-[#3c3c3c]"
-                      >
-                        #{tag.trim()}
+              return (
+                <div
+                  key={project.id}
+                  className={`bg-[#181818] border rounded-lg p-4 flex flex-col sm:flex-row gap-4 items-start transition-all ${
+                    editingProject?.id === project.id ? 'border-[#e5c07b] bg-[#1e1e1e]' : 'border-[#2b2b2b] hover:border-[#3c3c3c]'
+                  }`}
+                >
+                  {/* Thumbnail Previews */}
+                  <div className="w-full sm:w-36 flex flex-col gap-1 shrink-0">
+                    <div className="h-24 bg-[#1e1e1e] rounded overflow-hidden border border-[#3c3c3c]">
+                      <img
+                        src={imageList[0]}
+                        alt={project.project_title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    {imageList.length > 1 && (
+                      <span className="text-[10px] text-[#4ec9b0] text-center font-mono">
+                        +{imageList.length - 1} extra screenshots
                       </span>
-                    ))}
+                    )}
+                  </div>
+
+                  {/* Details */}
+                  <div className="flex-1 space-y-2 min-w-0 w-full">
+                    <div className="flex items-center justify-between gap-2">
+                      <h3 className="font-bold text-white text-sm truncate">
+                        {project.project_title}
+                      </h3>
+                      <span className="bg-[#252526] text-[#569cd6] border border-[#3c3c3c] text-[10px] px-2 py-0.5 rounded shrink-0">
+                        {project.project_type}
+                      </span>
+                    </div>
+
+                    <p className="text-[#808080] text-xs line-clamp-2 leading-relaxed">
+                      {project.project_description}
+                    </p>
+
+                    <div className="flex flex-wrap gap-1">
+                      {project.project_stack?.split(",").map((tag) => (
+                        <span
+                          key={tag}
+                          className="bg-[#1e1e1e] text-[#9cdcfe] text-[10px] px-1.5 py-0.5 rounded border border-[#3c3c3c]"
+                        >
+                          #{tag.trim()}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Action Controls (Edit & Delete) */}
+                  <div className="flex sm:flex-col gap-2 w-full sm:w-auto shrink-0 self-end sm:self-start">
+                    <button
+                      onClick={() => startEditing(project)}
+                      className="flex-1 flex items-center justify-center gap-1.5 bg-[#e5c07b]/10 hover:bg-[#e5c07b] border border-[#e5c07b]/30 text-[#e5c07b] hover:text-black px-3 py-1.5 rounded text-xs transition-colors font-semibold cursor-pointer"
+                    >
+                      <VscEdit />
+                      <span>Edit</span>
+                    </button>
+                    
+                    <button
+                      onClick={() => handleDelete(project.id)}
+                      className="flex-1 flex items-center justify-center gap-1.5 bg-[#f14c4c]/10 hover:bg-[#f14c4c] border border-[#f14c4c]/30 text-[#f14c4c] hover:text-white px-3 py-1.5 rounded text-xs transition-colors cursor-pointer"
+                    >
+                      <VscTrash />
+                      <span>Delete</span>
+                    </button>
                   </div>
                 </div>
-
-                {/* Action Controls (Edit & Delete) */}
-                <div className="flex sm:flex-col gap-2 w-full sm:w-auto shrink-0 self-end sm:self-start">
-                  <button
-                    onClick={() => startEditing(project)}
-                    className="flex-1 flex items-center justify-center gap-1.5 bg-[#e5c07b]/10 hover:bg-[#e5c07b] border border-[#e5c07b]/30 text-[#e5c07b] hover:text-black px-3 py-1.5 rounded text-xs transition-colors font-semibold"
-                  >
-                    <VscEdit />
-                    <span>Edit</span>
-                  </button>
-                  
-                  <button
-                    onClick={() => handleDelete(project.id)}
-                    className="flex-1 flex items-center justify-center gap-1.5 bg-[#f14c4c]/10 hover:bg-[#f14c4c] border border-[#f14c4c]/30 text-[#f14c4c] hover:text-white px-3 py-1.5 rounded text-xs transition-colors"
-                  >
-                    <VscTrash />
-                    <span>Delete</span>
-                  </button>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
         </div>

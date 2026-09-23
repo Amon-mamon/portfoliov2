@@ -1,24 +1,17 @@
 "use client";
 
 import ProjectCard from "@/components/ProjectCard";
-import { Lens } from "@/components/ui/lens";
+import VariableDeclaration from "@/components/reusable/variable-declaration";
 import { ProjectItem } from "@/types/project";
-import { useEffect, useState } from "react";
-import { 
-  VscGithubAlt, 
-  VscLinkExternal, 
-  VscCode, 
-  VscChevronDown, 
-  VscChevronUp 
-} from "react-icons/vsc";
-
-// Separate component to handle individual expandable description state
-
+import { useEffect, useState, useMemo } from "react";
+import { VscFolder, VscSearch, VscFilter } from "react-icons/vsc";
 
 const Project = () => {
   const [projects, setProjects] = useState<ProjectItem[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedTag, setSelectedTag] = useState("All");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,52 +31,130 @@ const Project = () => {
     fetchData();
   }, []);
 
+  // Filter projects by Search Input and Category Tags
+  const filteredProjects = useMemo(() => {
+    if (!projects) return [];
+
+    return projects.filter((project) => {
+      const matchesSearch =
+        project.project_title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        project.project_stack?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        project.project_description?.toLowerCase().includes(searchQuery.toLowerCase());
+
+      const matchesTag =
+        selectedTag === "All" ||
+        project.project_type?.toLowerCase() === selectedTag.toLowerCase() ||
+        project.project_stack?.toLowerCase().includes(selectedTag.toLowerCase());
+
+      return matchesSearch && matchesTag;
+    });
+  }, [projects, searchQuery, selectedTag]);
+
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 py-8 text-[#d4d4d4] font-mono text-xs sm:text-sm select-none space-y-8">
-      
-      {/* ── IDE Header ───────────────────────────────── */}
-      <div className="pb-4 border-b border-[#2b2b2b] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl sm:text-4xl font-bold text-white tracking-tight flex items-center gap-2">
-            <span className="text-[#569cd6]">const</span> project = <span className="text-[#ce9178]">&apos;[All_Projects]&apos;</span>
-          </h1>
-        </div>
-        <p className="text-[#808080] text-xs max-w-md">
-          &#47;&#47; Complete showcase of repositories, client builds, and experimental full-stack applications.
-        </p>
-      </div>
-
-      {/* ── Loading Skeleton State ─────────────────────── */}
-      {loading && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="bg-[#181818] border border-[#2b2b2b] rounded-lg p-5 space-y-4 animate-pulse">
-              <div className="h-44 bg-[#252526] rounded" />
-              <div className="h-5 bg-[#252526] rounded w-3/4" />
-              <div className="h-4 bg-[#252526] rounded w-full" />
-              <div className="h-4 bg-[#252526] rounded w-2/3" />
+    <section
+      suppressHydrationWarning
+      id="projects"
+      className="p-4 md:p-8 text-[#d4d4d4] font-mono text-xs sm:text-sm select-none"
+    >
+      <VariableDeclaration variableName="Project" tagName="section" tagId="projects">
+        <div className="my-6 pl-4 sm:pl-12 border-l-2 border-[#2d2d2d] ml-4 sm:ml-12 space-y-6">
+          
+          {/* Section IDE Header */}
+          <div className="pb-4 border-b border-[#2b2b2b] flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <div className="flex items-center gap-2 text-xs text-[#808080] mb-2 font-mono">
+                <VscFolder className="text-[#dcb67a]" />
+                <span>src/pages/projects</span>
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2">
+                <span className="text-[#569cd6]">const</span> showcase ={" "}
+                <span className="text-[#ce9178]">&apos;[visual_gallery]&apos;</span>
+              </h1>
             </div>
-          ))}
-        </div>
-      )}
+            <p className="text-[#808080] text-xs max-w-md font-mono leading-relaxed">
+              &#47;&#47; Interface previews and application visual breakdowns. Source code and live environments are private for client builds.
+            </p>
+          </div>
 
-      {/* ── Error State ───────────────────────────────── */}
-      {error && (
-        <div className="bg-[#181818] border border-[#f14c4c] text-[#f14c4c] p-4 rounded-lg text-center">
-          <p>&#47;&#47; Error: {error}</p>
-        </div>
-      )}
+          {/* Search & Filter Toolbar */}
+          
+          {/* for future purposes once i had many projects */}
+          {/* {!loading && !error && (
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-[#1e1e1e] p-3 rounded-lg border border-[#2b2b2b]">
+             
+              <div className="relative flex-1">
+                <VscSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-[#808080]" />
+                <input
+                  type="text"
+                  placeholder="Filter projects by title, stack, keyword..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full bg-[#252526] border border-[#2b2b2b] focus:border-[#569cd6] rounded-md pl-9 pr-3 py-1.5 text-xs text-white placeholder-[#808080] outline-none transition-colors"
+                />
+              </div>
 
-      {/* ── Projects Grid Layout ──────────────────────── */}
-      {!loading && !error && projects && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
-        </div>
-      )}
+         
+              <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none py-0.5">
+                <VscFilter className="text-[#808080] shrink-0 mr-1" />
+                {["All", "Web App", "Next.js", "React", "Mobile"].map((tag) => (
+                  <button
+                    key={tag}
+                    onClick={() => setSelectedTag(tag)}
+                    className={`px-2.5 py-1 rounded-md text-xs font-mono transition-colors shrink-0 cursor-pointer ${
+                      selectedTag === tag
+                        ? "bg-[#0e639c] text-white"
+                        : "bg-[#252526] text-[#808080] hover:text-white border border-[#2b2b2b]"
+                    }`}
+                  >
+                    {tag}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )} */}
 
-    </div>
+          {/* Loading Skeleton */}
+          {loading && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-6">
+              {[1, 2, 3].map((i) => (
+                <div
+                  key={i}
+                  className="bg-[#1e1e1e] border border-[#2b2b2b] rounded-xl p-5 space-y-4 animate-pulse"
+                >
+                  <div className="h-44 bg-[#252526] rounded-lg" />
+                  <div className="h-5 bg-[#252526] rounded w-3/4" />
+                  <div className="h-4 bg-[#252526] rounded w-full" />
+                  <div className="h-4 bg-[#252526] rounded w-2/3" />
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Error State */}
+          {error && (
+            <div className="my-6 bg-[#1e1e1e] border border-[#f14c4c] text-[#f14c4c] p-4 rounded-xl text-center">
+              <p>&#47;&#47; Error: {error}</p>
+            </div>
+          )}
+
+          {/* Projects Grid */}
+          {!loading && !error && filteredProjects.length > 0 && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-6">
+              {filteredProjects.map((project) => (
+                <ProjectCard key={project.id} project={project} />
+              ))}
+            </div>
+          )}
+
+          {/* Empty Search State */}
+          {!loading && !error && filteredProjects.length === 0 && (
+            <div className="my-12 text-center py-12 bg-[#1e1e1e] border border-[#2b2b2b] rounded-xl font-mono text-[#808080]">
+              <p className="text-sm">// No matching projects found for filter criteria.</p>
+            </div>
+          )}
+        </div>
+      </VariableDeclaration>
+    </section>
   );
 };
 
