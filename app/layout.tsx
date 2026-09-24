@@ -1,9 +1,9 @@
 import { Metadata } from "next";
 import { Geist, Geist_Mono, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/common/Header";
 import Particles from "@/components/ui/background-particles";
-import FooterToolbar from "@/components/footer-toolbar";
+import { BetaNoticeModal } from "./components/BetaNoticeModal";
+import { SmoothCursor } from "@/components/ui/smooth-cursor";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -64,7 +64,8 @@ export default function RootLayout({
       <body
         className={`max-w-[2000px] mx-auto relative ${geistSans.variable} ${geistMono.variable} ${jetbrainsMono.variable} antialiased overflow-hidden`}
       >
-           {/* <Particles
+        <BetaNoticeModal contactEmail="your-email@example.com" />
+          {/* <Particles
           className='w-full h-screen absolute'
           particleColors={["#a2a0a0"]}
           particleCount={600}
@@ -75,8 +76,8 @@ export default function RootLayout({
           alphaParticles={false}
           disableRotation={true}
           pixelRatio={1}
-        /> */}
-        
+        />  */}
+        <SmoothCursor/>
         {children}
       </body>
     </html>

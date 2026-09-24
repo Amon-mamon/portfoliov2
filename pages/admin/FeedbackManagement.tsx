@@ -23,7 +23,7 @@ export interface FeedbackItem {
   suggestions?: string | null;
 }
 
-export function FeedbackManagement() {
+const FeedbackManagement = () => {
   const [feedbacks, setFeedbacks] = useState<FeedbackItem[]>([]);
   const [loading, setLoading] = useState(true);
   
@@ -301,3 +301,5 @@ export function FeedbackManagement() {
     </div>
   );
 }
+
+export default FeedbackManagement;

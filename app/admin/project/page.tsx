@@ -18,7 +18,7 @@ import {
   VscEdit,
   VscClose
 } from "react-icons/vsc";
-import { FeedbackManagement } from "@/pages/admin/FeedbackManagement";
+import FeedbackManagement from "@/pages/admin/FeedbackManagement";
 
 interface ProjectItem {
   id: number;
