@@ -1,13 +1,9 @@
 import { Metadata } from "next";
 import { Geist, Geist_Mono, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-<<<<<<< HEAD
-import ComingSoonModal from "./components/ComingSoonBanner";
-=======
 import Header from "@/components/common/Header";
 import Particles from "@/components/ui/background-particles";
 import FooterToolbar from "@/components/footer-toolbar";
->>>>>>> dev
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -40,7 +36,7 @@ export const metadata: Metadata = {
       "Welcome to my portfolio! I'm Vince, a passionate web developer specializing in creating responsive, accessible, and interactive web applications.",
     images: [
       {
-        url: "https://v-devs.vercel.app/image.png", // Example Open Graph image
+        url: "https://v-devs.vercel.app/meta.png", // Example Open Graph image
         width: 1200,
         height: 630,
         alt: "Vince's Portfolio",
