@@ -30,10 +30,10 @@ const About = () => {
               {/* VS Code Breadcrumb Header */}
               <div className="space-y-3">
                 {/* Hero Title */}
-                <h1 className="text-3xl @md:text-5xl font-bold tracking-tight text-white font-sans">
+                <h3 className="text-3xl @md:text-5xl font-bold tracking-tight text-white font-sans">
                   The <span className="text-[#569cd6] font-mono">&lt;Mind&gt;</span>{" "}
                   Behind the Code.
-                </h1>
+                </h3>
 
                 <p className="text-[#808080] text-xs @sm:text-sm font-mono leading-relaxed max-w-2xl">
                   &#47;&#47; Full-stack engineer building fast, responsive web systems

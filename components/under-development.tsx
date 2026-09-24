@@ -107,10 +107,10 @@ export default function UnderDevelopment({
 
           {/* Code Header */}
           <div className="space-y-2">
-            <h1 className="text-base sm:text-xl font-bold text-white tracking-wide">
+            <h3 className="text-base sm:text-xl font-bold text-white tracking-wide">
               <span className="text-[#569cd6]">const</span> status ={" "}
               <span className="text-[#ce9178]">&quot;{title}&quot;</span>;
-            </h1>
+            </h3>
             <p className="text-[#808080] text-xs sm:text-sm">
               {message}
               {!isComplete && dots}

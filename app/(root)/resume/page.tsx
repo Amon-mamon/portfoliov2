@@ -44,11 +44,11 @@ const page = () => {
               {/* ── HEADER SECTION ──────────────────────────── */}
               <header className="border-b border-[#2b2b2b] pb-6 space-y-3">
                 <div className="space-y-1">
-                  <h1 className="text-xl sm:text-2xl font-bold text-white tracking-wide flex items-center gap-2">
+                  <h3 className="text-xl sm:text-2xl font-bold text-white tracking-wide flex items-center gap-2">
                     <span className="text-[#569cd6]">const</span>
                     <span className="text-[#4ec9b0]">VINCE_STEPHEN_DAVID</span>
                     <span className="text-[#d4d4d4]">=</span>
-                  </h1>
+                  </h3>
                   <p className="text-[#9cdcfe] font-semibold text-sm sm:text-base">
                     &quot;Full-Stack Developer&quot;
                   </p>

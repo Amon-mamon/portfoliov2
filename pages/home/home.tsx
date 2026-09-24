@@ -63,7 +63,7 @@ const Home = () => {
                 <span>I craft fast, intuitive web applications — from responsive front-end interfaces to robust backend architectures.</span>
               </p>
               <p className="text-[#6a9955] italic">
-                &#47;&#47; Specialized in React, Next.js, TypeScript, and modern API integration.
+                &#47;&#47; Specialized in React, Next.js, TypeScript, UI, and modern API integration.
               </p>
             </div>
 

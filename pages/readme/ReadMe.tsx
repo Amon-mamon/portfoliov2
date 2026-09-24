@@ -29,7 +29,7 @@ export default function ReadMe() {
               <div className="bg-[#252526] border border-[#3c3c3c] rounded-lg p-5 space-y-2">
                 <div className="flex items-center gap-2 text-[#4ec9b0] font-bold text-base">
                   <VscInfo className="text-xl" />
-                  <h1>Portfolio Navigation Guide</h1>
+                  <h3>Portfolio Navigation Guide</h3>
                 </div>
                 <p className="text-[#808080] leading-relaxed">
                   Welcome to my portfolio! This interface is engineered like a functional VS Code IDE. Use the custom keyboard triggers below to control your workspace layout.

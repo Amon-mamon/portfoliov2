@@ -35,11 +35,11 @@ const Sidebar = () => {
 
   return (
       <div className="flex-col items-center justify-center overflow-hidden h-full border-r border-[#2b2b2b] bg-[#181818] font-mono text-xs text-[#bbbbbb] select-none">
-            <h1 className='p-1.5 px-3 w-full text-[11px] font-bold tracking-wider text-[#cccccc] uppercase bg-[#252526] border-b border-[#2b2b2b] flex items-center justify-between'>
+            <h3 className='p-1.5 px-3 w-full text-[11px] font-bold tracking-wider text-[#cccccc] uppercase bg-[#252526] border-b border-[#2b2b2b] flex items-center justify-between'>
                <button className="hover:text-white uppercase">
                 explorer: portfolio
                </button>
-            </h1>
+            </h3>
             <Tree 
               sort="none"
               className="overflow-hidden p-2 text-[#cccccc]"

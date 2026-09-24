@@ -230,10 +230,10 @@ const Page = () => {
         <div className="flex items-center gap-3">
           <VscFolder className="text-[#e5c07b] text-xl" />
           <div>
-            <h1 className="text-base font-bold text-white flex items-center gap-2">
+            <h3 className="text-base font-bold text-white flex items-center gap-2">
               <span>admin_control_panel.config</span>
               <span className="text-[10px] bg-[#007acc] text-white px-2 py-0.5 rounded font-mono">AUTH: ACTIVE</span>
-            </h1>
+            </h3>
             <p className="text-[#808080] text-[11px]">// Manage repository projects and screenshot assets</p>
           </div>
         </div>

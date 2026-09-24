@@ -17,7 +17,7 @@ export default function LoginPage() {
     <div className="flex justify-center items-center w-full min-h-screen">
       {/* Bind the Server Action to the form */}
       <form action={handleSubmit} className="border border-gray-800 py-6 px-6">
-        <h1 className="text-2xl font-bold mb-4">Admin Login</h1>
+        <h3 className="text-2xl font-bold mb-4">Admin Login</h3>
         
         {error && <p className="text-red-500 mb-4">{error}</p>}
 

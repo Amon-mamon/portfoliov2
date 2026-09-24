@@ -62,10 +62,10 @@ const Project = () => {
           {/* Section IDE Header */}
           <div className="pb-4 border-b border-[#2b2b2b] flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2">
+              <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2">
                 <span className="text-[#569cd6]">const</span> showcase ={" "}
                 <span className="text-[#ce9178]">&apos;[visual_gallery]&apos;</span>
-              </h1>
+              </h3>
             </div>
             <p className="text-[#808080] text-xs max-w-md font-mono leading-relaxed">
               &#47;&#47; Interface previews and application visual breakdowns. Source code and live environments are private for client builds.
