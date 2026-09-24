@@ -1,8 +1,19 @@
 import { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+<<<<<<< HEAD
 import ComingSoonModal from "./components/ComingSoonBanner";
+=======
+import Header from "@/components/common/Header";
+import Particles from "@/components/ui/background-particles";
+import FooterToolbar from "@/components/footer-toolbar";
+>>>>>>> dev
 
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains-mono", // exposes it as a CSS variable
+  weight: ["400", "500", "700"], // pick whichever weights you'll actually use
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,7 +27,7 @@ const geistMono = Geist_Mono({
 
 
 export const metadata: Metadata = {
-  title: "Vince | Web Developer | Creating User-Friendly Websites", // Global title
+  title: "Vince | Web Developer", // Global title
   description:
     "Welcome to my portfolio! I'm Vince, a passionate web developer specializing in creating responsive, accessible, and interactive web applications.",
     verification: {
@@ -55,9 +66,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`max-w-[2000px] mx-auto relative ${geistSans.variable} ${geistMono.variable} ${jetbrainsMono.variable} antialiased overflow-hidden`}
       >
-        <ComingSoonModal/>
+           {/* <Particles
+          className='w-full h-screen absolute'
+          particleColors={["#a2a0a0"]}
+          particleCount={600}
+          particleSpread={10}
+          speed={0.3}
+          particleBaseSize={100}
+          moveParticlesOnHover={false}
+          alphaParticles={false}
+          disableRotation={true}
+          pixelRatio={1}
+        /> */}
+        
         {children}
       </body>
     </html>

@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { createClient } from "./lib/supabaseServer"; // Ensure this matches file above
+import { createClient } from "../lib/supabaseServer"; // Ensure this matches file above
 
 export async function loginAction(formData: FormData) {
   const email = formData.get("email") as string;
@@ -16,6 +16,7 @@ export async function loginAction(formData: FormData) {
   });
 
   if (error) {
+    console.log(error);
     return { error: error.message };
   }
 

@@ -8,7 +8,7 @@ export default function AdminLayout({
 }) {
   return (
     // Only wrap children, do not add Header or Footer here!
-    <section >
+    <section className="overflow-y-auto h-screen">
       {children}
     </section>
   );

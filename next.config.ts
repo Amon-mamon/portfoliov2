@@ -5,11 +5,16 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'sufxfiwmjrclqquduiav', // Replace with your actual URL
+        hostname: 'api.microlink.io', // Replace with your actual URL
         port: '',
-        pathname: '/storage/v1/object/public/**',
+        pathname: '/**',
       },
     ],
+  },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "10mb",
+    },
   },
 };
 

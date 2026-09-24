@@ -1,57 +1,73 @@
-// src/components/Hero.tsx
-import Link from 'next/link';
-const Home = () => {
+"use client"
+import React, { useEffect, useRef } from 'react'
+import Home from '../../pages/home/home'
+import { SmoothCursor } from '@/components/ui/smooth-cursor'
+import { useSectionStore } from '@/store/useSectionStore' // adjust path to wherever this actually lives
+
+// Must match the ids used in Sidebar.tsx's TREE_ID_TO_SECTION map
+const SECTION_IDS = ['home', 'about', 'project', 'contact']
+
+const page = () => {
+  const setActiveSection = useSectionStore((state) => state.setActiveSection)
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const root = scrollContainerRef.current
+    if (!root) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Of all sections currently on screen, pick whichever has the
+        // largest visible portion and treat that as "active".
+        const mostVisible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
+
+        if (mostVisible?.target.id) {
+          setActiveSection(mostVisible.target.id)
+        }
+      },
+      {
+        root, // observe visibility relative to the scrollable div, not the window
+        threshold: [0.25, 0.5, 0.75],
+      }
+    )
+
+    SECTION_IDS.forEach((id) => {
+      const el = document.getElementById(id)
+      if (el) observer.observe(el)
+    })
+
+    return () => observer.disconnect()
+  }, [setActiveSection])
+
   return (
-    <div className="flex min-h-screen flex-col md:flex-row justify-center items-center gap-16  px-6 py-12 bg-gray-950 text-white border-b border-gray-800">
-      
-      {/* Profile Image Container */}
-      <div className="relative group">
-        <div className="absolute -inset-2 rounded-full bg-linear-to-r from-blue-600 via-sky-500 to-cyan-400 opacity-60 blur-lg group-hover:opacity-100 transition-opacity duration-500"></div>
-        <img
-          src="/1X1.png" // <-- Put image in /public folder
-          alt="Vince Profile"
-          className="relative rounded-full w-120 h-120 object-cover border-4 border-gray-900 shadow-2xl select-none pointer-events-none "
-        />
-      </div>
-
-      {/* Text Container */}
-      <div className="text-center md:text-left md:max-w-xl">
-        <span className="inline-flex items-center rounded-full bg-blue-950 px-4 py-1.5 text-sm font-semibold text-blue-300 ring-1 ring-inset ring-blue-700/50 mb-6">
-          <span className="relative flex h-2 w-2 mr-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
-          </span>
-          Available for opportunities
-        </span>
-
-        <h1 className="text-6xl md:text-7xl font-extrabold tracking-tighter mb-6 leading-tight">
-          Hi, I'm <span className="bg-linear-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">Vince</span>.
-            A Web Developer.
-        </h1>
-
-        <p className="text-xl text-gray-400 mb-10 leading-relaxed">
-         I build high-performance web experiences that focus on speed and user experience. Let's build something great together.
-        </p>
-
-        {/* CTA Buttons */}
-        <div className="flex gap-4 justify-center md:justify-start">
-          <Link
-            href="/project"
-            className="group relative inline-flex items-center bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition-all duration-300 shadow-lg shadow-blue-950/30"
-          >
-            Explore Projects
-            <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
-          </Link>
-          <Link
-            href="/contact"
-            className="bg-gray-800 text-white px-8 py-3 rounded-full font-semibold hover:bg-gray-700 transition-colors"
-          >
-            Get in touch
-          </Link>
-        </div>
-      </div>
+    <>
+    <div ref={scrollContainerRef} id="page-scroll-container" className='bg-[#121314] overflow-y-hidden'>
+     {/* <div className='text-white px-6'>
+        <p>1</p>
+        <p>2</p>
+        <p>3</p>
+        <p>4</p>
+        <p>5</p>
+        <p>6</p>
+        <p>7</p>
+        <p>8</p>
+        <p>9</p>
+        <p>10</p>
+        <p>11</p>
+     </div> */}
+      {/* <div className='w-full'> */}
+        {/* <SmoothCursor/> */}
+          <div id="home"><Home/></div>
+          {/* <div id="about"><About/></div>
+          <div id="project"><Project/></div>
+          <div id="contact"><Contact/></div> */}
+          
+      {/* </div> */}
     </div>
-  );
-};
+    </>
+  )
+}
 
-export default Home;
+export default page
