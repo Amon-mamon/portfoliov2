@@ -12,11 +12,13 @@ import {
   VscLock,
   VscChevronLeft,
   VscChevronRight,
+  VscCircleFilled,
 } from "react-icons/vsc";
 import { Lens } from "./ui/lens";
 
 export interface MultiImageProjectItem extends ProjectItem {
-  project_images?: string[]; // Optional explicit array override
+  project_images?: string[];
+  is_active?: boolean; // Added status boolean
 }
 
 const ProjectCard = ({ project }: { project: MultiImageProjectItem }) => {
@@ -24,12 +26,15 @@ const ProjectCard = ({ project }: { project: MultiImageProjectItem }) => {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
-  // Parse images into a clean array (handles comma-separated string, arrays, or single string)
+  // Default to true if not specified
+  const isActive = project.is_active ?? true;
+
+  // Parse images into a clean array
   const images: string[] = project.project_images?.length
     ? project.project_images
     : typeof project.project_image === "string" && project.project_image.includes(",")
     ? project.project_image.split(",").map((img) => img.trim())
-    : [project.project_image].filter(Boolean);
+    : [project.project_image].filter((img): img is string => Boolean(img));
 
   const formattedFilename = `${project.project_title
     .toLowerCase()
@@ -69,9 +74,28 @@ const ProjectCard = ({ project }: { project: MultiImageProjectItem }) => {
               {formattedFilename}
             </span>
           </div>
-          <span className="text-[#ce9178] bg-[#181818] px-2 py-0.5 rounded border border-[#3c3c3c] text-[10px] shrink-0 font-mono">
-            {project.project_type || "Web App"}
-          </span>
+
+          <div className="flex items-center gap-1.5 shrink-0">
+            {/* Active / Inactive Indicator Badge */}
+            <span
+              className={`flex items-center gap-1 px-2 py-0.5 rounded border text-[10px] font-mono ${
+                isActive
+                  ? "bg-[#132a13] text-[#89b4fa] border-[#2a4d2a]"
+                  : "bg-[#2a1313] text-[#808080] border-[#4d2a2a]"
+              }`}
+            >
+              <VscCircleFilled
+                className={`text-[8px] ${
+                  isActive ? "text-[#4ec9b0] animate-pulse" : "text-[#808080]"
+                }`}
+              />
+              {isActive ? "Active" : "Archived"}
+            </span>
+
+            <span className="text-[#ce9178] bg-[#181818] px-2 py-0.5 rounded border border-[#3c3c3c] text-[10px] font-mono">
+              {project.project_type || "Web App"}
+            </span>
+          </div>
         </div>
 
         {/* Cover Image Showcase */}
@@ -181,8 +205,8 @@ const ProjectCard = ({ project }: { project: MultiImageProjectItem }) => {
 
       {/* Multi-Image Gallery Modal */}
       {isPreviewOpen && (
-        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-fadeIn">
-          <div className="bg-[#1e1e1e] border border-[#2b2b2b] rounded-xl max-w-5xl w-full overflow-hidden shadow-2xl flex flex-col max-h-[92vh] font-mono">
+        <div className="fixed inset-0 z-50 bg-gray-800/10 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-fadeIn">
+          <div className="bg-[#1e1e1e]/10 border border-[#2b2b2b] rounded-xl max-w-5xl w-full overflow-hidden shadow-2xl flex flex-col max-h-[92vh] font-mono">
             {/* Modal Top Bar */}
             <div className="bg-[#252526] px-4 py-2.5 border-b border-[#2b2b2b] flex items-center justify-between text-xs">
               <div className="flex items-center gap-2">

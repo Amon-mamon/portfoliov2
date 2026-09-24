@@ -18,6 +18,7 @@ import {
   VscEdit,
   VscClose
 } from "react-icons/vsc";
+import { FeedbackManagement } from "@/pages/admin/FeedbackManagement";
 
 interface ProjectItem {
   id: number;
@@ -214,7 +215,7 @@ const Page = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#181818] flex items-center justify-center font-mono text-[#4ec9b0] text-sm">
+      <div className="min-h-screen overflow-y-auto bg-[#181818] flex items-center justify-center font-mono text-[#4ec9b0] text-sm">
         <VscLoading className="animate-spin text-2xl mr-2" />
         <span>// Verifying admin authentication...</span>
       </div>
@@ -502,6 +503,10 @@ const Page = () => {
         </div>
 
       </div>
+      <div className="mt-8 space-y-2">
+      <div className="text-[#808080] text-xs font-semibold">// USER FEEDBACK MANAGEMENT</div>
+      <FeedbackManagement />
+    </div>
 
     </div>
   );

@@ -1,11 +1,6 @@
 "use client"
 import React, { useEffect, useRef } from 'react'
-import Contact from '../../pages/contact/Contact'
 import Home from '../../pages/home/home'
-import About from '../../pages/about/About'
-import Project from '../../pages/project/Project'
-import NavBar from '@/components/common/NavBar'
-import Footer from '@/components/common/Footer'
 import { SmoothCursor } from '@/components/ui/smooth-cursor'
 import { useSectionStore } from '@/store/useSectionStore' // adjust path to wherever this actually lives
 

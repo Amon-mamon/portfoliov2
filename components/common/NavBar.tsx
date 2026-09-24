@@ -19,7 +19,9 @@ const TABS = [
   { id: 'project', label: 'Project.tsx' },
   { id: 'contact', label: 'Contact.tsx' },
   // { id: 'utils',   label: 'utils.tsx' },
-  { id: 'resume',  label: 'resume.pdf' },
+  { id: 'activitylog',  label: 'ActivityLog.tsx' },
+  { id: 'feedback',  label: 'Feedback.tsx' },
+  { id: 'resume',  label: 'Resume.tsx' },
   { id: 'readme',  label: 'readme.md' },
 ]
 
@@ -28,7 +30,8 @@ const NavBar = () => {
   const pathname = usePathname()
   const setActiveSection = useSectionStore((s) => s.setActiveSection)
 
-  const activeId = pathname ? PATH_TO_ID[pathname] : undefined
+  const activeSection = useSectionStore((s) => s.activeSection)
+  const activeId = (pathname ? PATH_TO_ID[pathname] : null) || activeSection || 'hero'
   const activeTab = TABS.find((tab) => tab.id === activeId)
 
   const handleTabClick = (id: string) => {

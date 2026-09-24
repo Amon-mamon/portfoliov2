@@ -26,12 +26,14 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
           <Sidebar />
         </div>
         <div className="flex flex-col w-full min-h-0 border-t border-l border-gray-200/5 rounded-t-md">
-          <NavBar />
-          <div id="page-scroll-container" className="flex-1 min-h-0 px-2 overflow-y-auto">
+        <div className="shrink-0">
+            <NavBar />
+        </div>
+          <div id="page-scroll-container" className="flex-1 px-2 overflow-y-auto">
             {children}
           </div>
           <div
-            className={`transition-all duration-300 ease-in-out border-t border-gray-200/5 ${
+            className={`transition-all duration-300 ease-in-out border-t border-gray-200/5 overflow-hidden ${
               isFooterOpen ? "h-0" : "h-72"
             }`}
           >

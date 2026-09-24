@@ -22,7 +22,7 @@ const About = () => {
       <VariableDeclaration variableName="About" tagName="section" tagId="about">
         
         {/* ── Rendered Card View ────────── */}
-        <div className="my-6 pl-4 sm:pl-12 md:pl-20 border-l-2 border-[#2d2d2d] ml-2 sm:ml-8 md:ml-12 min-w-0">
+        <div className="my-6 pl-4 sm:pl-12 md:pl-20 ml-2 sm:ml-8 md:ml-12 min-w-0">
           <div className="w-full space-y-12 min-w-0">
 
             {/* Title Header */}

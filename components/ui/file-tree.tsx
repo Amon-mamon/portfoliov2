@@ -10,11 +10,9 @@ import React, {
 } from "react"
 import * as AccordionPrimitive from "@radix-ui/react-accordion"
 import { FileIcon, FolderIcon, FolderOpenIcon } from "lucide-react"
-import { IoLogoReact } from "react-icons/io5";
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
-import { CgReadme } from "react-icons/cg";
 
 
 // this can be optimize just one props icon?:React.ReactNode im just lazy
@@ -30,6 +28,7 @@ type TreeViewElement = {
   globalCssIcon?: React.ReactNode
   envIcon?: React.ReactNode
   readmeIcon?:React.ReactNode
+  jsonIcon?:React.ReactNode
 }
 
 type TreeSortMode =
@@ -155,6 +154,7 @@ const renderTreeElements = (
         envIcon={element.envIcon}
         globalCssIcon={element.globalCssIcon}
         readmeIcon={element.readmeIcon}
+        jsonIcon={element.jsonIcon}
       >
         <span>{element.name}</span>
       </File>
@@ -390,7 +390,7 @@ const Folder = forwardRef<
         ref={ref}
         {...props}
         value={value}
-        className="relative h-full overflow-hidden"
+        className="relative overflow-hidden"
       >
         <AccordionPrimitive.Trigger
           className={cn(
@@ -413,7 +413,7 @@ const Folder = forwardRef<
             : (closeIcon ?? <FolderIcon className="size-4 text-white" />)}
           <span className="text-white">{element}</span>
         </AccordionPrimitive.Trigger>
-        <AccordionPrimitive.Content className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down relative h-full overflow-hidden text-sm">
+        <AccordionPrimitive.Content className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down relative overflow-hidden text-sm">
           {/* {element && indicator && <TreeIndicator aria-hidden="true" />} */}
           <AccordionPrimitive.Root
             dir={direction}
@@ -444,6 +444,7 @@ const File = forwardRef<
     envIcon?:React.ReactNode
     globalCssIcon?:React.ReactNode
     readmeIcon?:React.ReactNode
+    jsonIcon?:React.ReactNode
   } & React.ButtonHTMLAttributes<HTMLButtonElement>
 >(
   (
@@ -460,6 +461,7 @@ const File = forwardRef<
       globalCssIcon,
       envIcon,
       readmeIcon,
+      jsonIcon,
       children,
       ...props
     },
@@ -475,6 +477,7 @@ const File = forwardRef<
       if (envIcon) return envIcon
       if (globalCssIcon) return globalCssIcon
       if (readmeIcon) return readmeIcon
+      if (jsonIcon) return jsonIcon
       return (
         <svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 32 32" fill="none">
           <path d="M18.6789 15.9759C18.6789 14.5415 17.4796 13.3785 16 13.3785C14.5206 13.3785 13.3211 14.5415 13.3211 15.9759C13.3211 17.4105 14.5206 18.5734 16 18.5734C17.4796 18.5734 18.6789 17.4105 18.6789 15.9759Z" fill="#53C1DE"/>

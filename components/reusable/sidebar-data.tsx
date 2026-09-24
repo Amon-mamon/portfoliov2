@@ -4,6 +4,7 @@ import { FaFilePdf } from "react-icons/fa";
 import { BiLogoTypescript } from "react-icons/bi";
 import { FaCss3Alt } from "react-icons/fa6";
 import { CgReadme } from "react-icons/cg";
+import { VscJson } from "react-icons/vsc";
 export const ELEMENTS: TreeViewElement[] = [
     {
       id: "src",
@@ -74,6 +75,45 @@ export const ELEMENTS: TreeViewElement[] = [
                       name:"page.tsx"
                     }
                   ]
+                },             
+                {
+                  id: "activitylog",
+                  type:"folder",
+                  isSelectable: true,
+                  name: "activity-log",
+                  children: [
+                    {
+                      id: "activitylog",
+                      isSelectable:true,
+                      name:"page.tsx"
+                    }
+                  ]
+                },
+                {
+                  id: "feedback",
+                  type:"folder",
+                  isSelectable: true,
+                  name: "feedback",
+                  children: [
+                    {
+                      id: "feedback",
+                      isSelectable:true,
+                      name:"page.tsx"
+                    }
+                  ]
+                },
+                {
+                  id: "resume",
+                  type:"folder",
+                  isSelectable: true,
+                  name: "resume",
+                  children: [
+                    {
+                      id: "resume",
+                      isSelectable:true,
+                      name:"page.tsx"
+                    }
+                  ]
                 },
                 {
                   id: "readme",
@@ -88,7 +128,6 @@ export const ELEMENTS: TreeViewElement[] = [
                     }
                   ]
                 },
-               
               ] 
             },
             {
@@ -155,11 +194,6 @@ export const ELEMENTS: TreeViewElement[] = [
               ]
             },
             {
-              id: "feedback",
-              isSelectable: false,
-              name: "feedback.tsx",
-            },
-            {
               id: "card",
               isSelectable: false,
               name: "card.tsx",
@@ -173,7 +207,12 @@ export const ELEMENTS: TreeViewElement[] = [
               id: "github-activty",
               isSelectable: false,
               name: "github-activity.tsx",
-            },
+            },  
+            {
+              id: "under-development",
+              isSelectable: false,
+              name: "under-development.tsx",
+            },  
           ],
         },
         {
@@ -277,6 +316,13 @@ export const ELEMENTS: TreeViewElement[] = [
           isSelectable: true,
           name: "readme.md",
           readmeIcon: <CgReadme size={15}/>
+        },
+        {
+          id: "keybind",
+          type: "file",
+          isSelectable: false,
+          name: "keybind.json",
+          readmeIcon: <VscJson size={15} className="text-orange-400"/>
         }
       ],
     },

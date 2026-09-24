@@ -144,20 +144,49 @@
 
 
 
-@keyframes marquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-100%); }
-}
+@theme inline {
+  /* Animation Utility Classes */
+  --animate-marquee: marquee var(--duration, 30s) linear infinite;
+  --animate-marquee-vertical: marquee-vertical var(--duration, 30s) linear infinite;
 
-@keyframes marquee-reverse {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(0%); }
-}
+  --animate-marquee-feedback: marquee-feedback var(--duration, 25s) linear infinite;
+  --animate-marquee-feedback-vertical: marquee-feedback-vertical var(--duration, 25s) linear infinite;
 
-.animate-marquee {
-  animation: marquee linear infinite;
-}
+  /* Standard Marquee Keyframes */
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-100% - var(--gap, 1rem)));
+    }
+  }
 
-.animate-marquee-reverse {
-  animation: marquee-reverse linear infinite;
+  @keyframes marquee-vertical {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(calc(-100% - var(--gap, 1rem)));
+    }
+  }
+
+  /* Feedback Marquee Keyframes */
+  @keyframes marquee-feedback {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-100% - var(--gap, 1rem)));
+    }
+  }
+
+  @keyframes marquee-feedback-vertical {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(calc(-100% - var(--gap, 1rem)));
+    }
+  }
 }

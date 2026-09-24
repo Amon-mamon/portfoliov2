@@ -57,15 +57,11 @@ const Project = () => {
       className="p-4 md:p-8 text-[#d4d4d4] font-mono text-xs sm:text-sm select-none"
     >
       <VariableDeclaration variableName="Project" tagName="section" tagId="projects">
-        <div className="my-6 pl-4 sm:pl-12 border-l-2 border-[#2d2d2d] ml-4 sm:ml-12 space-y-6">
+        <div className="my-6 pl-4 sm:pl-12 md:pl-20 ml-2 sm:ml-8 md:ml-12 min-w-0 space-y-6">
           
           {/* Section IDE Header */}
           <div className="pb-4 border-b border-[#2b2b2b] flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <div className="flex items-center gap-2 text-xs text-[#808080] mb-2 font-mono">
-                <VscFolder className="text-[#dcb67a]" />
-                <span>src/pages/projects</span>
-              </div>
               <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2">
                 <span className="text-[#569cd6]">const</span> showcase ={" "}
                 <span className="text-[#ce9178]">&apos;[visual_gallery]&apos;</span>

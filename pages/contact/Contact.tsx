@@ -100,7 +100,7 @@ export default function Contact() {
   return (
     <div id="contact" className="p-4 md:p-8 text-[#d4d4d4] font-mono text-xs sm:text-sm select-none">
       <VariableDeclaration variableName="Contact" tagName="section" tagId="contact">
-        <div className="pl-8 sm:pl-20 border-l-2 border-[#2d2d2d]  space-y-6 my-6   w-full mx-auto">
+        <div className="my-6 pl-4 sm:pl-12 flex flex-col gap-3 md:pl-20 ml-2 sm:ml-8 md:ml-12 min-w-0">
           
           {/* ── 1. Availability & Time Zone Banner ────────────── */}
           <div className="bg-[#181818] border border-[#2b2b2b] rounded-lg p-3 sm:p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
@@ -160,6 +160,9 @@ export default function Contact() {
                   { id: 'project', label: 'Project Inquiry' },
                   { id: 'freelance', label: 'Freelance / Contract' },
                   { id: 'fulltime', label: 'Full-Time Role' },
+                  { id: 'Bugs', label: 'Bugs' },
+                  { id: 'Recommendation', label: 'Recommendation' },
+                  { id: 'Suggestion', label: 'Suggestion' },
                 ].map((type) => (
                   <button
                     key={type.id}
