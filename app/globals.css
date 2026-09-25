@@ -152,6 +152,10 @@
   --animate-marquee-feedback: marquee-feedback var(--duration, 25s) linear infinite;
   --animate-marquee-feedback-vertical: marquee-feedback-vertical var(--duration, 25s) linear infinite;
 
+  --animate-marquee-reverse: marquee-reverse
+  var(--duration,30s) linear infinite;
+
+
   /* Standard Marquee Keyframes */
   @keyframes marquee {
     from {
@@ -170,6 +174,16 @@
       transform: translateY(calc(-100% - var(--gap, 1rem)));
     }
   }
+
+  @keyframes marquee-reverse {
+     from {
+      transform: translateX(-50%);
+    }
+    to {
+      transform: translateX(calc(0));
+    }
+  }
+
 
   /* Feedback Marquee Keyframes */
   @keyframes marquee-feedback {
@@ -190,3 +204,4 @@
     }
   }
 }
+

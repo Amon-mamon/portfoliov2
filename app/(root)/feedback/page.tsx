@@ -287,7 +287,7 @@ export default function FeedbackPage() {
                   >
                     <div className="flex items-center justify-between mb-1.5">
                       <span className="text-[#9cdcfe] font-medium text-xs">
-                        // @{item.name} 
+                        @{item.name} 
                       </span>
                       <div className="flex items-center gap-1 text-amber-400">
                         <span className="text-[10px] font-bold">{item.rating}.0</span>

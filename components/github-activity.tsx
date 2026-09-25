@@ -68,7 +68,8 @@ export default function GitHubActivity({ username }: { username: string }) {
         <div className="flex items-center gap-2">
           <span className="text-[#569cd6]">03.</span>
           <span className="text-[#808080]">.git/</span>
-          <span className="text-[#ce9178]">activity_log.graphql</span>
+          <span className="text-[#ce9178]">activity_log.graphql /</span>
+          <span className="text-[#ce9178] text-[11px]">  2026</span>
         </div>
 
         <div className="flex items-center gap-2 text-[10px] text-[#6a9955]">

@@ -142,15 +142,7 @@ export default function Contact() {
                 </div>
                 <div className="flex-1 bg-[#1e1e1e] border border-[#3c3c3c] rounded px-3 py-1.5 text-[#ce9178] text-xs truncate">
                   https://vince.dev/api/v1/contact
-                </div>
-                <button
-                  onClick={handleSubmit}
-                  disabled={status === 'loading'}
-                  className="flex items-center justify-center gap-2 bg-[#0e639c] hover:bg-[#1177bb] text-white px-5 py-2 rounded font-semibold transition-colors disabled:bg-[#3c3c3c] shrink-0"
-                >
-                  <VscRunAll className={`text-base ${status === 'loading' ? 'animate-spin' : ''}`} />
-                  <span>{status === 'loading' ? 'Sending...' : 'Send Request'}</span>
-                </button>
+                </div>            
               </div>
 
               {/* Inquiry Type Selectors */}
@@ -246,24 +238,34 @@ export default function Contact() {
               </div>
 
               {/* Response Console Status Bar */}
-              <div className="bg-[#1e1e1e] border border-[#2b2b2b] p-3 rounded flex items-center justify-between min-h-[42px]">
-                <div className="text-[11px] text-[#808080]">
-                  STATUS: {status === 'idle' && <span>Awaiting execution</span>}
-                  {status === 'loading' && <span className="text-[#e5c07b]">Transmitting payload...</span>}
-                  {status === 'success' && <span className="text-[#89d185] font-semibold">200 OK (24ms)</span>}
-                  {status === 'error' && <span className="text-[#f14c4c] font-semibold">500 Internal Error</span>}
-                </div>
+              <div className='flex items-center justify-between'>
+                  <div className="bg-[#1e1e1e] border border-[#2b2b2b] p-3 rounded flex items-center justify-between min-h-[42px]">
+                      <div className="text-[11px] text-[#808080]">
+                        STATUS: {status === 'idle' && <span>Awaiting execution</span>}
+                        {status === 'loading' && <span className="text-[#e5c07b]">Transmitting payload...</span>}
+                        {status === 'success' && <span className="text-[#89d185] font-semibold">200 OK (24ms)</span>}
+                        {status === 'error' && <span className="text-[#f14c4c] font-semibold">500 Internal Error</span>}
+                      </div>
 
-                {status === 'success' && (
-                  <p className="text-[#89d185] text-xs flex items-center gap-1.5">
-                    <VscCheck /> Message delivered successfully!
-                  </p>
-                )}
-                {status === 'error' && (
-                  <p className="text-[#f14c4c] text-xs flex items-center gap-1.5">
-                    <VscError /> Failed to send message.
-                  </p>
-                )}
+                      {status === 'success' && (
+                        <p className="text-[#89d185] text-xs flex items-center gap-1.5">
+                          <VscCheck /> Message delivered successfully!
+                        </p>
+                      )}
+                      {status === 'error' && (
+                        <p className="text-[#f14c4c] text-xs flex items-center gap-1.5">
+                          <VscError /> Failed to send message.
+                        </p>
+                      )}
+                  </div>
+                  <button
+                  onClick={handleSubmit}
+                  disabled={status === 'loading'}
+                  className="flex items-center justify-center gap-2 bg-[#0e639c] hover:bg-[#1177bb] text-white px-5 py-2 rounded font-semibold transition-colors disabled:bg-[#3c3c3c] shrink-0"
+                >
+                  <VscRunAll className={`text-base ${status === 'loading' ? 'animate-spin' : ''}`} />
+                  <span>{status === 'loading' ? 'Sending...' : 'Send Request'}</span>
+                </button>
               </div>
             </form>
           </div>
