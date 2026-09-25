@@ -80,7 +80,7 @@ export default function RootLayout({
         <SmoothCursor/>
         {children}
 
-        <button className="bg-red-200 absolute left-3 bottom-3 w-15 h-15 rounded-full text-5xl font-extrabold">?</button>
+        {/* <button className="bg-red-200 absolute left-3 bottom-3 w-15 h-15 rounded-full text-5xl font-extrabold">?</button> */}
       </body>
     </html>
   );
