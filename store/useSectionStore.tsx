@@ -2,14 +2,14 @@ import { create } from 'zustand'
 
 // tree/file id -> URL path. Used by Sidebar + NavBar to route.
 export const ID_TO_PATH: Record<string, string> = {
-  hero: '/',
-  about: '/about',
-  project: '/project',
-  contact: '/contact',
-  resume: '/resume',
-  readme: '/readme',
-  activitylog: '/activity-log',
-  feedback: '/feedback',
+  hero: '/vscode-theme/',
+  about: '/vscode-theme/about',
+  project: '/vscode-theme/project',
+  contact: '/vscode-theme/contact',
+  resume: '/vscode-theme/resume',
+  readme: '/vscode-theme/readme',
+  activitylog: '/vscode-theme/activity-log',
+  feedback: '/vscode-theme/feedback',
   // keybind:'/keybind-json'
 }
 

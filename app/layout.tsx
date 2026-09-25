@@ -3,7 +3,8 @@ import { Geist, Geist_Mono, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/common/Header";
 import Particles from "@/components/ui/background-particles";
-import FooterToolbar from "@/components/footer-toolbar";
+import { SmoothCursor } from "@/components/ui/smooth-cursor";
+import { ThemeOnboardingProvider } from "@/components/ThemeOnboardProvider";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -56,29 +57,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
   return (
-    <html lang="en">
-      <body
-        className={`max-w-[2000px] mx-auto relative ${geistSans.variable} ${geistMono.variable} ${jetbrainsMono.variable} antialiased overflow-hidden`}
-      >
-           {/* <Particles
-          className='w-full h-screen absolute'
-          particleColors={["#a2a0a0"]}
-          particleCount={600}
-          particleSpread={10}
-          speed={0.3}
-          particleBaseSize={100}
-          moveParticlesOnHover={false}
-          alphaParticles={false}
-          disableRotation={true}
-          pixelRatio={1}
-        /> */}
-        
-        {children}
+    <html lang="en" className="h-full">
+      <body className="h-full w-full text-[#d4d4d4] antialiased overflow-hidden">
+        <ThemeOnboardingProvider>
+          {children}
+        </ThemeOnboardingProvider>
       </body>
     </html>
-  );
+  )
 }
