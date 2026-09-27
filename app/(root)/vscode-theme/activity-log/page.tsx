@@ -4,7 +4,7 @@ import React from 'react'
 
 const page = () => {
   return (
-   <div className='overflow-hidden h-full text-white select-none p-4 md:p-8'>
+   <div className='overflow-auto h-full text-white select-none p-4 md:p-8'>
       <VariableDeclaration 
       variableName="ActivtyLog" tagName="section" tagId="activity-log"      
       >

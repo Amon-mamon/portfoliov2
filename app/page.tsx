@@ -3,6 +3,7 @@
 
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
+import { Spotlight } from "@/components/ui/background-spotlight"
 
 export default function RootPage() {
   const router = useRouter()
@@ -18,10 +19,11 @@ export default function RootPage() {
   }, [router])
 
   return (
-    <div className="flex h-screen w-screen items-center justify-center bg-[#121314] text-white">
+    <div className="flex h-screen w-screen items-center justify-center bg-black text-white">
+      <Spotlight/>
       {/* If ThemeOnboardingProvider in app/layout.tsx renders the modal, 
           this acts as a clean loading backdrop until they make a choice */}
       <p className="font-mono text-sm text-gray-400">Loading portfolio...</p>
-    </div>
+    </div>  
   )
 }

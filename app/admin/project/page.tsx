@@ -66,7 +66,7 @@ const Page = () => {
   }, []);
 
   // Fetch Projects Data
-  const fetchData = async () => {
+  const fetchData = async () => { 
     try {
       const res = await fetch('/api/project');
       const result = await res.json();

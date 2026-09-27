@@ -131,15 +131,49 @@
 }
 
 
-/* * {
-  cursor:none !important;
-} */
-
 .league-spartan {
   font-family: "League Spartan", sans-serif;
   font-optical-sizing: auto;
   font-weight:600;
   font-style: normal;
+}
+
+* {
+  scrollbar-width: thin !important;
+  scrollbar-color: #2a2d2e #1e1e1e !important;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1e1e1e;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2a2d2e;
+  border-radius: 0px;
+  border: 2px solid #1e1e1e; /* Creates inset padding around the thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #424242;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: #007acc; /* VS Code active blue accent */
+}
+
+::-webkit-scrollbar-corner {
+  background: #1e1e1e;
+}
+
+/* Firefox support */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #2a2d2e #1e1e1e;
 }
 
 
@@ -148,9 +182,12 @@
   /* Animation Utility Classes */
   --animate-marquee: marquee var(--duration, 30s) linear infinite;
   --animate-marquee-vertical: marquee-vertical var(--duration, 30s) linear infinite;
-
   --animate-marquee-feedback: marquee-feedback var(--duration, 25s) linear infinite;
   --animate-marquee-feedback-vertical: marquee-feedback-vertical var(--duration, 25s) linear infinite;
+  --animate-marquee-reverse: marquee-reverse var(--duration, 30s) linear infinite;  
+  --animate-spotlight: spotlight 2s ease 0.75s 1 forwards;
+}
+ 
 
   /* Standard Marquee Keyframes */
   @keyframes marquee {
@@ -189,4 +226,21 @@
       transform: translateY(calc(-100% - var(--gap, 1rem)));
     }
   }
-}
+  @keyframes marquee-reverse {
+    from {
+      transform: translateX(calc(-100% - var(--gap, 0rem)));
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  @keyframes spotlight {
+    0% {
+      opacity: 0;
+      transform: translate(-72%, -62%) scale(0.5);
+    }
+    100% {
+      opacity: 1;
+      transform: translate(-50%, -40%) scale(1);
+    }
+  }

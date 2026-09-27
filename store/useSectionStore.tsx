@@ -30,7 +30,7 @@ type SectionStore = {
 }
 
 export const useSectionStore = create<SectionStore>((set) => ({
-  activeSection: 'home',
+  activeSection: 'hero',
   setActiveSection: (id) => set({ activeSection: id }),
   isFooterOpen: false,
   toggleFooter: () => set((s) => ({ isFooterOpen: !s.isFooterOpen })),

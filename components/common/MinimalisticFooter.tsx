@@ -1,101 +1,136 @@
-"use client"
+"use client";
 
-import React, { useState, useRef, useEffect } from "react"
-import Link from "next/link"
-import { VscTerminal, VscGithub, VscMention, VscMail } from "react-icons/vsc"
+import React, { useState } from "react";
+import { VscGithub, VscMention, VscMail, VscSend, VscCheck, VscCopy } from "react-icons/vsc";
 
 export function MinimalisticFooter() {
-  const currentYear = new Date().getFullYear()
-  const [terminalInput, setTerminalInput] = useState('')
-  const [terminalLogs, setTerminalLogs] = useState<Array<{ cmd?: string; output: string }>>([
-    { output: 'Type "help" to see available terminal commands.' },
-  ])
+  const currentYear = new Date().getFullYear();
+  const [copied, setCopied] = useState(false);
+  const [message, setMessage] = useState("");
+  const [sent, setSent] = useState(false);
 
-  const terminalEndRef = useRef<HTMLDivElement>(null)
+  const email = "stoicdavid16@gmail.com";
 
-  useEffect(() => {
-    terminalEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [terminalLogs])
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText(email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
-  const handleTerminalSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    const trimmed = terminalInput.trim().toLowerCase()
-    let response = ''
-
-    if (trimmed === 'help') {
-      response = 'Available commands:\n  dev socials.json   - View direct social handles\n  dev location.txt  - View time zone & status\n  clear             - Clear terminal logs'
-    } else if (trimmed === 'dev socials.json') {
-      response = '{\n  "email": "stoicdavid16@gmail.com",\n  "github": "https://github.com/Amon-mamon",\n  "linkedin": "https://www.linkedin.com/in/vince-stephen-david-ab72292a0/"\n}'
-    } else if (trimmed === 'dev location.txt') {
-      response = 'Location: Central Luzon, Philippines (UTC+8)\nStatus: Active — Accepting new projects.\nAvg SLA: < 24 hrs response time.'
-    } else if (trimmed === 'clear') {
-      setTerminalLogs([])
-      setTerminalInput('')
-      return
-    } else if (trimmed === '') {
-      return
-    } else {
-      response = `Command not found: "${trimmed}". Type "help" for a list of available commands.`
-    }
-
-    setTerminalLogs((prev) => [...prev, { cmd: terminalInput, output: response }])
-    setTerminalInput('')
-  }
+  const handleQuickSend = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!message.trim()) return;
+    window.location.href = `mailto:${email}?subject=Portfolio Inquiry&body=${encodeURIComponent(
+      message
+    )}`;
+    setSent(true);
+    setMessage("");
+    setTimeout(() => setSent(false), 3000);
+  };
 
   return (
-    <footer className="w-full bg-slate-50 border-t border-slate-200 text-slate-600 font-sans text-xs pt-12">
-      <div className="max-w-5xl mx-auto px-6 space-y-10 pb-8">
+    <footer className="w-full bg-white text-slate-600 text-xs font-sans pt-16 pb-8 border-t border-slate-200">
+      <div className="max-w-5xl mx-auto px-6 space-y-12">
         
-        {/* Main Footer Links & Info */}
+        {/* Upper Footer Navigation & Info Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
           
-          {/* Column 1: Brand */}
-          <div className="space-y-2">
-            <Link href="/" className="text-base font-bold text-slate-900 tracking-tight flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-blue-600" />
+          {/* Brand Info */}
+          <div className="space-y-3">
+            <div className="flex items-center gap-2 text-slate-900 font-bold text-base">
+              <span className="w-2.5 h-2.5 rounded-full bg-indigo-600" />
               <span>Vince Stephen David</span>
-            </Link>
-            <p className="text-xs text-slate-500 leading-relaxed">
-              Full-Stack Software Engineer crafting fast, resilient web systems and clean user experiences.
+            </div>
+            <p className="text-slate-500 leading-relaxed text-xs">
+              Building high-performance, maintainable web applications and modern user experiences.
             </p>
-          </div>
-
-          {/* Column 2: Quick Links */}
-          <div className="space-y-2 font-mono text-xs">
-            <span className="text-[10px] text-slate-400 uppercase tracking-wider block font-bold">Navigation</span>
-            <div className="flex flex-col gap-1.5 text-slate-600">
-              <button onClick={() => document.getElementById("home")?.scrollIntoView({ behavior: "smooth" })} className="text-left hover:text-blue-600 transition-colors">01. Home</button>
-              <button onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })} className="text-left hover:text-blue-600 transition-colors">02. About</button>
-              <button onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })} className="text-left hover:text-blue-600 transition-colors">03. Projects</button>
-              <button onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })} className="text-left hover:text-blue-600 transition-colors">04. Contact</button>
+            <div className="pt-1">
+              <button
+                onClick={handleCopyEmail}
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 font-mono text-xs transition-colors"
+              >
+                {copied ? <VscCheck className="text-emerald-600" /> : <VscCopy className="text-slate-400" />}
+                <span>{copied ? "Email Copied!" : email}</span>
+              </button>
             </div>
           </div>
 
-          {/* Column 3: Social Links */}
-          <div className="space-y-2 font-mono text-xs">
-            <span className="text-[10px] text-slate-400 uppercase tracking-wider block font-bold">Connect</span>
-            <div className="flex flex-col gap-1.5">
-              <a href="https://github.com/Amon-mamon" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-slate-900 transition-colors">
-                <VscGithub className="text-slate-500" /> GitHub Profile
+          {/* Quick Links */}
+          <div className="space-y-2 font-mono">
+            <span className="text-[10px] text-slate-400 uppercase tracking-widest font-bold block">
+              Quick Links
+            </span>
+            <div className="flex flex-col gap-1.5 text-slate-600">
+              <button
+                onClick={() => document.getElementById("home")?.scrollIntoView({ behavior: "smooth" })}
+                className="text-left hover:text-indigo-600 transition-colors"
+              >
+                → Home
+              </button>
+              <button
+                onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}
+                className="text-left hover:text-indigo-600 transition-colors"
+              >
+                → About
+              </button>
+              <button
+                onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
+                className="text-left hover:text-indigo-600 transition-colors"
+              >
+                → Projects
+              </button>
+              <button
+                onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+                className="text-left hover:text-indigo-600 transition-colors"
+              >
+                → Contact
+              </button>
+            </div>
+          </div>
+
+          {/* Connect Links */}
+          <div className="space-y-2 font-mono">
+            <span className="text-[10px] text-slate-400 uppercase tracking-widest font-bold block">
+              Social Links
+            </span>
+            <div className="flex flex-col gap-2">
+              <a
+                href="https://github.com/Amon-mamon"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-slate-600 hover:text-indigo-600 transition-colors"
+              >
+                <VscGithub className="text-slate-400 text-sm" /> GitHub
               </a>
-              <a href="https://www.linkedin.com/in/vince-stephen-david-ab72292a0/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-slate-900 transition-colors">
-                <VscMention className="text-slate-500" /> LinkedIn
+              <a
+                href="https://www.linkedin.com/in/vince-stephen-david-ab72292a0/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-slate-600 hover:text-indigo-600 transition-colors"
+              >
+                <VscMention className="text-slate-400 text-sm" /> LinkedIn
               </a>
-              <a href="mailto:stoicdavid16@gmail.com" className="flex items-center gap-2 hover:text-slate-900 transition-colors">
-                <VscMail className="text-slate-500" /> Direct Email
+              <a
+                href={`mailto:${email}`}
+                className="flex items-center gap-2 text-slate-600 hover:text-indigo-600 transition-colors"
+              >
+                <VscMail className="text-slate-400 text-sm" /> Direct Email
               </a>
             </div>
           </div>
 
         </div>
 
-        {/* Copyright Bar */}
-        <div className="pt-4 border-t border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-slate-400 font-mono">
-          <p>© {currentYear} Vince Stephen David. Built with Next.js & Tailwind CSS.</p>
-          <p className="text-emerald-600 font-semibold">// All Systems Operational</p>
+        {/* Bottom Bar */}
+        <div className="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-slate-400 font-mono">
+          <p>© {currentYear} Vince Stephen David. All rights reserved.</p>
+          <div className="flex items-center gap-2 text-emerald-600">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span>Systems Operational</span>
+          </div>
         </div>
 
       </div>
     </footer>
-  )
+  );
 }

@@ -5,6 +5,7 @@ import Header from "@/components/common/Header";
 import Particles from "@/components/ui/background-particles";
 import { SmoothCursor } from "@/components/ui/smooth-cursor";
 import { ThemeOnboardingProvider } from "@/components/ThemeOnboardProvider";
+import NotFound from "./not-found";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],

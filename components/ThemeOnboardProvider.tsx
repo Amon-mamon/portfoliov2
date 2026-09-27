@@ -76,9 +76,9 @@ export function ThemeOnboardingProvider({ children }: { children: React.ReactNod
       {currentTheme && !activeModal && (
         <button
           onClick={toggleTheme}
-          className="fixed bottom-5 right-5 z-50 flex items-center gap-2 rounded-md border border-[#3c3c3c] bg-[#1e1e1e]/90 px-3 py-2 text-xs font-mono text-[#d4d4d4] shadow-2xl backdrop-blur transition-all hover:bg-[#252526] hover:text-[#ffffff] cursor-pointer"
+          className={`fixed bottom-5 right-5 z-50 flex items-center gap-2 rounded-md border   px-3 py-2 text-xs font-mono  shadow-2xl backdrop-blur transition-all ]  cursor-pointer ${currentTheme === "vscode" ? "bg-[#1e1e1e]/90 text-[#d4d4d4] hover:text-[#ffffff] hover:bg-[#252526] border-[#3c3c3c]" : "bg-white text-black hover:bg-gray-200 border-gray-300"}`}
         >
-          <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span className={` ${currentTheme === "vscode" ? "h-2 w-2 rounded-full bg-emerald-500 animate-pulse" : "h-2 w-2 rounded-full bg-indigo-600 text-black animate-pulse"}`} />
           Switch to {currentTheme === "vscode" ? "Minimalist SPA" : "VS Code IDE"}
         </button>
       )}

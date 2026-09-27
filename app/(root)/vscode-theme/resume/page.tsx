@@ -1,14 +1,14 @@
 "use client";
 
 import VariableDeclaration from "@/components/reusable/variable-declaration";
-import { 
-  VscAccount, 
-  VscMail, 
-  VscCallOutgoing, 
-  VscGlobe, 
-  VscBriefcase, 
-  VscTools, 
-  VscFolderOpened, 
+import {
+  VscAccount,
+  VscMail,
+  VscCallOutgoing,
+  VscGlobe,
+  VscBriefcase,
+  VscTools,
+  VscFolderOpened,
   VscMortarBoard,
   VscLinkExternal,
   VscCode
@@ -21,11 +21,11 @@ const page = () => {
         variableName="Resume"
         tagId="resume"
         tagName="section"
-        >
-          <div className="min-h-screen w-full  text-[#cccccc] font-mono text-xs sm:text-sm p-4 sm:p-8 space-y-6 max-w-6xl mx-auto select-text">
+      >
+        <div className="min-h-screen w-full  text-[#cccccc] font-mono text-xs sm:text-sm p-4 sm:p-8 space-y-6 max-w-6xl mx-auto select-text">
           {/* ── IDE WINDOW CONTAINER ─────────────────────────── */}
           <div className="bg-[#1e1e1e] border border-[#2b2b2b] rounded-lg shadow-2xl overflow-hidden">
-            
+
             {/* Editor Title Bar */}
             <div className="bg-[#252526] px-4 py-2 border-b border-[#2b2b2b] flex items-center justify-between text-xs text-[#808080]">
               <div className="flex items-center gap-2">
@@ -40,7 +40,7 @@ const page = () => {
 
             {/* Editor Body */}
             <div className="p-6 sm:p-8 space-y-8">
-              
+
               {/* ── HEADER SECTION ──────────────────────────── */}
               <header className="border-b border-[#2b2b2b] pb-6 space-y-3">
                 <div className="space-y-1">
@@ -56,26 +56,26 @@ const page = () => {
 
                 {/* Contact Metadata Matrix */}
                 <div className="flex flex-wrap gap-y-2 gap-x-6 text-xs text-[#808080] pt-2">
-                  <a 
-                    href="tel:+639212477004" 
+                  <a
+                    href="tel:+639212477004"
                     className="flex items-center gap-1.5 hover:text-[#ce9178] transition-colors"
                   >
                     <VscCallOutgoing className="text-[#569cd6]" />
                     <span>+63 921 247 7004</span>
                   </a>
 
-                  <a 
-                    href="mailto:stoicdavid16@gmail.com" 
+                  <a
+                    href="mailto:stoicdavid16@gmail.com"
                     className="flex items-center gap-1.5 hover:text-[#ce9178] transition-colors"
                   >
                     <VscMail className="text-[#569cd6]" />
                     <span>stoicdavid16@gmail.com</span>
                   </a>
 
-                  <a 
-                    href="https://linkedin.com/in/vince-stephen-david" 
-                    target="_blank" 
-                    rel="noreferrer" 
+                  <a
+                    href="https://linkedin.com/in/vince-stephen-david"
+                    target="_blank"
+                    rel="noreferrer"
                     className="flex items-center gap-1.5 hover:text-[#ce9178] transition-colors"
                   >
                     <VscAccount className="text-[#569cd6]" />
@@ -118,7 +118,7 @@ const page = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pl-4">
                   <div className="bg-[#252526] p-3 rounded border border-[#2b2b2b] space-y-1">
                     <span className="text-[#4ec9b0] font-semibold text-xs">Frontend</span>
-                    <p className="text-[#ce9178]">HTML5, CSS, JavaScript, TypeScript, React.js, Next.js, Tailwind CSS</p>
+                    <p className="text-[#ce9178]">HTML5, CSS, GSAP, JavaScript, jQuery, TypeScript, React.js, Next.js, Tailwind CSS</p>
                   </div>
 
                   <div className="bg-[#252526] p-3 rounded border border-[#2b2b2b] space-y-1">
@@ -147,7 +147,7 @@ const page = () => {
                 </h2>
 
                 <div className="space-y-6 pl-4 border-l-2 border-[#2b2b2b]">
-                  
+
                   {/* Job 1 */}
                   <div className="space-y-2 relative">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
@@ -158,7 +158,7 @@ const page = () => {
                       </div>
                       <span className="text-[#808080] text-xs font-mono shrink-0">June 2025 – Present</span>
                     </div>
-                    
+
                     <ul className="list-disc list-inside space-y-1.5 text-[#cccccc] text-xs leading-relaxed pl-1">
                       <li>Developed and maintained responsive websites and web applications, improving load times and user experience.</li>
                       <li>Worked closely with cross-functional teams including designers, product managers, and back-end developers to implement features and fix bugs.</li>
@@ -177,7 +177,7 @@ const page = () => {
                       </div>
                       <span className="text-[#808080] text-xs font-mono shrink-0">Feb 2025 – Apr 2025</span>
                     </div>
-                    
+
                     <ul className="list-disc list-inside space-y-1.5 text-[#cccccc] text-xs leading-relaxed pl-1">
                       <li>Completed comprehensive training in full-stack development, covering both front-end and back-end technologies.</li>
                       <li>Gained hands-on experience with modern tools and frameworks.</li>
@@ -198,7 +198,7 @@ const page = () => {
                 </h2>
 
                 <div className="space-y-6 pl-4 border-l-2 border-[#2b2b2b]">
-                  
+
                   {/* Project 1 */}
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
@@ -252,7 +252,7 @@ const page = () => {
           </div>
 
         </div>
-        </VariableDeclaration>
+      </VariableDeclaration>
     </div>
   );
 }

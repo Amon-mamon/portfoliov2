@@ -34,7 +34,7 @@ const Sidebar = () => {
   
 
   return (
-      <div className="flex-col items-center justify-center overflow-hidden h-full border-r border-[#2b2b2b] bg-[#181818] font-mono text-xs text-[#bbbbbb] select-none">
+      <div className="flex-col relative flex items-center justify-center h-full border-r border-[#2b2b2b] bg-[#181818] font-mono text-xs text-[#bbbbbb] select-none">
             <h1 className='p-1.5 px-3 w-full text-[11px] font-bold tracking-wider text-[#cccccc] uppercase bg-[#252526] border-b border-[#2b2b2b] flex items-center justify-between'>
                <button className="hover:text-white uppercase">
                 explorer: portfolio
@@ -42,12 +42,15 @@ const Sidebar = () => {
             </h1>
             <Tree 
               sort="none"
-              className="overflow-hidden p-2 text-[#cccccc]"
+              className="overflow-hidden  text-[#cccccc]"
               selectedId={selectedId}
               onSelectedIdChange={handleSelectedIdChange}
               initialExpandedItems={["src", "app", "components", "ui", "lib","public"]}
               elements={ELEMENTS}
             />
+            <div className='h-[200px] bg-red-200 w-full text-black'>
+                Workspace
+            </div>
       </div>
   )
 }

@@ -8,8 +8,6 @@ import NavBar from "@/components/common/NavBar";
 import { SmoothCursor } from "@/components/ui/smooth-cursor";
 import { useFooterShortcut } from "@/hooks/useFooterShortcut";
 import { useSidebarShortcut } from "@/hooks/useSidebarShortcut";
-import Particles from "@/components/ui/background-particles";
-import FooterToolbar from "@/components/footer-toolbar";
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   const isFooterOpen = useSectionStore((state) => state.isFooterOpen);

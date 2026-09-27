@@ -66,7 +66,7 @@ export function FeedbackManagement() {
       .delete()
       .eq("id", id)
       .select();
-
+    
     if (error) throw error;
 
     // If data is empty, RLS blocked the deletion!

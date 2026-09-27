@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useEffect } from 'react'
 import { IoCloseOutline } from 'react-icons/io5'
 import { ID_TO_PATH, PATH_TO_ID, useSectionStore } from '@/store/useSectionStore'
 import { FileText, ChevronRight } from 'lucide-react'
@@ -31,8 +31,17 @@ const NavBar = () => {
   const setActiveSection = useSectionStore((s) => s.setActiveSection)
 
   const activeSection = useSectionStore((s) => s.activeSection)
-  const activeId = (pathname ? PATH_TO_ID[pathname] : null) || activeSection || 'hero'
+  const activeId = PATH_TO_ID[pathname ?? ""] || activeSection || 'hero'
   const activeTab = TABS.find((tab) => tab.id === activeId)
+
+  useEffect(() => {
+    const currentNavId = PATH_TO_ID[pathname ?? ""] || 'hero'
+    if(activeSection !== currentNavId) {
+      setActiveSection(currentNavId)
+    }
+  },[pathname, activeSection, setActiveSection])
+
+
 
   const handleTabClick = (id: string) => {
     const path = ID_TO_PATH[id]
