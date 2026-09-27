@@ -42,13 +42,13 @@ const NavBar = () => {
   },[pathname, activeSection, setActiveSection])
 
 
-
   const handleTabClick = (id: string) => {
     const path = ID_TO_PATH[id]
     if (!path) return
     setActiveSection(id)
     router.push(path)
   }
+  
 
   return (
     <div className='flex flex-col w-full bg-[#181818] border-b border-[#2b2b2b] select-none text-xs font-mono'>

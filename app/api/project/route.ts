@@ -2,9 +2,11 @@ import { createClient } from "@/lib/supabaseServer";
 import { NextResponse } from "next/server";
 
 export async function GET() {
+  //controller
   try {
     const supabase = await createClient();
     
+    // this should be in service 
     const { data, error } = await supabase
       .from("project_table")
       .select("*")

@@ -7,10 +7,10 @@ import { CgReadme } from "react-icons/cg";
 import { VscJson } from "react-icons/vsc";
 export const ELEMENTS: TreeViewElement[] = [
     {
-      id: "src",
+      id: "portfolio",
       type: "folder",
       isSelectable: true,
-      name: "src",
+      name: "portfolio",
       children: [
         {
           id: "app",

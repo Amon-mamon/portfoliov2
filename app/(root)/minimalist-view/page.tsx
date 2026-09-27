@@ -1,6 +1,9 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 import GitHubActivity from "@/components/github-activity";
 import TechStack from "@/components/tech-stack";
 import { ProjectItem } from "@/types/project";
@@ -25,6 +28,11 @@ import TechStackMinimalist from "@/components/tech-stack-minimalist";
 import GitHubActivityMinimalist from "@/components/github-activity-minimalist";
 import MinimalisticNav from "@/components/common/MinimalisticNav";
 
+// Register ScrollTrigger plugin
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
 export default function SPA() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -34,7 +42,17 @@ export default function SPA() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [activeModal, setActiveModal] = useState<ProjectItem | null>(null);
 
-  // Fetch projects from existing API
+  // Parent scroll container ref
+  const mainContainerRef = useRef<HTMLDivElement>(null);
+
+  // Section Refs for GSAP
+  const heroRef = useRef<HTMLElement>(null);
+  const aboutRef = useRef<HTMLElement>(null);
+  const skillsRef = useRef<HTMLElement>(null);
+  const projectsRef = useRef<HTMLElement>(null);
+  const contactRef = useRef<HTMLElement>(null);
+
+  // Fetch projects
   useEffect(() => {
     const loadProjects = async () => {
       try {
@@ -51,6 +69,56 @@ export default function SPA() {
     };
     loadProjects();
   }, []);
+
+  // GSAP Animations Setup
+  useEffect(() => {
+    const scroller = mainContainerRef.current;
+    if (!scroller) return;
+
+    // Refresh ScrollTrigger when container scrolls
+    const ctx = gsap.context(() => {
+      // Hero Entrance Animation
+      if (heroRef.current) {
+        gsap.fromTo(
+          heroRef.current.children,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: "power3.out",
+          }
+        );
+      }
+
+      // Section Fade + Rise Animations
+      const sections = [aboutRef.current, skillsRef.current, projectsRef.current, contactRef.current];
+
+      sections.forEach((section) => {
+        if (!section) return;
+
+        gsap.fromTo(
+          section,
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: section,
+              scroller: scroller, // Scroller container ref
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      });
+    }, mainContainerRef);
+
+    return () => ctx.revert();
+  }, [loadingProjects]);
 
   // Filter projects dynamically
   const filteredProjects = useMemo(() => {
@@ -90,11 +158,15 @@ export default function SPA() {
   };
 
   return (
-    <div className="h-full overflow-y-auto bg-slate-50/60 text-slate-800 font-sans selection:bg-indigo-600 selection:text-white">
-      <MinimalisticNav/>
+    <div 
+      ref={mainContainerRef}
+      className="h-full overflow-y-auto bg-slate-50/60 text-slate-800 font-sans selection:bg-indigo-600 selection:text-white"
+    >
+      <MinimalisticNav />
       <main className="max-w-6xl mx-auto px-6 pt-28 pb-20 space-y-24">
+        
         {/* HERO SECTION */}
-        <section id="home" className="space-y-6 pt-6">
+        <section id="home" ref={heroRef} className="space-y-6 pt-6">
           <div className="inline-flex items-center gap-2 rounded-full bg-indigo-50 border border-indigo-100 px-3 py-1 text-xs text-indigo-700 font-semibold">
             <span className="w-2 h-2 rounded-full bg-indigo-600 animate-ping" />
             <span>Available for Full-Stack Roles &amp; Contracts</span>
@@ -113,7 +185,7 @@ export default function SPA() {
           <div className="flex flex-wrap gap-3 pt-2">
             <button
               onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
-              className="flex items-center gap-2 group bg-slate-900 hover:bg-slate-800 text-white font-semibold px-5 py-3    text-sm transition-all    cursor-pointer"
+              className="flex items-center gap-2 group bg-slate-900 hover:bg-slate-800 text-white font-semibold px-5 py-3 text-sm transition-all cursor-pointer"
             >
               <span>Explore Projects</span>
               <VscArrowRight className="group-hover:translate-x-2 transition-all duration-300" />
@@ -122,7 +194,7 @@ export default function SPA() {
             <a
               href="/DAVID_VINCE_STEPHEN_CV.pdf"
               download
-              className="flex items-center gap-2 bg-white hover:bg-slate-100 text-slate-800    font-semibold px-5 py-3    text-sm transition-all   "
+              className="flex items-center gap-2 bg-white hover:bg-slate-100 text-slate-800 font-semibold px-5 py-3 text-sm transition-all"
             >
               <VscFilePdf className="text-indigo-600 text-base" />
               <span>Download CV</span>
@@ -131,7 +203,7 @@ export default function SPA() {
         </section>
 
         {/* ABOUT SECTION */}
-        <section id="about" className="space-y-8 h-full">
+        <section id="about" ref={aboutRef} className="space-y-8 h-full">
           <div className="border-b border-slate-200 pb-4">
             <h2 className="text-2xl font-bold text-slate-900 tracking-tight">About Me</h2>
             <p className="text-sm text-slate-500">Core metrics & background overview</p>
@@ -139,7 +211,7 @@ export default function SPA() {
 
           {/* Metrics Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="bg-white    p-4    flex items-center gap-3.5   ">
+            <div className="bg-white p-4 flex items-center gap-3.5">
               <div className="p-2.5 bg-indigo-50 text-indigo-600 rounded-lg">
                 <VscLocation className="text-xl" />
               </div>
@@ -149,7 +221,7 @@ export default function SPA() {
               </div>
             </div>
 
-            <div className="bg-white    p-4    flex items-center gap-3.5   ">
+            <div className="bg-white p-4 flex items-center gap-3.5">
               <div className="p-2.5 bg-emerald-50 text-emerald-600 rounded-lg">
                 <VscBriefcase className="text-xl" />
               </div>
@@ -159,7 +231,7 @@ export default function SPA() {
               </div>
             </div>
 
-            <div className="bg-white    p-4    flex items-center gap-3.5   ">
+            <div className="bg-white p-4 flex items-center gap-3.5">
               <div className="p-2.5 bg-purple-50 text-purple-600 rounded-lg">
                 <VscGlobe className="text-xl" />
               </div>
@@ -171,31 +243,26 @@ export default function SPA() {
           </div>
 
           {/* Bio card */}
-          <div className="bg-white    p-6 rounded-2xl leading-relaxed text-slate-700 text-sm space-y-3   ">
-              <p>
-                I am dedicated to engineering software that combines speed, accessibility, and high code quality. My work spans complete end-to-end web applications, API microservices, and database optimizations.
-              </p>
-              <p>
-                I am dedicated to engineering software that combines speed, accessibility, and high code quality. My work spans complete end-to-end web applications, API microservices, and database optimizations.
-              </p>
-              <p>
-                I am dedicated to engineering software that combines speed, accessibility, and high code quality. My work spans complete end-to-end web applications, API microservices, and database optimizations.
-              </p>
-              <p>
-                I am dedicated to engineering software that combines speed, accessibility, and high code quality. My work spans complete end-to-end web applications, API microservices, and database optimizations.
-              </p>
+          <div className="bg-white p-6 rounded-2xl leading-relaxed text-slate-700 text-sm space-y-3">
+            <p>
+              I am dedicated to engineering software that combines speed, accessibility, and high code quality. My work spans complete end-to-end web applications, API microservices, and database optimizations.
+            </p>
+            <p>
+              I am dedicated to engineering software that combines speed, accessibility, and high code quality. My work spans complete end-to-end web applications, API microservices, and database optimizations.
+            </p>
           </div>
         </section>
 
-        <section id="skills">
-              <div className="space-y-6 pt-2">
-                <TechStackMinimalist/>
-                <GitHubActivityMinimalist username="Amon-mamon"/>
-              </div>
+        {/* SKILLS SECTION */}
+        <section id="skills" ref={skillsRef}>
+          <div className="space-y-6 pt-2">
+            <TechStackMinimalist />
+            <GitHubActivityMinimalist username="Amon-mamon" />
+          </div>
         </section>
 
         {/* PROJECTS SECTION */}
-        <section id="projects" className="space-y-8">
+        <section id="projects" ref={projectsRef} className="space-y-8">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
             <div>
               <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Featured Projects</h2>
@@ -211,8 +278,8 @@ export default function SPA() {
                   onClick={() => setSelectedCategory(cat)}
                   className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer shrink-0 ${
                     selectedCategory === cat
-                      ? "bg-indigo-600 text-white   "
-                      : "bg-white    text-slate-600 hover:text-slate-900"
+                      ? "bg-indigo-600 text-white"
+                      : "bg-white text-slate-600 hover:text-slate-900"
                   }`}
                 >
                   {cat}
@@ -229,7 +296,7 @@ export default function SPA() {
               placeholder="Search by project name or technology..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-white       pl-10 pr-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-600 transition-colors   "
+              className="w-full bg-white pl-10 pr-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-600 transition-colors"
             />
           </div>
 
@@ -237,7 +304,7 @@ export default function SPA() {
           {loadingProjects ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[1, 2].map((i) => (
-                <div key={i} className="h-48 bg-white    rounded-2xl animate-pulse" />
+                <div key={i} className="h-48 bg-white rounded-2xl animate-pulse" />
               ))}
             </div>
           ) : filteredProjects.length > 0 ? (
@@ -246,7 +313,7 @@ export default function SPA() {
                 <div
                   key={project.id}
                   onClick={() => setActiveModal(project)}
-                  className="group bg-white    hover:border-indigo-300 rounded-2xl p-5 transition-all hover:shadow-md cursor-pointer flex flex-col justify-between space-y-4"
+                  className="group bg-white hover:border-indigo-300 rounded-2xl p-5 transition-all hover:shadow-md cursor-pointer flex flex-col justify-between space-y-4"
                 >
                   <div className="space-y-2.5">
                     <span className="inline-block text-[10px] font-mono font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full border border-indigo-100">
@@ -273,20 +340,20 @@ export default function SPA() {
               ))}
             </div>
           ) : (
-            <div className="py-12 text-center bg-white    rounded-2xl text-slate-500 font-mono text-sm">
+            <div className="py-12 text-center bg-white rounded-2xl text-slate-500 font-mono text-sm">
               No matching projects found.
             </div>
           )}
         </section>
 
         {/* CONTACT SECTION */}
-        <section id="contact" className="space-y-8">
+        <section id="contact" ref={contactRef} className="space-y-8">
           <div className="border-b border-slate-200 pb-4">
             <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Get in Touch</h2>
             <p className="text-sm text-slate-500">Send a direct inquiry or start a conversation</p>
           </div>
 
-          <div className="bg-white    rounded-2xl p-6    space-y-6">
+          <div className="bg-white rounded-2xl p-6 space-y-6">
             <form onSubmit={handleFormSubmit} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
@@ -298,7 +365,7 @@ export default function SPA() {
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     required
                     placeholder="Jane Doe"
-                    className="w-full bg-slate-50       px-4 py-2.5 text-sm focus:border-indigo-600 focus:outline-none transition-colors"
+                    className="w-full bg-slate-50 px-4 py-2.5 text-sm focus:border-indigo-600 focus:outline-none transition-colors"
                   />
                 </div>
 
@@ -311,7 +378,7 @@ export default function SPA() {
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     required
                     placeholder="jane@example.com"
-                    className="w-full bg-slate-50       px-4 py-2.5 text-sm focus:border-indigo-600 focus:outline-none transition-colors"
+                    className="w-full bg-slate-50 px-4 py-2.5 text-sm focus:border-indigo-600 focus:outline-none transition-colors"
                   />
                 </div>
               </div>
@@ -325,7 +392,7 @@ export default function SPA() {
                   required
                   rows={4}
                   placeholder="Share details about your inquiry..."
-                  className="w-full bg-slate-50       px-4 py-2.5 text-sm focus:border-indigo-600 focus:outline-none transition-colors resize-y"
+                  className="w-full bg-slate-50 px-4 py-2.5 text-sm focus:border-indigo-600 focus:outline-none transition-colors resize-y"
                 />
               </div>
 
@@ -339,7 +406,7 @@ export default function SPA() {
                 <button
                   type="submit"
                   disabled={status === "loading"}
-                  className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm px-6 py-2.5    transition-all    cursor-pointer disabled:bg-slate-300"
+                  className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm px-6 py-2.5 transition-all cursor-pointer disabled:bg-slate-300"
                 >
                   <VscRunAll />
                   <span>Send Inquiry</span>
@@ -352,7 +419,7 @@ export default function SPA() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <a
               href="mailto:stoicdavid16@gmail.com"
-              className="bg-white    p-4    flex items-center gap-3 hover:border-slate-300 transition-all    group"
+              className="bg-white p-4 flex items-center gap-3 hover:border-slate-300 transition-all group"
             >
               <VscMail className="text-xl text-indigo-600 group-hover:scale-110 transition-transform" />
               <div className="truncate">
@@ -365,7 +432,7 @@ export default function SPA() {
               href="https://github.com/Amon-mamon"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white    p-4    flex items-center gap-3 hover:border-slate-300 transition-all    group"
+              className="bg-white p-4 flex items-center gap-3 hover:border-slate-300 transition-all group"
             >
               <VscGithub className="text-xl text-slate-800 group-hover:scale-110 transition-transform" />
               <div className="truncate">
@@ -378,7 +445,7 @@ export default function SPA() {
               href="https://www.linkedin.com/in/vince-stephen-david-ab72292a0/"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white    p-4    flex items-center gap-3 hover:border-slate-300 transition-all    group"
+              className="bg-white p-4 flex items-center gap-3 hover:border-slate-300 transition-all group"
             >
               <VscMention className="text-xl text-indigo-600 group-hover:scale-110 transition-transform" />
               <div className="truncate">
@@ -394,7 +461,7 @@ export default function SPA() {
       {/* Project Detail Modal */}
       {activeModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm animate-in fade-in duration-150">
-          <div className="bg-white    rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-xl">
+          <div className="bg-white rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-xl">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <h3 className="text-lg font-bold text-slate-900">{activeModal.project_title}</h3>
               <button onClick={() => setActiveModal(null)} className="text-slate-400 hover:text-slate-700 p-1">
@@ -422,7 +489,7 @@ export default function SPA() {
             <div className="pt-4">
               <button
                 onClick={() => setActiveModal(null)}
-                className="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2.5    text-sm transition-colors"
+                className="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2.5 text-sm transition-colors"
               >
                 Close Details
               </button>

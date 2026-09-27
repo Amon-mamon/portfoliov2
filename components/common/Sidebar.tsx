@@ -45,7 +45,7 @@ const Sidebar = () => {
               className="overflow-hidden  text-[#cccccc]"
               selectedId={selectedId}
               onSelectedIdChange={handleSelectedIdChange}
-              initialExpandedItems={["src", "app", "components", "ui", "lib","public"]}
+              initialExpandedItems={["portfolio", "app", "components", "ui", "lib","public"]}
               elements={ELEMENTS}
             />
             <div className='h-[200px] bg-red-200 w-full text-black'>
