@@ -120,7 +120,7 @@ export default function GitHubActivityMinimalist({ username }: { username: strin
 
         {/* Scrollable Grid Container */}
         <div className="bg-slate-50/60 border border-slate-200/80 p-4 rounded-xl overflow-x-auto min-w-0 w-full scrollbar-thin scrollbar-thumb-slate-300">
-          <div className="inline-grid grid-rows-7 grid-flow-col gap-1 min-w-max">
+          <div className="inline-grid grid-rows-4 grid-flow-col gap-1 min-w-max">
             {data.weeks.flatMap((week) =>
               week.contributionDays.map((day) => {
                 let bg = "bg-slate-100 border border-slate-200/50";

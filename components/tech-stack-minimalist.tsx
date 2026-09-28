@@ -121,7 +121,7 @@ export default function TechStackMinimalist() {
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
           <span>Production Ready Stack</span>
         </span>
-        <span className="text-slate-400">19 Technologies Mastered</span>
+        <span className="text-slate-400">19 Technologies Skills Acquired </span>
       </div>
     </section>
   );
