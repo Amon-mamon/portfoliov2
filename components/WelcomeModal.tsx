@@ -47,7 +47,7 @@ export function WelcomeModal({ onSelect }: OnboardingModalProps) {
             onClick={() => onSelect("vscode")}
             className="flex gap-2 flex-col items-center p-5 rounded-lg border hover:border-3 border-[#3c3c3c] bg-[#1e1e1e] hover:border-[#007acc] hover:bg-[#252526] transition-all group cursor-pointer text-left"
           >
-            <Image width={300} height={300} alt="minimalist" src="/VSCODE.png" className="w-full h-full"></Image>
+            <Image width={300} height={300} alt="vscode" src="/VSCODE.png" className="w-full h-full"></Image>
             <div className="p-3 rounded-full bg-[#007acc]/10 text-[#007acc] mb-3 group-hover:scale-100 transition-transform">
               <VscCode className="text-xl" />
             </div>
