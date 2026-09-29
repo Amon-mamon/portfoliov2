@@ -408,7 +408,7 @@ export default function SPA() {
                 <button
                   type="submit"
                   disabled={status === "loading"}
-                  className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm px-6 py-2.5 transition-all cursor-pointer disabled:bg-slate-300"
+                  className="flex items-center gap-2 rounded bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm px-6 py-2.5 transition-all cursor-pointer disabled:bg-slate-300"
                 >
                   <VscRunAll />
                   <span>Send Inquiry</span>
