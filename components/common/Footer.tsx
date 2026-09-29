@@ -70,7 +70,7 @@ const Footer = () => {
 
       {/* ── Main Footer Body (Non-scrollable) ───── */}
       <div className="mx-auto px-6 py-6 bg-[#181818]">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center text-center md:text-left">
+        <div className="flex items-center justify-between gap-8 text-center md:text-left">
           
           {/* Column 1: Brand */}
           <div className="flex flex-col items-center md:items-start gap-1.5">
@@ -81,14 +81,6 @@ const Footer = () => {
               Building exceptional digital experiences.
             </p>
           </div>
-
-          {/* Column 2: Navigation */}
-          {/* <nav className="flex justify-center gap-6 text-xs font-medium text-[#9cdcfe]">
-            <Link href="/" className="hover:text-white hover:underline transition-colors">Home</Link>
-            <Link href="/about" className="hover:text-white hover:underline transition-colors">About</Link>
-            <Link href="/project" className="hover:text-white hover:underline transition-colors">Projects</Link>
-            <Link href="/contact" className="hover:text-white hover:underline transition-colors">Contact</Link>
-          </nav> */}
 
           {/* Column 3: Social / Copyright */}
           <div className="flex flex-col items-center md:items-end gap-2 text-xs">

@@ -48,17 +48,17 @@ export default function GitHubActivity({ username }: { username: string }) {
     );
   }
 
-  // 2. Error Fallback State
-  if (error || !data) {
-    return (
-      <div className="w-full bg-[#181818] border border-[#2b2b2b] rounded-xl p-5 font-mono text-xs text-[#f14c4c]">
-        // Error fetching github_activity.graphql
-      </div>
-    );
-  }
-
   // Extract flat array of recent days for mini heatmap display
-  const recentDays = data.weeks.flatMap((w) => w.contributionDays).slice(-120);
+  if (error || !data || !Array.isArray(data.weeks)) {
+  return (
+    <div className="w-full bg-[#181818] border border-[#2b2b2b] rounded-xl p-5 font-mono text-xs text-[#f14c4c]">
+      // Error fetching github_activity.graphql or invalid API response
+    </div>
+  );
+}
+
+// Extract flat array safely
+const recentDays = data.weeks.flatMap((w) => w.contributionDays ?? []).slice(-120);
 
   // 3. Rendered Content
   return (

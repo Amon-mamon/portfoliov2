@@ -19,7 +19,8 @@ export const VSCodeMarquee: React.FC<MarqueeProps> = ({
   items,
   speed = 35,
   reverse = false,
-}) => {
+}) => { 
+
   const quadItems = [...items, ...items, ...items, ...items];
 
   return (

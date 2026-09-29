@@ -4,6 +4,7 @@ import { Tree, TreeViewElement } from '../ui/file-tree'
 import { ID_TO_PATH, PATH_TO_ID, useSectionStore } from '@/store/useSectionStore' // adjust path to wherever this actually lives
 import { usePathname, useRouter } from 'next/navigation';
 import { ELEMENTS } from '../reusable/sidebar-data';
+import WorkspaceTimeline from '../Workspace';
 
 const Sidebar = () => {
   const router = useRouter()
@@ -34,7 +35,7 @@ const Sidebar = () => {
   
 
   return (
-      <div className="flex-col items-center justify-center overflow-hidden h-full border-r border-[#2b2b2b] bg-[#181818] font-mono text-xs text-[#bbbbbb] select-none">
+      <div className="flex-col relative flex items-center justify-center h-full border-r border-[#2b2b2b] bg-[#181818] font-mono text-xs text-[#bbbbbb] select-none">
             <h3 className='p-1.5 px-3 w-full text-[11px] font-bold tracking-wider text-[#cccccc] uppercase bg-[#252526] border-b border-[#2b2b2b] flex items-center justify-between'>
                <button className="hover:text-white uppercase">
                 explorer: portfolio
@@ -42,12 +43,13 @@ const Sidebar = () => {
             </h3>
             <Tree 
               sort="none"
-              className="overflow-hidden p-2 text-[#cccccc]"
+              className="overflow-hidden  text-[#cccccc]"
               selectedId={selectedId}
               onSelectedIdChange={handleSelectedIdChange}
-              initialExpandedItems={["src", "app", "components", "ui", "lib","public"]}
+              initialExpandedItems={["portfolio", "app", "components", "ui", "lib","public"]}
               elements={ELEMENTS}
             />
+            <WorkspaceTimeline/>
       </div>
   )
 }

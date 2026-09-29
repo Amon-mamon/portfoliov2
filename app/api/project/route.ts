@@ -1,10 +1,10 @@
-import { createClient } from "@/lib/supabaseServer";
+import { supabase } from "@/lib/supabase";
 import { NextResponse } from "next/server";
 
 export async function GET() {
+  //controller
   try {
-    const supabase = await createClient();
-    
+    // queries 
     const { data, error } = await supabase
       .from("project_table")
       .select("*")
@@ -19,3 +19,19 @@ export async function GET() {
     return NextResponse.json({ message: err.message }, { status: 500 });
   }
 }
+
+// export async function PATCH() {
+
+//   try {
+//     const { data, error } = await supabase
+//     .from("project_table")
+//     .select("*")
+
+//     if(error) {
+//       return NextResponse.json({ message: error.message}, { status: 500});
+//     }
+
+//     return NextResponse.json(data);
+//   }
+
+// }

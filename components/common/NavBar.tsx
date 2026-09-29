@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useEffect } from 'react'
 import { IoCloseOutline } from 'react-icons/io5'
 import { ID_TO_PATH, PATH_TO_ID, useSectionStore } from '@/store/useSectionStore'
 import { FileText, ChevronRight } from 'lucide-react'
@@ -19,7 +19,7 @@ const TABS = [
   { id: 'project', label: 'Project.tsx' },
   { id: 'contact', label: 'Contact.tsx' },
   // { id: 'utils',   label: 'utils.tsx' },
-  { id: 'activitylog',  label: 'ActivityLog.tsx' },
+  // { id: 'activitylog',  label: 'ActivityLog.tsx' },
   { id: 'feedback',  label: 'Feedback.tsx' },
   { id: 'resume',  label: 'Resume.tsx' },
   { id: 'readme',  label: 'readme.md' },
@@ -31,8 +31,16 @@ const NavBar = () => {
   const setActiveSection = useSectionStore((s) => s.setActiveSection)
 
   const activeSection = useSectionStore((s) => s.activeSection)
-  const activeId = (pathname ? PATH_TO_ID[pathname] : null) || activeSection || 'hero'
+  const activeId = PATH_TO_ID[pathname ?? ""] || activeSection || 'hero'
   const activeTab = TABS.find((tab) => tab.id === activeId)
+
+  useEffect(() => {
+    const currentNavId = PATH_TO_ID[pathname ?? ""] || 'hero'
+    if(activeSection !== currentNavId) {
+      setActiveSection(currentNavId)
+    }
+  },[pathname, activeSection, setActiveSection])
+
 
   const handleTabClick = (id: string) => {
     const path = ID_TO_PATH[id]
@@ -40,6 +48,7 @@ const NavBar = () => {
     setActiveSection(id)
     router.push(path)
   }
+  
 
   return (
     <div className='flex flex-col w-full bg-[#181818] border-b border-[#2b2b2b] select-none text-xs font-mono'>

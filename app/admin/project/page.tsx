@@ -18,7 +18,7 @@ import {
   VscEdit,
   VscClose
 } from "react-icons/vsc";
-import FeedbackManagement from "@/pages/admin/FeedbackManagement";
+import FeedbackManagement from "@/features/admin/FeedbackManagement";
 
 interface ProjectItem {
   id: number;
@@ -66,7 +66,7 @@ const Page = () => {
   }, []);
 
   // Fetch Projects Data
-  const fetchData = async () => {
+  const fetchData = async () => { 
     try {
       const res = await fetch('/api/project');
       const result = await res.json();

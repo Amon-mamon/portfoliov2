@@ -3,17 +3,32 @@
 import React from "react";
 import { VSCodeMarquee, SkillItem } from "@/components/ui/vscode-marquee";
 
-// Skills populated with SVG CDN icons
+// Row 1: Frontend Core
 const SKILLS_ROW_1: SkillItem[] = [
   {
-    name: "ReactJS",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-    color: "#4ec9b0",
+    name: "HTML5",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
+    color: "#e34f26",
   },
   {
-    name: "NextJS",
-    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
-    color: "#ffffff",
+    name: "CSS3",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
+    color: "#1572b6",
+  },
+  {
+    name: "GSAP",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/gsap/gsap-original.svg",
+    color: "#1572b6",
+  },
+  {
+    name: "JavaScript",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+    color: "#f7df1e",
+  },
+  {
+    name: "jQuery",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jquery/jquery-original.svg",
+    color: "#0769ad",
   },
   {
     name: "TypeScript",
@@ -21,17 +36,47 @@ const SKILLS_ROW_1: SkillItem[] = [
     color: "#569cd6",
   },
   {
+    name: "ReactJS",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+    color: "#4ec9b0",
+  },
+];
+
+// Row 2: Frameworks & Styling
+const SKILLS_ROW_2: SkillItem[] = [
+  {
+    name: "NextJS",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
+    color: "#ffffff",
+  },
+  {
     name: "Tailwind CSS",
     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
     color: "#9cdcfe",
   },
-];
-
-const SKILLS_ROW_2: SkillItem[] = [
   {
     name: "NodeJS",
     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
     color: "#6a9955",
+  },
+  {
+    name: "Python",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+    color: "#3776ab",
+  },
+  {
+    name: "Django",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg",
+    color: "#092e20",
+  },
+];
+
+// Row 3: Databases & BaaS
+const SKILLS_ROW_3: SkillItem[] = [
+  {
+    name: "PostgreSQL",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
+    color: "#c586c0",
   },
   {
     name: "Supabase",
@@ -39,14 +84,38 @@ const SKILLS_ROW_2: SkillItem[] = [
     color: "#b5cea8",
   },
   {
-    name: "PostgreSQL",
+    name: "NeonDB",
     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
-    color: "#c586c0",
+    color: "#00e599",
   },
   {
     name: "Git",
     icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
     color: "#ce9178",
+  },
+];
+
+// Row 4: DevOps & Tools
+const SKILLS_ROW_4: SkillItem[] = [
+  {
+    name: "GitHub",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg",
+    color: "#ffffff",
+  },
+  {
+    name: "Docker",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
+    color: "#2496ed",
+  },
+  {
+    name: "Postman",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg",
+    color: "#ff6c37",
+  },
+  {
+    name: "Vercel",
+    icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg",
+    color: "#ffffff",
   },
 ];
 
@@ -71,9 +140,11 @@ const TechStack = () => {
       </div>
 
       {/* Marquee Rows */}
-      <div className="relative w-full min-w-0 overflow-hidden">
-        <VSCodeMarquee items={SKILLS_ROW_1} speed={60} reverse={false} />
-        <VSCodeMarquee items={SKILLS_ROW_2} speed={60} reverse={true} />
+      <div className="relative w-full min-w-0 overflow-hidden space-y-2">
+        <VSCodeMarquee items={SKILLS_ROW_1} speed={50} reverse={false} />
+        <VSCodeMarquee items={SKILLS_ROW_2} speed={50} reverse={true} />
+        <VSCodeMarquee items={SKILLS_ROW_3} speed={50} reverse={false} />
+        <VSCodeMarquee items={SKILLS_ROW_4} speed={50} reverse={true} />
       </div>
 
       {/* Footer Details */}
