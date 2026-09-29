@@ -163,22 +163,22 @@ export default function SPA() {
       className="h-full overflow-y-auto bg-slate-50/60 text-slate-800 font-sans selection:bg-indigo-600 selection:text-white"
     >
       <MinimalisticNav />
-      <main className="max-w-6xl mx-auto px-6 pt-28 pb-20 space-y-24">
+      <main className="max-w-6xl mx-auto px-6 pt-28 pb-20 space-y-12 md:space-y-32">
         
         {/* HERO SECTION */}
-        <section id="home" ref={heroRef} className="space-y-6 pt-6">
+        <section id="home" ref={heroRef} className="space-y-6 pt-12">
           <div className="inline-flex items-center gap-2 rounded-full bg-indigo-50 border border-indigo-100 px-3 py-1 text-xs text-indigo-700 font-semibold">
             <span className="w-2 h-2 rounded-full bg-indigo-600 animate-ping" />
             <span>Available for Full-Stack Roles &amp; Contracts</span>
           </div>
 
           <div className="space-y-3">
-            <h1 className="text-8xl sm:text-6xl font-extrabold tracking-tight text-slate-900 leading-tight">
+            <h1 className="text-xl sm:text-6xl font-extrabold tracking-tight text-slate-900 leading-tight">
               Crafting reliable, <br className="hidden sm:inline" />
               <span className="text-indigo-600">modern web solutions</span>.
             </h1>
             <p className="text-lg text-slate-600 max-w-2xl leading-relaxed">
-              I&apos;m Vince Stephen David—a Full-Stack Engineer specializing in scalable Next.js systems, responsive UIs, and robust backend integrations.
+              I&apos;m Vince Stephen David—a Full-Stack Developer. I craft fast, intuitive web applications — from responsive front-end interfaces to robust backend architectures.
             </p>
           </div>
 
@@ -203,7 +203,7 @@ export default function SPA() {
         </section>
 
         {/* ABOUT SECTION */}
-        <section id="about" ref={aboutRef} className="space-y-8 h-full">
+        <section id="about" ref={aboutRef} className="space-y-8">
           <div className="border-b border-slate-200 pb-4">
             <h2 className="text-2xl font-bold text-slate-900 tracking-tight">About Me</h2>
             <p className="text-sm text-slate-500">Core metrics & background overview</p>
@@ -211,7 +211,7 @@ export default function SPA() {
 
           {/* Metrics Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="bg-white p-4 flex items-center gap-3.5">
+            <div className="bg-white p-4 flex items-center gap-3.5 border border-gray-300 hover:border-indigo-300 rounded">
               <div className="p-2.5 bg-indigo-50 text-indigo-600 rounded-lg">
                 <VscLocation className="text-xl" />
               </div>
@@ -221,7 +221,7 @@ export default function SPA() {
               </div>
             </div>
 
-            <div className="bg-white p-4 flex items-center gap-3.5">
+            <div className="bg-white p-4 flex items-center gap-3.5 border border-gray-300 hover:border-indigo-300 rounded">
               <div className="p-2.5 bg-emerald-50 text-emerald-600 rounded-lg">
                 <VscBriefcase className="text-xl" />
               </div>
@@ -231,33 +231,35 @@ export default function SPA() {
               </div>
             </div>
 
-            <div className="bg-white p-4 flex items-center gap-3.5">
+            <div className="bg-white p-4 flex items-center gap-3.5 border border-gray-300 hover:border-indigo-300 rounded">
               <div className="p-2.5 bg-purple-50 text-purple-600 rounded-lg">
                 <VscGlobe className="text-xl" />
               </div>
               <div>
                 <span className="text-[10px] text-slate-400 font-mono font-bold uppercase block">Status</span>
-                <span className="text-sm font-bold text-emerald-600">Open to Projects</span>
+                <span className="text-sm font-bold text-emerald-600">Open for Work</span>
               </div>
             </div>
           </div>
 
           {/* Bio card */}
-          <div className="bg-white p-6 rounded-2xl leading-relaxed text-slate-700 text-sm space-y-3">
-            <p>
-              I am dedicated to engineering software that combines speed, accessibility, and high code quality. My work spans complete end-to-end web applications, API microservices, and database optimizations.
+          <div className="p-6 rounded-2xl leading-relaxed text-slate-700 text-sm space-y-3">
+            <p className="text-sm sm:text-base leading-relaxed ">
+              Based in the Philippines, I specialize in bridging design with robust engineering. I build end-to-end web applications that emphasize smooth UI performance, resilient database schemas, and intuitive user experiences.
             </p>
-            <p>
-              I am dedicated to engineering software that combines speed, accessibility, and high code quality. My work spans complete end-to-end web applications, API microservices, and database optimizations.
+
+            <p className="text-sm leading-relaxed font-mono">
+             I prioritize quality, maintainability, and efficiency by following proven development best practices and modern workflows.
             </p>
           </div>
+
+            <GitHubActivityMinimalist username="Amon-mamon" />
         </section>
 
         {/* SKILLS SECTION */}
         <section id="skills" ref={skillsRef}>
-          <div className="space-y-6 pt-2">
+          <div className="space-y-6 mt-0 md:-mt-18">
             <TechStackMinimalist />
-            <GitHubActivityMinimalist username="Amon-mamon" />
           </div>
         </section>
 
@@ -266,17 +268,17 @@ export default function SPA() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
             <div>
               <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Featured Projects</h2>
-              <p className="text-sm text-slate-500">Interactive portfolio breakdown</p>
+              <p className="text-sm text-slate-500">Project Builts and Handle</p>
             </div>
 
             {/* Filter Pills */}
-            <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+            {/* <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
               <VscFilter className="text-slate-400 shrink-0" />
               {["All", "Web App", "Next.js", "React"].map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
-                  className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer shrink-0 ${
+                  className={`px-3 py-1 rounded-lg border  text-xs font-semibold transition-all cursor-pointer shrink-0 ${
                     selectedCategory === cat
                       ? "bg-indigo-600 text-white"
                       : "bg-white text-slate-600 hover:text-slate-900"
@@ -285,11 +287,11 @@ export default function SPA() {
                   {cat}
                 </button>
               ))}
-            </div>
+            </div> */}
           </div>
 
           {/* Search Box */}
-          <div className="relative">
+          {/* <div className="relative">
             <VscSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-base" />
             <input
               type="text"
@@ -298,7 +300,7 @@ export default function SPA() {
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full bg-white pl-10 pr-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-indigo-600 transition-colors"
             />
-          </div>
+          </div> */}
 
           {/* Project Cards */}
           {loadingProjects ? (
@@ -313,7 +315,7 @@ export default function SPA() {
                 <div
                   key={project.id}
                   onClick={() => setActiveModal(project)}
-                  className="group bg-white hover:border-indigo-300 rounded-2xl p-5 transition-all hover:shadow-md cursor-pointer flex flex-col justify-between space-y-4"
+                  className="group bg-white hover:border-indigo-300 border border-gray-300 rounded-2xl p-5 transition-all hover:shadow-md cursor-pointer flex flex-col justify-between space-y-4"
                 >
                   <div className="space-y-2.5">
                     <span className="inline-block text-[10px] font-mono font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full border border-indigo-100">
@@ -347,13 +349,13 @@ export default function SPA() {
         </section>
 
         {/* CONTACT SECTION */}
-        <section id="contact" ref={contactRef} className="space-y-8">
+        <section id="contact" ref={contactRef} className="space-y-8 ">
           <div className="border-b border-slate-200 pb-4">
             <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Get in Touch</h2>
             <p className="text-sm text-slate-500">Send a direct inquiry or start a conversation</p>
           </div>
 
-          <div className="bg-white rounded-2xl p-6 space-y-6">
+          <div className="bg-white rounded-2xl p-6 space-y-6 border border-gray-300 hover:border-indigo-300 rounded-2xl hover:shadow-sm">
             <form onSubmit={handleFormSubmit} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
@@ -365,7 +367,7 @@ export default function SPA() {
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     required
                     placeholder="Jane Doe"
-                    className="w-full bg-slate-50 px-4 py-2.5 text-sm focus:border-indigo-600 focus:outline-none transition-colors"
+                    className="w-full border border-gray-300 rounded bg-slate-50 px-4 py-2.5 text-sm focus:border-indigo-600 focus:outline-none transition-colors"
                   />
                 </div>
 
@@ -378,7 +380,7 @@ export default function SPA() {
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     required
                     placeholder="jane@example.com"
-                    className="w-full bg-slate-50 px-4 py-2.5 text-sm focus:border-indigo-600 focus:outline-none transition-colors"
+                    className="w-full border border-gray-300 rounded bg-slate-50 px-4 py-2.5 text-sm focus:border-indigo-600 focus:outline-none transition-colors"
                   />
                 </div>
               </div>
@@ -392,7 +394,7 @@ export default function SPA() {
                   required
                   rows={4}
                   placeholder="Share details about your inquiry..."
-                  className="w-full bg-slate-50 px-4 py-2.5 text-sm focus:border-indigo-600 focus:outline-none transition-colors resize-y"
+                  className="w-full border border-gray-300 rounded bg-slate-50 px-4 py-2.5 text-sm focus:border-indigo-600 focus:outline-none transition-colors resize-y"
                 />
               </div>
 
@@ -419,7 +421,7 @@ export default function SPA() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <a
               href="mailto:stoicdavid16@gmail.com"
-              className="bg-white p-4 flex items-center gap-3 hover:border-slate-300 transition-all group"
+              className="bg-white p-4 flex items-center gap-3 border border-gray-300 hover:border-indigo-300 rounded transition-all group"
             >
               <VscMail className="text-xl text-indigo-600 group-hover:scale-110 transition-transform" />
               <div className="truncate">
@@ -432,7 +434,7 @@ export default function SPA() {
               href="https://github.com/Amon-mamon"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white p-4 flex items-center gap-3 hover:border-slate-300 transition-all group"
+              className="bg-white p-4 flex items-center gap-3 border border-gray-300 hover:border-indigo-300 rounded transition-all group"
             >
               <VscGithub className="text-xl text-slate-800 group-hover:scale-110 transition-transform" />
               <div className="truncate">
@@ -445,7 +447,7 @@ export default function SPA() {
               href="https://www.linkedin.com/in/vince-stephen-david-ab72292a0/"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white p-4 flex items-center gap-3 hover:border-slate-300 transition-all group"
+              className="bg-white p-4 flex items-center gap-3 border border-gray-300 hover:border-indigo-300 rounded transition-all group"
             >
               <VscMention className="text-xl text-indigo-600 group-hover:scale-110 transition-transform" />
               <div className="truncate">

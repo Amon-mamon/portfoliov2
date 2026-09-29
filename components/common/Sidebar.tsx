@@ -4,6 +4,7 @@ import { Tree, TreeViewElement } from '../ui/file-tree'
 import { ID_TO_PATH, PATH_TO_ID, useSectionStore } from '@/store/useSectionStore' // adjust path to wherever this actually lives
 import { usePathname, useRouter } from 'next/navigation';
 import { ELEMENTS } from '../reusable/sidebar-data';
+import WorkspaceTimeline from '../Workspace';
 
 const Sidebar = () => {
   const router = useRouter()
@@ -48,9 +49,7 @@ const Sidebar = () => {
               initialExpandedItems={["portfolio", "app", "components", "ui", "lib","public"]}
               elements={ELEMENTS}
             />
-            <div className='h-[200px] bg-red-200 w-full text-black'>
-                Workspace
-            </div>
+            <WorkspaceTimeline/>
       </div>
   )
 }

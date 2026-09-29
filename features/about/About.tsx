@@ -68,7 +68,7 @@ const About = () => {
                       const focus
                     </span>
                     <span className="text-[#4ec9b0] text-xs font-semibold truncate block">
-                      &quot;Full-Stack &amp; UX&quot;
+                      &quot;Full-Stack Development
                     </span>
                   </div>
                 </div>

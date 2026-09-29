@@ -8,7 +8,7 @@ export const ID_TO_PATH: Record<string, string> = {
   contact: '/vscode-theme/contact',
   resume: '/vscode-theme/resume',
   readme: '/vscode-theme/readme',
-  activitylog: '/vscode-theme/activity-log',
+  // activitylog: '/vscode-theme/activity-log',
   feedback: '/vscode-theme/feedback',
   // keybind:'/keybind-json'
 }

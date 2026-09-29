@@ -1,4 +1,4 @@
-import Project from "@/pages/project/Project"
+import Project from "@/features/project/Project"
 
 const page = () => {
   return (

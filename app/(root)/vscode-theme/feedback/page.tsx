@@ -2,10 +2,9 @@
 
 import React, { useEffect, useState } from "react"
 import { Send, CheckCircle2, AlertCircle, Terminal, Star, Sparkles, Filter } from "lucide-react"
-import { createClient } from "@/lib/supabaseClient"
 import { Marquee } from "@/components/ui/feed-back-marquee"
 import VariableDeclaration from "@/components/reusable/variable-declaration"
-
+import { createClient } from "@/lib/supabaseClient"
 interface Feedback {
   id: string
   created_at: string

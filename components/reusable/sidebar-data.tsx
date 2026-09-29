@@ -76,19 +76,19 @@ export const ELEMENTS: TreeViewElement[] = [
                     }
                   ]
                 },             
-                {
-                  id: "activitylog",
-                  type:"folder",
-                  isSelectable: true,
-                  name: "activity-log",
-                  children: [
-                    {
-                      id: "activitylog",
-                      isSelectable:true,
-                      name:"page.tsx"
-                    }
-                  ]
-                },
+                // {
+                //   id: "activitylog",
+                //   type:"folder",
+                //   isSelectable: true,
+                //   name: "activity-log",
+                //   children: [
+                //     {
+                //       id: "activitylog",
+                //       isSelectable:true,
+                //       name:"page.tsx"
+                //     }
+                //   ]
+                // },
                 {
                   id: "feedback",
                   type:"folder",

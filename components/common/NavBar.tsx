@@ -19,7 +19,7 @@ const TABS = [
   { id: 'project', label: 'Project.tsx' },
   { id: 'contact', label: 'Contact.tsx' },
   // { id: 'utils',   label: 'utils.tsx' },
-  { id: 'activitylog',  label: 'ActivityLog.tsx' },
+  // { id: 'activitylog',  label: 'ActivityLog.tsx' },
   { id: 'feedback',  label: 'Feedback.tsx' },
   { id: 'resume',  label: 'Resume.tsx' },
   { id: 'readme',  label: 'readme.md' },

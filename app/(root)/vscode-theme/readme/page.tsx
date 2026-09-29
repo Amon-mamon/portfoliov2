@@ -1,4 +1,4 @@
-import ReadMe from '@/pages/readme/ReadMe'
+import ReadMe from '@/features/readme/ReadMe'
 import React from 'react'
 
 const page = () => {

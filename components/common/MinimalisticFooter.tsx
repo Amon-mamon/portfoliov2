@@ -65,25 +65,25 @@ export function MinimalisticFooter() {
                 onClick={() => document.getElementById("home")?.scrollIntoView({ behavior: "smooth" })}
                 className="text-left hover:text-indigo-600 transition-colors"
               >
-                → Home
+                Home
               </button>
               <button
                 onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}
                 className="text-left hover:text-indigo-600 transition-colors"
               >
-                → About
+                About
               </button>
               <button
                 onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
                 className="text-left hover:text-indigo-600 transition-colors"
               >
-                → Projects
+                Projects
               </button>
               <button
                 onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
                 className="text-left hover:text-indigo-600 transition-colors"
               >
-                → Contact
+                Contact
               </button>
             </div>
           </div>

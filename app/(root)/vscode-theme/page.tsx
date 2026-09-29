@@ -1,7 +1,6 @@
 "use client"
 import React, { useEffect, useRef } from 'react'
-import Home from '../../../pages/home/home'
-import { SmoothCursor } from '@/components/ui/smooth-cursor'
+import Home from '../../../features/home/home'
 import { useSectionStore } from '@/store/useSectionStore' // adjust path to wherever this actually lives
 
 // Must match the ids used in Sidebar.tsx's TREE_ID_TO_SECTION map
@@ -44,27 +43,7 @@ const page = () => {
   return (
     <>
     <div ref={scrollContainerRef} id="page-scroll-container" className='bg-[#121314] overflow-y-hidden'>
-     {/* <div className='text-white px-6'>
-        <p>1</p>
-        <p>2</p>
-        <p>3</p>
-        <p>4</p>
-        <p>5</p>
-        <p>6</p>
-        <p>7</p>
-        <p>8</p>
-        <p>9</p>
-        <p>10</p>
-        <p>11</p>
-     </div> */}
-      {/* <div className='w-full'> */}
-        {/* <SmoothCursor/> */}
-          <div id="home"><Home/></div>
-          {/* <div id="about"><About/></div>
-          <div id="project"><Project/></div>
-          <div id="contact"><Contact/></div> */}
-          
-      {/* </div> */}
+        <div id="home"><Home/></div>
     </div>
     </>
   )

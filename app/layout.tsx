@@ -6,6 +6,7 @@ import Particles from "@/components/ui/background-particles";
 import { SmoothCursor } from "@/components/ui/smooth-cursor";
 import { ThemeOnboardingProvider } from "@/components/ThemeOnboardProvider";
 import NotFound from "./not-found";
+import QueryProvider from "@/components/provider/QueryClientProvider";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -65,7 +66,9 @@ export default function RootLayout({
     <html lang="en" className="h-full">
       <body className="h-full w-full text-[#d4d4d4] antialiased overflow-hidden">
         <ThemeOnboardingProvider>
-          {children}
+          <QueryProvider>
+            {children}
+          </QueryProvider>
         </ThemeOnboardingProvider>
       </body>
     </html>

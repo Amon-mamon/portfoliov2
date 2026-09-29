@@ -22,34 +22,37 @@ export default function MinimalisticNav() {
 
   // 1. Detect active section when scrolling
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
+  const handleScroll = () => {
+    setScrolled(window.scrollY > 20);
+  };
 
-    window.addEventListener("scroll", handleScroll);
+  window.addEventListener("scroll", handleScroll);
 
-    // Track active section using IntersectionObserver
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      { threshold: 0.4 } // Triggers when section is 40% visible
-    );
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    },
+    {
+      // Triggers when section top enters top 20% to bottom 40% of viewport
+      rootMargin: "-20% 0px -40% 0px",
+      threshold: 0,
+    }
+  );
 
-    NAV_ITEMS.forEach((item) => {
-      const el = document.getElementById(item.href);
-      if (el) observer.observe(el);
-    });
+  NAV_ITEMS.forEach((item) => {
+    const el = document.getElementById(item.href);
+    if (el) observer.observe(el);
+  });
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      observer.disconnect();
-    };
-  }, []);
+  return () => {
+    window.removeEventListener("scroll", handleScroll);
+    observer.disconnect();
+  };
+}, []);
 
   // 2. Smooth scroll handler
   const scrollToSection = (id: string) => {
@@ -68,7 +71,7 @@ export default function MinimalisticNav() {
           : "bg-transparent py-5"
       }`}
     >
-      <div className="max-w-5xl mx-auto px-6 flex items-center justify-between gap-4">
+      <div className="max-w-6xl mx-auto px-6 flex items-center justify-between gap-4">
         {/* Brand / Logo */}
         <button
           onClick={() => scrollToSection("home")}
@@ -106,6 +109,7 @@ export default function MinimalisticNav() {
         {/* External Action Links (GitHub & Resume) */}
         <div className="flex items-center gap-2 font-mono text-xs shrink-0">
           <a
+
             href="https://github.com/Amon-mamon"
             target="_blank"
             rel="noopener noreferrer"
@@ -117,8 +121,8 @@ export default function MinimalisticNav() {
           </a>
 
            <a
-            href="/resume.pdf"
-            target="_blank"
+           href="/DAVID_VINCE_STEPHEN_CV.pdf"
+           download
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-all duration-200 shadow-2xs hover:shadow-xs"
           >
