@@ -13,7 +13,7 @@ export default function WorkspaceTimeline() {
   const timelineLogs = [
     {
       id: "1",
-      time: "Today",
+      date: "Today",
       title: "Refactoring Portfolio Codebase",
       description: "Refactor codebase, apply tanstack query, mutation for admin side.",
       status: "In Progress",
@@ -22,7 +22,7 @@ export default function WorkspaceTimeline() {
     },
     {
       id: "2",
-      time: "Yesterday",
+      date: "9-30-2026",
       title: "Added GitHub & Tech Stack Minimalist Views",
       description: "Integrated GitHub contribution graph and tech stack icons into the main SPA structure.",
       status: "Completed",
@@ -75,7 +75,7 @@ export default function WorkspaceTimeline() {
                 {/* Meta Header */}
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] text-[#858585] uppercase tracking-wide">
-                    {log.time}
+                    {log.date}
                   </span>
                   <span
                     className={`text-[10px] font-semibold px-1.5 py-0.2 rounded border ${
