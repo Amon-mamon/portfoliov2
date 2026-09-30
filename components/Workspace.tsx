@@ -51,7 +51,7 @@ export default function WorkspaceTimeline() {
 
         <span className="text-[10px] bg-[#0e639c]/30 text-[#4fc1ff] border border-[#007acc]/40 px-2 py-0.5 rounded flex items-center gap-1 font-sans">
           <VscCircleFilled className="text-[8px] text-[#3794ff] animate-pulse" />
-          <span>Session Active</span>
+          <span>Session</span>
         </span>
       </div>
 
