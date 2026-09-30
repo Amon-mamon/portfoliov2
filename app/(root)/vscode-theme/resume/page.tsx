@@ -118,7 +118,7 @@ const page = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pl-4">
                   <div className="bg-[#252526] p-3 rounded border border-[#2b2b2b] space-y-1">
                     <span className="text-[#4ec9b0] font-semibold text-xs">Frontend</span>
-                    <p className="text-[#ce9178]">HTML5, CSS, GSAP, JavaScript, jQuery, TypeScript, React.js, Next.js, Tailwind CSS</p>
+                    <p className="text-[#ce9178]">HTML5, Tailwind CSS, CSS, GSAP, JavaScript, jQuery, TypeScript, React.js, Next.js, </p>
                   </div>
 
                   <div className="bg-[#252526] p-3 rounded border border-[#2b2b2b] space-y-1">
