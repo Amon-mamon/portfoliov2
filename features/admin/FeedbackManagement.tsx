@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { createClient } from "@/lib/supabaseClient";
 import { 
   VscFeedback, 
@@ -10,23 +10,16 @@ import {
   VscClose, 
   VscLoading, 
   VscStarFull, 
-  VscRefresh,
-  VscSymbolVariable
+  VscRefresh
 } from "react-icons/vsc";
-
-export interface FeedbackItem {
-  id: string | number;
-  created_at?: string;
-  rating: number;
-  name: string;
-  description: string;
-  suggestions?: string | null;
-}
+import { FeedbackItem } from "@/types/feedback";
+import { useQuery } from "@tanstack/react-query";
+import { getFeedbacks } from "@/service/feedback.service";
 
 export default function FeedbackManagement() {
+  // Local state for feedbacks (used by manual update/delete handlers)
   const [feedbacks, setFeedbacks] = useState<FeedbackItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  
+
   // Edit State
   const [editingId, setEditingId] = useState<string | number | null>(null);
   const [editForm, setEditForm] = useState<Partial<FeedbackItem>>({});
@@ -34,54 +27,41 @@ export default function FeedbackManagement() {
 
   const supabase = createClient();
 
-  const fetchFeedbacks = async () => {
-    setLoading(true);
+  // Fetching with TanStack Query
+  const { isLoading, isError, error, refetch, isFetching } = useQuery({
+    queryKey: ["feedbacks"],
+    queryFn: async () => {
+      const data = await getFeedbacks();
+      setFeedbacks(data);
+      return data;
+    },
+  });
+
+  // Delete Action (Unchanged Supabase async/await logic)
+  const handleDelete = async (id: string | number) => {
+    if (!confirm("Are you sure you want to delete this feedback record?")) return;
+
     try {
       const { data, error } = await supabase
         .from("feedbacks")
-        .select("*")
-        .order("created_at", { ascending: false });
-
+        .delete()
+        .eq("id", id)
+        .select();
+      
       if (error) throw error;
-      if (data) setFeedbacks(data);
+
+      if (!data || data.length === 0) {
+        alert("Delete failed: Row Level Security (RLS) prevented deletion on Supabase.");
+        return;
+      }
+
+      setFeedbacks((prev) => prev.filter((item) => item.id !== id));
+      if (editingId === id) cancelEdit();
     } catch (err: any) {
-      console.error("Error fetching feedbacks:", err.message);
-    } finally {
-      setLoading(false);
+      console.error("Delete failed:", err.message);
     }
   };
 
-  useEffect(() => {
-    fetchFeedbacks();
-  }, []);
-
-  // Delete Action
-  const handleDelete = async (id: string | number) => {
-  if (!confirm("Are you sure you want to delete this feedback record?")) return;
-
-  try {
-    // Adding .select() returns the array of deleted rows
-    const { data, error } = await supabase
-      .from("feedbacks")
-      .delete()
-      .eq("id", id)
-      .select();
-    
-    if (error) throw error;
-
-    // If data is empty, RLS blocked the deletion!
-    if (!data || data.length === 0) {
-      alert("Delete failed: Row Level Security (RLS) prevented deletion on Supabase.");
-      return;
-    }
-
-    // Remove from local UI state only if actual DB deletion succeeded
-    setFeedbacks((prev) => prev.filter((item) => item.id !== id));
-    if (editingId === id) cancelEdit();
-  } catch (err: any) {
-    console.error("Delete failed:", err.message);
-  }
-};
   // Start Editing
   const startEditing = (item: FeedbackItem) => {
     setEditingId(item.id);
@@ -99,7 +79,7 @@ export default function FeedbackManagement() {
     setEditForm({});
   };
 
-  // Save Edit Action
+  // Save Edit Action (Unchanged Supabase async/await logic)
   const handleSaveUpdate = async (id: string | number) => {
     setIsSaving(true);
     try {
@@ -115,7 +95,6 @@ export default function FeedbackManagement() {
 
       if (error) throw error;
 
-      // Update Local State
       setFeedbacks((prev) =>
         prev.map((item) =>
           item.id === id
@@ -147,21 +126,25 @@ export default function FeedbackManagement() {
           <span>feedbacks.table.json [{feedbacks.length}]</span>
         </span>
         <button
-          onClick={fetchFeedbacks}
-          disabled={loading}
-          className="flex items-center gap-1 text-[#808080] hover:text-white transition-colors cursor-pointer"
+          onClick={() => refetch()}
+          disabled={isFetching}
+          className="flex items-center gap-1 text-[#808080] hover:text-white transition-colors cursor-pointer disabled:opacity-50"
         >
-          <VscRefresh className={`text-sm ${loading ? "animate-spin" : ""}`} />
+          <VscRefresh className={`text-sm ${isFetching ? "animate-spin" : ""}`} />
           <span>reload()</span>
         </button>
       </div>
 
       {/* Body List */}
       <div className="p-4 space-y-3">
-        {loading ? (
+        {isLoading ? (
           <div className="p-8 text-center text-[#4ec9b0] flex items-center justify-center gap-2">
             <VscLoading className="animate-spin text-lg" />
             <span>// Loading feedback records...</span>
+          </div>
+        ) : isError ? (
+          <div className="p-8 text-center text-[#f14c4c]">
+            // Error loading records: {(error as Error)?.message}
           </div>
         ) : feedbacks.length === 0 ? (
           <div className="p-8 text-center text-[#808080]">
@@ -189,9 +172,13 @@ export default function FeedbackManagement() {
                         <button
                           onClick={() => handleSaveUpdate(item.id)}
                           disabled={isSaving}
-                          className="flex items-center gap-1 bg-[#4ec9b0] hover:bg-[#3db39a] text-black px-2 py-1 rounded font-bold cursor-pointer"
+                          className="flex items-center gap-1 bg-[#4ec9b0] hover:bg-[#3db39a] text-black px-2 py-1 rounded font-bold cursor-pointer disabled:opacity-50"
                         >
-                          {isSaving ? <VscLoading className="animate-spin" /> : <VscCheck />}
+                          {isSaving ? (
+                            <VscLoading className="animate-spin" />
+                          ) : (
+                            <VscCheck />
+                          )}
                           <span>Save</span>
                         </button>
                         <button
@@ -206,43 +193,62 @@ export default function FeedbackManagement() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div>
-                        <label className="text-[#9cdcfe] text-[11px] block mb-1">&quot;author_name&quot;:</label>
+                        <label className="text-[#9cdcfe] text-[11px] block mb-1">
+                          &quot;author_name&quot;:
+                        </label>
                         <input
                           type="text"
                           value={editForm.name || ""}
-                          onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
+                          onChange={(e) =>
+                            setEditForm({ ...editForm, name: e.target.value })
+                          }
                           className="w-full bg-[#181818] border border-[#3c3c3c] rounded px-2 py-1 text-[#ce9178] outline-none focus:border-[#007acc]"
                         />
                       </div>
                       <div>
-                        <label className="text-[#9cdcfe] text-[11px] block mb-1">&quot;rating_score&quot; (1-5):</label>
+                        <label className="text-[#9cdcfe] text-[11px] block mb-1">
+                          &quot;rating_score&quot; (1-5):
+                        </label>
                         <input
                           type="number"
                           min={1}
                           max={5}
                           value={editForm.rating || 5}
-                          onChange={(e) => setEditForm({ ...editForm, rating: Number(e.target.value) })}
+                          onChange={(e) =>
+                            setEditForm({
+                              ...editForm,
+                              rating: Number(e.target.value),
+                            })
+                          }
                           className="w-full bg-[#181818] border border-[#3c3c3c] rounded px-2 py-1 text-[#ce9178] outline-none focus:border-[#007acc]"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label className="text-[#9cdcfe] text-[11px] block mb-1">&quot;description&quot;:</label>
+                      <label className="text-[#9cdcfe] text-[11px] block mb-1">
+                        &quot;description&quot;:
+                      </label>
                       <textarea
                         rows={2}
                         value={editForm.description || ""}
-                        onChange={(e) => setEditForm({ ...editForm, description: e.target.value })}
+                        onChange={(e) =>
+                          setEditForm({ ...editForm, description: e.target.value })
+                        }
                         className="w-full bg-[#181818] border border-[#3c3c3c] rounded px-2 py-1 text-[#ce9178] outline-none focus:border-[#007acc] resize-y"
                       />
                     </div>
 
                     <div>
-                      <label className="text-[#9cdcfe] text-[11px] block mb-1">&quot;suggestions&quot;:</label>
+                      <label className="text-[#9cdcfe] text-[11px] block mb-1">
+                        &quot;suggestions&quot;:
+                      </label>
                       <input
                         type="text"
                         value={editForm.suggestions || ""}
-                        onChange={(e) => setEditForm({ ...editForm, suggestions: e.target.value })}
+                        onChange={(e) =>
+                          setEditForm({ ...editForm, suggestions: e.target.value })
+                        }
                         className="w-full bg-[#181818] border border-[#3c3c3c] rounded px-2 py-1 text-[#ce9178] outline-none focus:border-[#007acc]"
                       />
                     </div>
@@ -252,14 +258,15 @@ export default function FeedbackManagement() {
                   <div className="flex flex-col sm:flex-row items-start justify-between gap-3">
                     <div className="space-y-1.5 flex-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <span className="text-[#9cdcfe] font-bold">@{item.name}</span>
+                        <span className="text-[#9cdcfe] font-bold">
+                          @{item.name}
+                        </span>
                         <div className="flex items-center text-amber-400 gap-0.5 text-[11px]">
                           <VscStarFull />
                           <span>{item.rating}.0</span>
                         </div>
                       </div>
 
-                      {/* Commented Description formatting */}
                       <div className="text-[#6a9955] italic leading-relaxed text-[11px]">
                         <span className="not-italic text-[#57a64a]">/* </span>
                         {item.description}
@@ -268,7 +275,9 @@ export default function FeedbackManagement() {
 
                       {item.suggestions && (
                         <div className="text-[#6a9955] text-[10px]">
-                          <span className="text-[#4ec9b0] font-semibold not-italic">// Suggestion:</span>{" "}
+                          <span className="text-[#4ec9b0] font-semibold not-italic">
+                            // Suggestion:
+                          </span>{" "}
                           {item.suggestions}
                         </div>
                       )}

@@ -1,22 +1,16 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
-import { Send, CheckCircle2, AlertCircle, Terminal, Star, Sparkles, Filter } from "lucide-react"
+import React, { useState } from "react"
+import { Send, CheckCircle2, AlertCircle, Star, Sparkles, Filter } from "lucide-react"
 import { Marquee } from "@/components/ui/feed-back-marquee"
 import VariableDeclaration from "@/components/reusable/variable-declaration"
 import { createClient } from "@/lib/supabaseClient"
-interface Feedback {
-  id: string
-  created_at: string
-  rating: number
-  name: string
-  description: string
-  suggestions?: string | null
-}
+import { useQuery } from "@tanstack/react-query"
+import { getFeedbacks } from "@/service/feedback.service"
+import { FeedbackItem } from "@/types/feedback"
 
 export default function FeedbackPage() {
-  const [feedbacks, setFeedbacks] = useState<Feedback[]>([])
-  const [fetching, setFetching] = useState(true)
+  const [feedbacks, setFeedbacks] = useState<FeedbackItem[]>([])
   const [filterRating, setFilterRating] = useState<number | "all">("all")
 
   // Form states
@@ -29,33 +23,20 @@ export default function FeedbackPage() {
   const [submitted, setSubmitted] = useState(false)
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
 
-  useEffect(() => {
-    fetchFeedbacks()
-  }, [])
+  // Fetching with TanStack Query
+  const { isLoading: fetching } = useQuery({
+    queryKey: ["feedbacks"],
+    queryFn: async () => {
+      const data = await getFeedbacks()
+      setFeedbacks(data)
+      return data
+    },
+  })
 
-  const fetchFeedbacks = async () => {
-
-    const supabase = await createClient()
-
-    try {
-      setFetching(true)
-      const { data, error } = await supabase
-        .from("feedbacks")
-        .select("*")
-        .order("created_at", { ascending: false })
-
-      if (error) throw error
-      if (data) setFeedbacks(data)
-    } catch (err: any) {
-      console.error("Failed to load feedbacks:", err.message)
-    } finally {
-      setFetching(false)
-    }
-  }
-
+  // Submit Action (Standard async/await Supabase logic)
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const supabase = await createClient()
+    const supabase = createClient()
 
     if (!rating) {
       setErrorMsg("Please select a score.")
@@ -105,9 +86,9 @@ export default function FeedbackPage() {
     <div className=" p-4 md:p-8 font-mono text-xs text-gray-300">
 
       <VariableDeclaration
-      variableName="Feedback"
-      tagId="feedback"
-      tagName="section"
+        variableName="Feedback"
+        tagId="feedback"
+        tagName="section"
       >
 
         <div className="my-6 pl-8 sm:pl-20  ml-8 sm:ml-20max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
