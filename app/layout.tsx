@@ -63,7 +63,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="h-full">
-      <body className="h-full w-full text-[#d4d4d4] antialiased overflow-hidden">
+      <body className="h-full w-full text-[#d4d4d4] antialiased overflow-hidden max-w-[2000px] mx-auto">
         <ThemeOnboardingProvider>
           <QueryProvider>
             {children}

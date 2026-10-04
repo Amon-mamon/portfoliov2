@@ -1,10 +1,11 @@
 "use client"
 import React, { useEffect } from 'react'
+import Link from 'next/link'
 import { IoCloseOutline } from 'react-icons/io5'
-import { ID_TO_PATH, PATH_TO_ID, useSectionStore } from '@/store/useSectionStore'
+import { PATH_TO_ID, useSectionStore } from '@/store/useSectionStore'
 import { FileText, ChevronRight } from 'lucide-react'
-import { usePathname, useRouter } from 'next/navigation'
-import { CgReadme } from "react-icons/cg";
+import { usePathname } from 'next/navigation'
+import { CgReadme } from "react-icons/cg"
 
 const ReactFileIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 32 32" fill="none">
@@ -14,19 +15,16 @@ const ReactFileIcon = () => (
 )
 
 const TABS = [
-  { id: 'hero',    label: 'Home.tsx' },
-  { id: 'about',   label: 'About.tsx' },
-  { id: 'project', label: 'Project.tsx' },
-  { id: 'contact', label: 'Contact.tsx' },
-  // { id: 'utils',   label: 'utils.tsx' },
-  // { id: 'activitylog',  label: 'ActivityLog.tsx' },
-  { id: 'feedback',  label: 'Feedback.tsx' },
-  { id: 'resume',  label: 'Resume.tsx' },
-  { id: 'readme',  label: 'readme.md' },
+  { id: 'hero',    label: 'Home.tsx', href:"/vscode-theme" },
+  { id: 'about',   label: 'About.tsx', href:"/vscode-theme/about" },
+  { id: 'project', label: 'Project.tsx', href:"/vscode-theme/project" },
+  { id: 'contact', label: 'Contact.tsx', href:"/vscode-theme/contact" },
+  { id: 'feedback',label: 'Feedback.tsx', href:"/vscode-theme/feedback" },
+  { id: 'resume',  label: 'Resume.tsx', href:"/vscode-theme/resume" },
+  { id: 'readme',  label: 'readme.md', href:"/vscode-theme/readme" },
 ]
 
 const NavBar = () => {
-  const router = useRouter()
   const pathname = usePathname()
   const setActiveSection = useSectionStore((s) => s.setActiveSection)
 
@@ -36,19 +34,10 @@ const NavBar = () => {
 
   useEffect(() => {
     const currentNavId = PATH_TO_ID[pathname ?? ""] || 'hero'
-    if(activeSection !== currentNavId) {
+    if (activeSection !== currentNavId) {
       setActiveSection(currentNavId)
     }
-  },[pathname, activeSection, setActiveSection])
-
-
-  const handleTabClick = (id: string) => {
-    const path = ID_TO_PATH[id]
-    if (!path) return
-    setActiveSection(id)
-    router.push(path)
-  }
-  
+  }, [pathname, activeSection, setActiveSection])
 
   return (
     <div className='flex flex-col w-full bg-[#181818] border-b border-[#2b2b2b] select-none text-xs font-mono'>
@@ -62,31 +51,37 @@ const NavBar = () => {
             const isReadme = tab.label.endsWith(".md")
 
             return (
-              <li
-                key={tab.id}
-                onClick={() => handleTabClick(tab.id)}
-                className={`group relative flex items-center h-full gap-2 px-3 border-r border-[#2b2b2b] cursor-pointer transition-colors duration-150 shrink-0 ${
-                  isActive 
-                    ? 'bg-[#1e1e1e] text-white border-t-2 border-t-[#007acc]' 
-                    : 'bg-[#2d2d2d] text-[#8c8c8c] hover:bg-[#2a2d2e] hover:text-[#cccccc]'
-                }`}
-              >
-                {/* File Icon */}
-                <span className="shrink-0">
-                  {isPdf ? <FileText size={14} className="text-red-400" /> :  isReadme ?  <CgReadme size={14}/> : <ReactFileIcon />}
-                </span>
-
-                {/* File Label */}
-                <span className="truncate">{tab.label}</span>
-
-                {/* Close Button */}
-                <button 
-                  type="button" 
-                  aria-label={`Close ${tab.label}`}
-                  className="p-0.5 rounded hover:bg-[#454545] opacity-0 group-hover:opacity-100 transition-opacity ml-1"
+              <li key={tab.id} className="h-full shrink-0">
+                <Link
+                  href={tab.href}
+                  prefetch={true}
+                  onClick={() => setActiveSection(tab.id)}
+                  className={`group relative flex items-center h-full gap-2 px-3 border-r border-[#2b2b2b] transition-colors duration-150 ${
+                    isActive 
+                      ? 'bg-[#1e1e1e] text-white border-t-2 border-t-[#007acc]' 
+                      : 'bg-[#2d2d2d] text-[#8c8c8c] hover:bg-[#2a2d2e] hover:text-[#cccccc]'
+                  }`}
                 >
-                  <IoCloseOutline className='text-sm text-gray-400 hover:text-white' />
-                </button>
+                  <span className="shrink-0">
+                    {isPdf ? <FileText size={14} className="text-red-400" /> : isReadme ? <CgReadme size={14}/> : <ReactFileIcon />}
+                  </span>
+                  <span className="truncate">{tab.label}</span>
+
+                  {/* Close Button placed inside Link so flex alignment stays perfect */}
+                  <span
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`Close ${tab.label}`}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      e.stopPropagation()
+                      // Add close tab logic here if needed
+                    }}
+                    className="p-0.5 rounded hover:bg-[#454545] opacity-0 group-hover:opacity-100 transition-opacity ml-1"
+                  >
+                    <IoCloseOutline className='text-sm text-gray-400 hover:text-white' />
+                  </span>
+                </Link>
               </li>
             )
           })}
