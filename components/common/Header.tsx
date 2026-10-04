@@ -50,7 +50,7 @@ const Header = () => {
               className="w-full bg-transparent outline-none text-[#cccccc] text-[11px] placeholder-[#808080]"
             />
             <div className="flex items-center gap-1 shrink-0 border-l border-[#3c3c3c] pl-2">
-              <Link href="/contact" title="Open Discussion / Contact">
+              <Link href="/vscode-theme/contact" title="Open Discussion / Contact">
                 <LuMessageSquareDot className="text-sm text-[#808080] hover:text-[#4ec9b0] cursor-pointer transition-colors" />
               </Link>
             </div>
