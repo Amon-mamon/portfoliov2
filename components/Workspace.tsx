@@ -14,20 +14,47 @@ export default function WorkspaceTimeline() {
     {
       id: "1",
       date: "Today",
-      title: "Refactoring Portfolio Codebase",
-      description: "Refactor codebase, apply tanstack query, mutation for admin side.",
+      title: "Refactor Project Page",
+      description: "Fix UI and add Demo in projects for visitors.",
       status: "In Progress",
-      type: "refactor",
-      tags: ["Next.js", "tanstack", "Tailwind"],
+      type: "Refactor",
+      // tags: ["Next.js", "tanstack", "Tailwind"],
     },
     {
       id: "2",
+      date: "10-4-2026",
+      title: "Optimization",
+      description: "Optimizing Navigations and Pages.",
+      status: "Completed",
+      type: "optimization",
+      // tags: ["Next.js", "tanstack", "Tailwind"],
+    },
+    {
+      id: "3",
+      date: "10-2-2026",
+      title: "Refactoring Portfolio Codebase",
+      description: "Refactor codebase, apply tanstack query, mutation for admin side.",
+      status: "Completed",
+      type: "refactor",
+      // tags: ["Next.js", "tanstack", "Tailwind"],
+    },
+    {
+      id: "4",
       date: "9-30-2026",
       title: "Added GitHub & Tech Stack Minimalist Views",
       description: "Integrated GitHub contribution graph and tech stack icons into the main SPA structure.",
       status: "Completed",
       type: "feature",
-      tags: ["React", "API"],
+      // tags: ["React", "API"],
+    },
+    {
+      id: "5",
+      date: "9-17-2026",
+      title: "Implementing Minimalist View for non-dev",
+      description: "Implement Minimalist view for non-dev to avoid confusion for non-devs.",
+      status: "Completed",
+      type: "feature",
+      // tags: ["React", "API"],
     },
   ];
 
@@ -56,12 +83,18 @@ export default function WorkspaceTimeline() {
       </div>
 
       {/* Vertical Timeline Feed with VS Code Scrollbar */}
-      <div className="relative overflow-y-auto h-[210px] my-2 pr-1 pl-4 space-y-4 before:absolute before:left-2 before:top-2 before:bottom-0 before:w-[1px] before:bg-[#3c3c3c] scrollbar-thin scrollbar-thumb-[#424242] scrollbar-track-transparent">
-        {timelineLogs.map((log) => {
+      <div className="relative overflow-y-auto h-[210px] my-2 pr-1 pl-4 space-y-4 scrollbar-thin scrollbar-thumb-[#424242] scrollbar-track-transparent">
+        {timelineLogs.map((log, index) => {
           const isInProgress = log.status === "In Progress";
+          const isLast = index === timelineLogs.length - 1;
 
           return (
             <div key={log.id} className="relative group">
+              {/* Connecting Line between nodes */}
+              {!isLast && (
+                <div className="absolute left-[-8px] top-3.5 bottom-[-16px] w-[1px] bg-[#3c3c3c]" />
+              )}
+
               {/* Timeline Indicator Node */}
               <div
                 className={`absolute -left-[13px] top-1 w-2.5 h-2.5 rounded-full border ${
@@ -99,7 +132,7 @@ export default function WorkspaceTimeline() {
                 </p>
 
                 {/* Tags */}
-                <div className="flex flex-wrap gap-1 pt-1">
+                {/* <div className="flex flex-wrap gap-1 pt-1">
                   {log.tags.map((tag, idx) => (
                     <span
                       key={idx}
@@ -108,7 +141,7 @@ export default function WorkspaceTimeline() {
                       #{tag}
                     </span>
                   ))}
-                </div>
+                </div> */}
               </div>
             </div>
           );
