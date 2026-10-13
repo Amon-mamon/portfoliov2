@@ -5,7 +5,8 @@ export interface ProjectItem {
   project_type?: string;
   project_stack?: string;
   project_image?: string;
-  project_images?: string[]
-  live_url?: string;
+  project_images?: string[];
+  project_url?: string | null;
+  live_url?: string | null;
   is_active?: boolean;
 }

@@ -179,9 +179,9 @@ const ProjectCard = ({ project }: { project: MultiImageProjectItem }) => {
               </span>
             </button>
 
-            {project.live_url ? (
+            {project.project_url? (
               <a
-                href={project.live_url}
+                href={project.project_url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-1 bg-[#0e639c] hover:bg-[#1177bb] text-white py-1.5 px-3 rounded-md transition-colors"
