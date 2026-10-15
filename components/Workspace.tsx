@@ -14,14 +14,23 @@ export default function WorkspaceTimeline() {
     {
       id: "1",
       date: "Today",
-      title: "Optimize responsive layout",
-      description: "Optimizing VS Code theme layout for all screen sizes.",
-      status: "In progress",
+      title: "Client Project",
+      description: "Laundry and WaterStation shop CMS.",
+      status: "In Progress",
       type: "Optimization",
       // tags: ["Next.js", "tanstack", "Tailwind"],
     },
     {
       id: "2",
+      date: "Today",
+      title: "Optimize responsive layout",
+      description: "Optimizing VS Code theme layout for all screen sizes.",
+      status: "Paused",
+      type: "Optimization",
+      // tags: ["Next.js", "tanstack", "Tailwind"],
+    },
+    {
+      id: "3",
       date: "10-12-2026",
       title: "Refactor Project Page",
       description: "Add Demo in projects for visitors.",
@@ -30,7 +39,7 @@ export default function WorkspaceTimeline() {
       // tags: ["Next.js", "tanstack", "Tailwind"],
     },
     {
-      id: "3",
+      id: "4",
       date: "10-4-2026",
       title: "Optimize navigation",
       description: "Optimizing Navigations and Pages.",
@@ -39,7 +48,7 @@ export default function WorkspaceTimeline() {
       // tags: ["Next.js", "tanstack", "Tailwind"],
     },
     {
-      id: "4",
+      id: "5",
       date: "10-2-2026",
       title: "Refactoring Portfolio Codebase",
       description: "Refactor codebase, apply tanstack query, mutation for admin side.",
@@ -48,7 +57,7 @@ export default function WorkspaceTimeline() {
       // tags: ["Next.js", "tanstack", "Tailwind"],
     },
     {
-      id: "5",
+      id: "6",
       date: "9-30-2026",
       title: "Added GitHub & Tech Stack Minimalist Views",
       description: "Integrated GitHub contribution graph and tech stack icons into the main SPA structure.",
@@ -57,7 +66,7 @@ export default function WorkspaceTimeline() {
       // tags: ["React", "API"],
     },
     {
-      id: "6",
+      id: "7",
       date: "9-17-2026",
       title: "Implementing Minimalist View for non-dev",
       description: "Implement Minimalist view for non-dev to avoid confusion for non-devs.",
