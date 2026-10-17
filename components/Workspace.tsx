@@ -22,7 +22,7 @@ export default function WorkspaceTimeline() {
     },
     {
       id: "2",
-      date: "Today",
+      date: "10-13-2026",
       title: "Optimize responsive layout",
       description: "Optimizing VS Code theme layout for all screen sizes.",
       status: "Paused",
