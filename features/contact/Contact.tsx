@@ -273,7 +273,7 @@ export default function Contact() {
           </div>
 
           {/* ── 3. Alternative Direct Endpoints ───────────────── */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
             <a
               href="/contact"
               className="bg-[#181818] border border-[#2b2b2b] hover:border-[#007acc] p-3 rounded flex items-center gap-3 transition-colors group"
