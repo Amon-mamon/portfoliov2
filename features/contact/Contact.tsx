@@ -311,7 +311,7 @@ export default function Contact() {
               </div>
             </a>
 
-            <button
+            {/* <button
               onClick={() => setShowPgp(!showPgp)}
               className="bg-[#181818] border border-[#2b2b2b] hover:border-[#007acc] p-3 rounded flex items-center gap-3 transition-colors text-left group"
             >
@@ -320,11 +320,11 @@ export default function Contact() {
                 <p className="text-[11px] text-[#808080]">Security</p>
                 <p className="text-xs text-white truncate font-semibold">{showPgp ? 'Hide PGP Key' : 'View PGP Key'}</p>
               </div>
-            </button>
+            </button> */}
           </div>
 
           {/* PGP Public Key Drawer */}
-          {showPgp && (
+          {/* {showPgp && (
             <div className="bg-[#181818] border border-[#2b2b2b] rounded-lg p-4 font-mono text-[11px] text-[#808080] space-y-2">
               <p className="text-[#e5c07b] font-bold">// Public Key Fingerprint: 4A8F 9B2C 1D3E 5F7A</p>
               <pre className="bg-[#1e1e1e] p-3 rounded text-[#808080] overflow-x-auto select-all">
@@ -333,7 +333,7 @@ mQENBF2... Vince Stephen David <vince@example.com> ...
 -----END PGP PUBLIC KEY BLOCK-----`}
               </pre>
             </div>
-          )}
+          )} */}
 
         </div>
       </VariableDeclaration>
