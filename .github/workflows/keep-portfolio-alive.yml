@@ -1,0 +1,28 @@
+name: Keep Portfolio Database Alive
+
+on:
+  schedule:
+    # Runs every day at 02:20 UTC (10:20 AM Philippines time)
+    - cron: "20 2 * * *"
+  # Lets you run it by hand from the Actions tab to test it
+  workflow_dispatch:
+
+jobs:
+  ping-portfolio:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Query the portfolio projects database
+        env:
+          SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY }}
+          TABLE: project_table
+        run: |
+          set -euo pipefail
+
+          # Fetch 1 record from project_table to wake up the database
+          curl -fsS --max-time 30 \
+            "$SUPABASE_URL/rest/v1/$TABLE?select=id&limit=1" \
+            -H "apikey: $SUPABASE_ANON_KEY" \
+            -H "Authorization: Bearer $SUPABASE_ANON_KEY" > /dev/null
+
+          echo "Portfolio database ($TABLE) is awake."
