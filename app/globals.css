@@ -254,3 +254,82 @@
       transform: translate(-50%, -40%) scale(1);
     }
   }
+
+/* ── Minimalist view: "Paper & Ember" palette ───────────────────────── */
+@theme {
+  --color-paper: #f6f2eb;
+  --color-paper-deep: #ece5d9;
+  --color-sand: #e2d8c7;       /* inputs / chips that sit ON paper-deep */
+  --color-ink: #16130f;
+  --color-ink-soft: #37312a;   /* body copy: ~11:1 on paper */
+  --color-stone-warm: #5c544a; /* labels / meta: ~6.6:1 on paper */
+  --color-ember: #e8552d;
+  --color-ember-deep: #c0401b; /* white text on this: ~5:1 */
+  --color-ember-soft: #f2d2c0;
+  --color-night: #15120e;
+  --color-night-raised: #231e18;
+}
+
+/* Scroll reveal (driven by components/minimalist/Reveal.tsx) */
+.mv-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--mv-delay, 0ms);
+}
+.mv-reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Hero entrance, plays on first paint, no JS needed */
+@keyframes mv-rise {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: none; }
+}
+.mv-rise {
+  animation: mv-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--mv-delay, 0ms);
+}
+
+@keyframes mv-underline {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+.mv-underline {
+  transform-origin: left;
+  animation: mv-underline 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.7s both;
+}
+
+/* Underline that draws in when its <Reveal> parent scrolls into view */
+.mv-underline-reveal {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.4s;
+}
+.is-visible .mv-underline-reveal {
+  transform: scaleX(1);
+}
+
+/* Vertical connector that draws downward on reveal */
+.mv-line-reveal {
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.3s;
+}
+.is-visible .mv-line-reveal {
+  transform: scaleY(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mv-line-reveal { transform: none !important; transition: none !important; }
+  .mv-underline-reveal { transform: none !important; transition: none !important; }
+  .mv-reveal, .mv-rise, .mv-underline {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}

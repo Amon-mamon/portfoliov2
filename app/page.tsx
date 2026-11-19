@@ -1,29 +1,20 @@
-// app/page.tsx
-"use client"
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { Spotlight } from "@/components/ui/background-spotlight";
+import RootRedirect from "@/components/theme/RootRedirect";
+import { THEME_COOKIE, THEME_ROUTES, isThemeMode } from "@/lib/themeCookie";
 
-import { useEffect } from "react"
-import { useRouter } from "next/navigation"
-import { Spotlight } from "@/components/ui/background-spotlight"
-
-export default function RootPage() {
-  const router = useRouter()
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("portfolio_theme_mode")
-    
-    if (savedTheme === "minimalist") {
-      router.replace("/minimalist-view")
-    } else if (savedTheme === "vscode") {
-      router.replace("/vscode-theme")
-    }
-  }, [router])
+export default async function RootPage() {
+  // Returning visitors are redirected on the server, before any JS loads.
+  const saved = (await cookies()).get(THEME_COOKIE)?.value;
+  if (isThemeMode(saved)) redirect(THEME_ROUTES[saved]);
 
   return (
     <div className="flex h-screen w-screen items-center justify-center bg-black text-white">
-      <Spotlight/>
-      {/* If ThemeOnboardingProvider in app/layout.tsx renders the modal, 
-          this acts as a clean loading backdrop until they make a choice */}
+      <Spotlight />
+      <RootRedirect />
+      {/* ThemeOnboardingProvider (app/layout.tsx) shows the theme picker over this backdrop */}
       <p className="font-mono text-sm text-gray-400">Loading portfolio...</p>
-    </div>  
-  )
+    </div>
+  );
 }

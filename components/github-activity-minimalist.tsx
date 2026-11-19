@@ -2,6 +2,7 @@
 
 import React from "react";
 import useSWR from "swr";
+import { CountUp } from "@/components/minimalist/Reveal";
 
 export interface GitHubStats {
   totalContributions: number;
@@ -30,122 +31,92 @@ export default function GitHubActivityMinimalist({ username }: { username: strin
     }
   );
 
-  // 1. Skeleton Loading State
-  if (isLoading) {
+  // No data and no error yet = loading. (SWR's isLoading is false on the server but
+  // true on the client's first render, which caused a hydration mismatch.)
+  if (isLoading || (!data && !error)) {
     return (
-      <div className="w-full bg-white border border-slate-200 rounded-2xl p-6 space-y-4 animate-pulse shadow-sm">
-        <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-          <div className="h-5 w-40 bg-slate-200 rounded" />
-          <div className="h-4 w-20 bg-slate-100 rounded-full" />
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div className="w-full animate-pulse space-y-6 rounded-3xl bg-paper-deep p-6 sm:p-8">
+        <div className="h-6 w-48 rounded bg-sand" />
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="h-20 bg-slate-50 border border-slate-100 rounded-xl" />
+            <div key={i} className="h-14 rounded-xl bg-sand" />
           ))}
         </div>
-        <div className="h-28 bg-slate-50 border border-slate-100 rounded-xl" />
+        <div className="h-24 rounded-xl bg-sand" />
       </div>
     );
   }
 
-  // 2. Error State
   if (error || !data || !Array.isArray(data.weeks)) {
     return (
-      <div className="w-full bg-red-50/50 border border-red-200 rounded-2xl p-6 font-mono text-xs text-red-600">
-        Unable to load GitHub activity for &quot;{username}&quot;. Please check API configuration.
+      <div className="w-full rounded-3xl bg-paper-deep p-6 text-base text-ink-soft sm:p-8">
+        GitHub activity is unavailable right now.{" "}
+        <a href={`https://github.com/${username}`} target="_blank" rel="noopener noreferrer" className="font-semibold text-ember-deep underline underline-offset-4">
+          View @{username} on GitHub
+        </a>
       </div>
     );
   }
 
+  const stats = [
+    { label: "Contributions", value: data.totalContributions, accent: true },
+    { label: "Commits", value: data.totalCommitContributions },
+    { label: "Pull requests", value: data.totalPullRequestContributions },
+    { label: "Repos created", value: data.totalRepositoryContributions },
+  ];
+
+  const level = (n: number) =>
+    n > 10 ? "bg-ember-deep" : n > 6 ? "bg-ember" : n > 3 ? "bg-[#f29a7a]" : n > 0 ? "bg-[#f7c9b6]" : "bg-[#dcd2c2]";
+
   return (
-    <section className="w-full bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 space-y-6 shadow-sm ">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-4">
+    <section className="w-full space-y-7 rounded-3xl bg-paper-deep p-6 sm:p-8">
+      <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
         <div>
-          <h3 className="text-lg font-bold text-slate-900 tracking-tight flex items-center gap-2">GitHub Activity <span className="text-sm">@</span> 2026</h3>
-          <p className="text-xs text-slate-500">Real-time open source contributions &amp; commit metrics</p>
+          <h3 className="text-xl font-bold text-ink">GitHub activity</h3>
+          <p className="text-sm text-ink-soft">Contributions over the past year</p>
         </div>
-
-        <div className="inline-flex items-center gap-2 bg-slate-100 px-3 py-1 rounded-full text-xs font-mono text-slate-600 border border-slate-200/60 self-start sm:self-auto">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span>@{username}</span>
-        </div>
+        <a
+          href={`https://github.com/${username}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 self-start rounded-full bg-sand px-4 py-2 text-sm font-semibold text-ink transition-colors hover:bg-ink hover:text-paper sm:self-auto"
+        >
+          <span className="h-2 w-2 rounded-full bg-emerald-500" />@{username}
+        </a>
       </div>
 
-      {/* Key Stats Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <div className="bg-slate-50/70 border border-slate-200/80 p-4 rounded-xl">
-          <p className="text-slate-500 text-[11px] font-medium uppercase tracking-wider">Commits</p>
-          <p className="text-slate-900 font-extrabold text-xl sm:text-2xl mt-1 tracking-tight">
-            {data.totalCommitContributions.toLocaleString()}
-          </p>
-        </div>
-
-        <div className="bg-slate-50/70 border border-slate-200/80 p-4 rounded-xl">
-          <p className="text-slate-500 text-[11px] font-medium uppercase tracking-wider">Pull Requests</p>
-          <p className="text-indigo-600 font-extrabold text-xl sm:text-2xl mt-1 tracking-tight">
-            {data.totalPullRequestContributions.toLocaleString()}
-          </p>
-        </div>
-
-        <div className="bg-slate-50/70 border border-slate-200/80 p-4 rounded-xl">
-          <p className="text-slate-500 text-[11px] font-medium uppercase tracking-wider">Repos Created</p>
-          <p className="text-slate-900 font-extrabold text-xl sm:text-2xl mt-1 tracking-tight">
-            {data.totalRepositoryContributions.toLocaleString()}
-          </p>
-        </div>
-
-        <div className="bg-slate-50/70 border border-slate-200/80 p-4 rounded-xl">
-          <p className="text-slate-500 text-[11px] font-medium uppercase tracking-wider">Total Contributions</p>
-          <p className="text-emerald-600 font-extrabold text-xl sm:text-2xl mt-1 tracking-tight">
-            {data.totalContributions.toLocaleString()}
-          </p>
-        </div>
-      </div>
-
-      {/* Contribution Calendar Heatmap */}
-      <div className="space-y-3">
-        <div className="flex items-center justify-between text-xs text-slate-500">
-          <span className="font-mono font-medium text-slate-700">Contribution Calendar</span>
-          <div className="flex items-center gap-1.5 text-[11px]">
-            <span>Less</span>
-            <span className="w-3 h-3 rounded-xs bg-slate-100 border border-slate-200" />
-            <span className="w-3 h-3 rounded-xs bg-emerald-200" />
-            <span className="w-3 h-3 rounded-xs bg-emerald-400" />
-            <span className="w-3 h-3 rounded-xs bg-emerald-600" />
-            <span className="w-3 h-3 rounded-xs bg-emerald-800" />
-            <span>More</span>
+      <dl className="grid grid-cols-2 gap-5 md:grid-cols-4">
+        {stats.map((s) => (
+          <div key={s.label}>
+            <dt className="text-sm font-medium text-stone-warm">{s.label}</dt>
+            <dd className={`mt-1 text-3xl font-bold tracking-tight ${s.accent ? "text-ember-deep" : "text-ink"}`}>
+              <CountUp value={s.value} />
+            </dd>
           </div>
-        </div>
+        ))}
+      </dl>
 
-        {/* Scrollable Grid Container */}
-        <div className="bg-slate-50/60 border border-slate-200/80 p-4 rounded-xl overflow-x-auto min-w-0 w-full scrollbar-thin scrollbar-thumb-slate-300">
-          <div className="inline-grid grid-rows-4 grid-flow-col gap-1 min-w-max">
+      <div className="space-y-2">
+        <div className="overflow-x-auto pb-2">
+          <div className="inline-grid min-w-max grid-flow-col grid-rows-7 gap-[3px]">
             {data.weeks.flatMap((week) =>
-              week.contributionDays.map((day) => {
-                let bg = "bg-slate-100 border border-slate-200/50";
-                if (day.contributionCount > 0) bg = "bg-emerald-200 border border-emerald-300/60";
-                if (day.contributionCount > 3) bg = "bg-emerald-400 border border-emerald-500/60";
-                if (day.contributionCount > 6) bg = "bg-emerald-600 border border-emerald-700/60";
-                if (day.contributionCount > 10) bg = "bg-emerald-800 border border-emerald-900/60";
-
-                return (
-                  <div
-                    key={day.date}
-                    title={`${day.date}: ${day.contributionCount} contributions`}
-                    className={`w-3 h-3 rounded-xs ${bg} transition-all duration-150 hover:scale-125 cursor-pointer`}
-                  />
-                );
-              })
+              week.contributionDays.map((day) => (
+                <div
+                  key={day.date}
+                  title={`${day.date}: ${day.contributionCount} contributions`}
+                  className={`h-2.5 w-2.5 rounded-[2px] ${level(day.contributionCount)}`}
+                />
+              ))
             )}
           </div>
         </div>
-      </div>
-
-      {/* Footer Bar */}
-      <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-mono text-slate-400">
-        <span>data_source: github_graphql_v4</span>
-        <span className="text-emerald-600 font-medium">Status: Active</span>
+        <div className="flex items-center justify-end gap-1.5 text-xs text-stone-warm">
+          <span>Less</span>
+          {[0, 1, 4, 7, 11].map((n) => (
+            <span key={n} className={`h-2.5 w-2.5 rounded-[2px] ${level(n)}`} />
+          ))}
+          <span>More</span>
+        </div>
       </div>
     </section>
   );

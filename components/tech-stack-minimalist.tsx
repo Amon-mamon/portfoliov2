@@ -1,128 +1,181 @@
 "use client";
 
-import React from "react";
-import Image from "next/image";
+import React, { useState } from "react";
+import type { IconType } from "react-icons";
+import {
+  SiHtml5, SiCss, SiGreensock, SiJavascript, SiJquery, SiTypescript, SiReact, SiNextdotjs,
+  SiTailwindcss, SiNodedotjs, SiPython, SiDjango, SiPostgresql, SiSupabase, SiNeon, SiGit,
+  SiGithub, SiDocker, SiPostman, SiVercel,
+} from "react-icons/si";
+import { Reveal } from "@/components/minimalist/Reveal";
 
 interface SkillItem {
   name: string;
-  icon: string;
-  invertOnLight?: boolean;
+  symbol: string;
+  icon: IconType;
+  color: string;
 }
 
 interface SkillCategory {
   title: string;
+  description: string;
+  /** colour used for the category bar on each tile + the filter dot */
+  tone: string;
   skills: SkillItem[];
 }
 
-const TECH_CATEGORIES: SkillCategory[] = [
+// Icons are bundled (react-icons), so there are no external image requests.
+export const TECH_CATEGORIES: SkillCategory[] = [
   {
     title: "Frontend",
+    description: "Interfaces & interactions",
+    tone: "#e8552d",
     skills: [
-      { name: "HTML5", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
-      { name: "CSS3", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
-      { name: "GSAP", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/gsap/gsap-original.svg" },
-      { name: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
-      { name: "jQuery", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jquery/jquery-original.svg" },
-      { name: "TypeScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
-      { name: "React.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-      { name: "Next.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg", invertOnLight: true },
-      { name: "Tailwind CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" },
+      { name: "React.js", symbol: "Re", icon: SiReact, color: "#149ECA" },
+      { name: "Next.js", symbol: "Nx", icon: SiNextdotjs, color: "#000000" },
+      { name: "TypeScript", symbol: "Ts", icon: SiTypescript, color: "#3178C6" },
+      { name: "JavaScript", symbol: "Js", icon: SiJavascript, color: "#D4A900" },
+      { name: "Tailwind CSS", symbol: "Tw", icon: SiTailwindcss, color: "#06B6D4" },
+      { name: "HTML5", symbol: "Ht", icon: SiHtml5, color: "#E34F26" },
+      { name: "CSS3", symbol: "Cs", icon: SiCss, color: "#1572B6" },
+      { name: "GSAP", symbol: "Gs", icon: SiGreensock, color: "#0AE448" },
+      { name: "jQuery", symbol: "Jq", icon: SiJquery, color: "#0769AD" },
     ],
   },
   {
     title: "Backend",
+    description: "APIs & server logic",
+    tone: "#2f7a55",
     skills: [
-      { name: "Node.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
-      { name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
-      { name: "Django", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" },
+      { name: "Node.js", symbol: "No", icon: SiNodedotjs, color: "#5FA04E" },
+      { name: "Python", symbol: "Py", icon: SiPython, color: "#3776AB" },
+      { name: "Django", symbol: "Dj", icon: SiDjango, color: "#092E20" },
     ],
   },
   {
     title: "Database",
+    description: "Data modeling & storage",
+    tone: "#3f5fa8",
     skills: [
-      { name: "PostgreSQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
-      { name: "Supabase", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg" },
-      { name: "NeonDB", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
+      { name: "PostgreSQL", symbol: "Pg", icon: SiPostgresql, color: "#4169E1" },
+      { name: "Supabase", symbol: "Sb", icon: SiSupabase, color: "#3FCF8E" },
+      { name: "NeonDB", symbol: "Ne", icon: SiNeon, color: "#00C08B" },
     ],
   },
   {
     title: "Tools & DevOps",
+    description: "Workflow & deployment",
+    tone: "#a07a16",
     skills: [
-      { name: "Git", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
-      { name: "GitHub", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg", invertOnLight: true },
-      { name: "Docker", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
-      { name: "Postman", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg" },
-      { name: "Vercel", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg", invertOnLight: true },
+      { name: "Git", symbol: "Gt", icon: SiGit, color: "#F05032" },
+      { name: "GitHub", symbol: "Gh", icon: SiGithub, color: "#181717" },
+      { name: "Docker", symbol: "Dk", icon: SiDocker, color: "#2496ED" },
+      { name: "Postman", symbol: "Pm", icon: SiPostman, color: "#FF6C37" },
+      { name: "Vercel", symbol: "Vc", icon: SiVercel, color: "#000000" },
     ],
   },
 ];
 
+export const ALL_TECH = TECH_CATEGORIES.flatMap((c) => c.skills);
+export const TECH_COUNT = ALL_TECH.length;
+
+const TILES = TECH_CATEGORIES.flatMap((c) => c.skills.map((s) => ({ ...s, category: c.title, tone: c.tone })));
+
+/** "Periodic table" of the stack, with category filters. */
 export default function TechStackMinimalist() {
+  const [active, setActive] = useState<string | null>(null);
+
   return (
-    <section className="w-full bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 space-y-6 shadow-sm">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-4">
-        <div>
-          <h3 className="text-lg font-bold text-slate-900 tracking-tight">Tech Stack &amp; Skills</h3>
-          <p className="text-xs text-slate-500">Core technologies used across development workflows</p>
-        </div>
-
-        <div className="inline-flex items-center gap-2 bg-slate-100 px-3 py-1 rounded-full text-xs font-mono text-slate-600 border border-slate-200/60">
-          <span className="w-2 h-2 rounded-full bg-indigo-600 animate-pulse" />
-          <span>Full-Stack Engineer</span>
-        </div>
-      </div>
-
-      {/* Categories Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {TECH_CATEGORIES.map((category) => (
-          <div
-            key={category.title}
-            className="bg-slate-50/60 border border-slate-200/80 rounded-xl p-5 space-y-4"
-          >
-            <div className="flex items-center justify-between border-b border-slate-200/60 pb-2">
-              <h4 className="text-sm font-bold text-slate-900 font-mono tracking-tight">
-                // {category.title}
-              </h4>
-              <span className="text-[10px] font-mono font-medium text-slate-500 bg-slate-200/60 px-2 py-0.5 rounded">
-                {category.skills.length} Items
-              </span>
-            </div>
-
-            <div className="flex flex-wrap gap-2">
-              {category.skills.map((skill) => (
-                <div
-                  key={skill.name}
-                  className="group bg-white hover:bg-slate-100/80 border border-slate-200/80 hover:border-indigo-300 px-3 py-2 rounded-lg flex items-center gap-2.5 transition-all duration-150 shadow-2xs"
-                >
-                  <div className="w-4 h-4 relative flex items-center justify-center shrink-0">
-                    <Image
-                      src={skill.icon}
-                      alt={skill.name}
-                      width={16}
-                      height={16}
-                      className={`w-full h-full object-contain ${skill.invertOnLight ? "invert brightness-0" : ""
-                        }`}
-                    />
-                  </div>
-                  <span className="text-xs font-medium text-slate-800 group-hover:text-indigo-600 transition-colors">
-                    {skill.name}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
+    <div className="space-y-8">
+      {/* Category filters / legend */}
+      <Reveal className="flex flex-wrap gap-2.5" role="group" aria-label="Filter skills by category">
+        <FilterButton label="All" count={TECH_COUNT} tone="#16130f" selected={active === null} onClick={() => setActive(null)} />
+        {TECH_CATEGORIES.map((c) => (
+          <FilterButton
+            key={c.title}
+            label={c.title}
+            count={c.skills.length}
+            tone={c.tone}
+            selected={active === c.title}
+            onClick={() => setActive(active === c.title ? null : c.title)}
+          />
         ))}
-      </div>
+      </Reveal>
 
-      {/* Footer Details */}
-      <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-mono text-slate-500">
-        <span className="flex items-center gap-1.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-          <span>Production Ready Stack</span>
-        </span>
-        <span className="text-slate-400">19 Technologies Skills Acquired </span>
-      </div>
-    </section>
+      {/* Element tiles */}
+      <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-4 lg:grid-cols-5">
+        {TILES.map((t, i) => {
+          const dimmed = active !== null && active !== t.category;
+          const Icon = t.icon;
+          return (
+            <Reveal as="li" key={t.name} delay={(i % 5) * 60 + Math.floor(i / 5) * 40}>
+              <div
+                className={`group relative flex aspect-square flex-col justify-between overflow-hidden rounded-2xl bg-paper-deep p-4 sm:p-5 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1.5 hover:shadow-[0_24px_40px_-24px_rgba(22,19,15,0.5)] ${
+                  dimmed ? "scale-[0.94] opacity-25 saturate-0" : ""
+                }`}
+              >
+                {/* brand-colour wash on hover */}
+                <span
+                  aria-hidden
+                  className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                  style={{ background: `color-mix(in srgb, ${t.color} 12%, transparent)` }}
+                />
+                {/* category bar */}
+                <span aria-hidden className="absolute inset-x-0 top-0 h-1.5" style={{ background: t.tone }} />
+
+                <div className="relative flex items-start justify-between">
+                  <span className="text-sm font-bold tabular-nums text-stone-warm">{String(i + 1).padStart(2, "0")}</span>
+                  <Icon
+                    className="text-2xl transition-transform duration-500 group-hover:rotate-[-8deg] group-hover:scale-125 sm:text-3xl"
+                    style={{ color: t.color }}
+                    aria-hidden
+                  />
+                </div>
+
+                <span className="relative text-5xl font-bold leading-none tracking-[-0.04em] text-ink sm:text-6xl">
+                  {t.symbol}
+                </span>
+
+                <div className="relative">
+                  <p className="truncate text-base font-bold text-ink">{t.name}</p>
+                  <p className="truncate text-xs font-semibold" style={{ color: t.tone }}>
+                    {t.category}
+                  </p>
+                </div>
+              </div>
+            </Reveal>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
+function FilterButton({
+  label,
+  count,
+  tone,
+  selected,
+  onClick,
+}: {
+  label: string;
+  count: number;
+  tone: string;
+  selected: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={selected}
+      className={`inline-flex cursor-pointer items-center gap-2.5 rounded-full px-5 py-2.5 text-sm font-semibold transition-colors ${
+        selected ? "bg-ink text-paper" : "bg-paper-deep text-ink hover:bg-sand"
+      }`}
+    >
+      <span className="h-2.5 w-2.5 rounded-full" style={{ background: selected && label === "All" ? "#f6f2eb" : tone }} />
+      {label}
+      <span className={selected ? "text-paper/60" : "text-stone-warm"}>{count}</span>
+    </button>
   );
 }

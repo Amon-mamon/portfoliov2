@@ -1,135 +1,91 @@
 "use client";
 
 import React, { useState } from "react";
-import { VscGithub, VscMention, VscMail, VscSend, VscCheck, VscCopy } from "react-icons/vsc";
+import { scrollToId } from "@/components/minimalist/SmoothScroll";
+import { VscGithub, VscMention, VscMail, VscCheck, VscCopy, VscArrowUp } from "react-icons/vsc";
+
+const EMAIL = "stoicdavid16@gmail.com";
+
+const LINKS = [
+  { label: "About", id: "about" },
+  { label: "Skills", id: "skills" },
+  { label: "Work", id: "projects" },
+  { label: "Contact", id: "contact" },
+];
 
 export function MinimalisticFooter() {
   const currentYear = new Date().getFullYear();
   const [copied, setCopied] = useState(false);
-  const [message, setMessage] = useState("");
-  const [sent, setSent] = useState(false);
 
-  const email = "stoicdavid16@gmail.com";
-
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText(email);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const handleCopyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(EMAIL);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      window.location.href = `mailto:${EMAIL}`;
+    }
   };
 
-  const handleQuickSend = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!message.trim()) return;
-    window.location.href = `mailto:${email}?subject=Portfolio Inquiry&body=${encodeURIComponent(
-      message
-    )}`;
-    setSent(true);
-    setMessage("");
-    setTimeout(() => setSent(false), 3000);
-  };
+  const scrollTo = scrollToId;
 
   return (
-    <footer className="w-full bg-white text-slate-600 text-xs font-sans pt-16 pb-8 border-t border-slate-200">
-      <div className="max-w-5xl mx-auto px-6 space-y-12">
-        
-        {/* Upper Footer Navigation & Info Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
-          
-          {/* Brand Info */}
-          <div className="space-y-3">
-            <div className="flex items-center gap-2 text-slate-900 font-bold text-base">
-              <span className="w-2.5 h-2.5 rounded-full bg-indigo-600" />
-              <span>Vince Stephen David</span>
-            </div>
-            <p className="text-slate-500 leading-relaxed text-xs">
-              Building high-performance, maintainable web applications and modern user experiences.
-            </p>
-            <div className="pt-1">
-              <button
-                onClick={handleCopyEmail}
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 font-mono text-xs transition-colors"
-              >
-                {copied ? <VscCheck className="text-emerald-600" /> : <VscCopy className="text-slate-400" />}
-                <span>{copied ? "Email Copied!" : email}</span>
-              </button>
-            </div>
+    <footer className="bg-night text-paper">
+      <div className="mx-auto max-w-6xl px-5 sm:px-6 pt-16 pb-8 sm:pt-20 sm:pb-10">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12">
+          <div className="space-y-6">
+            <p className="text-base font-semibold text-stone-300">Let&apos;s work together</p>
+            <button
+              onClick={handleCopyEmail}
+              className="group text-left cursor-pointer"
+              aria-label="Copy email address"
+            >
+              <span className="block text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-tight text-paper group-hover:text-ember transition-colors break-all sm:break-normal">
+                {EMAIL}
+              </span>
+              <span className="mt-4 inline-flex items-center gap-2 text-sm text-stone-300 group-hover:text-paper transition-colors">
+                {copied ? <VscCheck className="text-emerald-400" /> : <VscCopy />}
+                {copied ? "Copied to clipboard" : "Click to copy"}
+              </span>
+            </button>
           </div>
 
-          {/* Quick Links */}
-          <div className="space-y-2 font-mono">
-            <span className="text-[10px] text-slate-400 uppercase tracking-widest font-bold block">
-              Quick Links
-            </span>
-            <div className="flex flex-col gap-1.5 text-slate-600">
-              <button
-                onClick={() => document.getElementById("home")?.scrollIntoView({ behavior: "smooth" })}
-                className="text-left hover:text-indigo-600 transition-colors"
-              >
-                Home
-              </button>
-              <button
-                onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}
-                className="text-left hover:text-indigo-600 transition-colors"
-              >
-                About
-              </button>
-              <button
-                onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
-                className="text-left hover:text-indigo-600 transition-colors"
-              >
-                Projects
-              </button>
-              <button
-                onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-                className="text-left hover:text-indigo-600 transition-colors"
-              >
-                Contact
-              </button>
-            </div>
-          </div>
-
-          {/* Connect Links */}
-          <div className="space-y-2 font-mono">
-            <span className="text-[10px] text-slate-400 uppercase tracking-widest font-bold block">
-              Social Links
-            </span>
-            <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-2">
+            {[
+              { href: "https://github.com/Amon-mamon", icon: VscGithub, label: "GitHub" },
+              { href: "https://www.linkedin.com/in/vince-stephen-david-ab72292a0/", icon: VscMention, label: "LinkedIn" },
+              { href: `mailto:${EMAIL}`, icon: VscMail, label: "Email" },
+            ].map(({ href, icon: Icon, label }) => (
               <a
-                href="https://github.com/Amon-mamon"
-                target="_blank"
+                key={label}
+                href={href}
+                target={href.startsWith("http") ? "_blank" : undefined}
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-slate-600 hover:text-indigo-600 transition-colors"
+                aria-label={label}
+                className="flex h-12 w-12 items-center justify-center rounded-full bg-night-raised text-lg text-paper hover:bg-ember-deep transition-colors"
               >
-                <VscGithub className="text-slate-400 text-sm" /> GitHub
+                <Icon />
               </a>
-              <a
-                href="https://www.linkedin.com/in/vince-stephen-david-ab72292a0/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-slate-600 hover:text-indigo-600 transition-colors"
-              >
-                <VscMention className="text-slate-400 text-sm" /> LinkedIn
-              </a>
-              <a
-                href={`mailto:${email}`}
-                className="flex items-center gap-2 text-slate-600 hover:text-indigo-600 transition-colors"
-              >
-                <VscMail className="text-slate-400 text-sm" /> Direct Email
-              </a>
-            </div>
-          </div>
-
-        </div>
-
-        {/* Bottom Bar */}
-        <div className="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-slate-400 font-mono">
-          <p>© {currentYear} Vince Stephen David. All rights reserved.</p>
-          <div className="flex items-center gap-2 text-emerald-600">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span>Systems Operational</span>
+            ))}
           </div>
         </div>
 
+        <div className="mt-20 flex flex-col-reverse sm:flex-row sm:items-center justify-between gap-6 text-sm text-stone-300">
+          <p>© {currentYear} Vince Stephen David</p>
+          <nav className="flex flex-wrap items-center gap-x-6 gap-y-2">
+            {LINKS.map((l) => (
+              <button key={l.id} onClick={() => scrollTo(l.id)} className="hover:text-paper transition-colors cursor-pointer">
+                {l.label}
+              </button>
+            ))}
+            <button
+              onClick={() => scrollTo("home")}
+              className="inline-flex items-center gap-1.5 hover:text-paper transition-colors cursor-pointer"
+            >
+              Back to top <VscArrowUp />
+            </button>
+          </nav>
+        </div>
       </div>
     </footer>
   );

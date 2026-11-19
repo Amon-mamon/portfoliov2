@@ -1,15 +1,13 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { VscGithub, VscFilePdf } from "react-icons/vsc";
+import { VscGithub, VscFilePdf, VscMenu, VscClose } from "react-icons/vsc";
+import { scrollToId } from "@/components/minimalist/SmoothScroll";
 
-interface NavItem {
-  label: string;
-  href: string;
-}
+/** id of the element that actually scrolls on the minimalist page (body is overflow-hidden) */
+export const MV_SCROLL_ID = "mv-scroll";
 
-const NAV_ITEMS: NavItem[] = [
-  { label: "Home", href: "home" },
+const NAV_ITEMS = [
   { label: "About", href: "about" },
   { label: "Skills", href: "skills" },
   { label: "Projects", href: "projects" },
@@ -19,118 +17,120 @@ const NAV_ITEMS: NavItem[] = [
 export default function MinimalisticNav() {
   const [activeSection, setActiveSection] = useState("home");
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  // 1. Detect active section when scrolling
   useEffect(() => {
-  const handleScroll = () => {
-    setScrolled(window.scrollY > 20);
-  };
+    const scroller = document.getElementById(MV_SCROLL_ID);
+    const target: HTMLElement | Window = scroller ?? window;
+    const handleScroll = () => setScrolled((scroller?.scrollTop ?? window.scrollY) > 20);
+    handleScroll();
+    target.addEventListener("scroll", handleScroll, { passive: true });
 
-  window.addEventListener("scroll", handleScroll);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
+        });
+      },
+      { rootMargin: "-40% 0px -55% 0px", threshold: 0 }
+    );
+    ["home", ...NAV_ITEMS.map((i) => i.href)].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-        }
-      });
-    },
-    {
-      // Triggers when section top enters top 20% to bottom 40% of viewport
-      rootMargin: "-20% 0px -40% 0px",
-      threshold: 0,
-    }
-  );
+    return () => {
+      target.removeEventListener("scroll", handleScroll);
+      observer.disconnect();
+    };
+  }, []);
 
-  NAV_ITEMS.forEach((item) => {
-    const el = document.getElementById(item.href);
-    if (el) observer.observe(el);
-  });
-
-  return () => {
-    window.removeEventListener("scroll", handleScroll);
-    observer.disconnect();
-  };
-}, []);
-
-  // 2. Smooth scroll handler
   const scrollToSection = (id: string) => {
     setActiveSection(id);
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
+    setMenuOpen(false);
+    scrollToId(id);
   };
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-white/80 backdrop-blur-md border-b border-slate-200/80 shadow-xs py-3"
-          : "bg-transparent py-5"
+      className={`fixed top-0 inset-x-0 z-50 transition-[background-color,box-shadow,padding] duration-300 ${
+        scrolled || menuOpen ? "bg-paper shadow-[0_1px_0_rgba(22,19,15,0.08)] py-3" : "bg-transparent py-5"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-6 flex items-center justify-between gap-4">
-        {/* Brand / Logo */}
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 sm:px-6">
         <button
           onClick={() => scrollToSection("home")}
-          className="flex items-center gap-2 font-bold text-slate-900 text-sm hover:opacity-80 transition-opacity shrink-0"
+          className="text-xl font-bold tracking-tight text-ink cursor-pointer"
+          aria-label="Back to top"
         >
-          <span className="w-2.5 h-2.5 rounded-full bg-indigo-600" />
-          <span>Vince.dev</span>
+          Vince<span className="text-ember">.</span>
         </button>
 
-        {/* Navigation Bar */}
-        <nav className="hidden sm:flex items-center bg-slate-100/80 border border-slate-200/80 p-1 rounded-full shadow-2xs font-mono text-xs">
+        <nav className="hidden md:flex items-center gap-1">
           {NAV_ITEMS.map((item) => {
             const isActive = activeSection === item.href;
-
             return (
               <button
                 key={item.href}
                 onClick={() => scrollToSection(item.href)}
-                className={`relative px-4 py-1.5 rounded-full font-medium transition-all duration-200 select-none ${
-                  isActive
-                    ? "text-slate-900 bg-white shadow-xs font-semibold"
-                    : "text-slate-500 hover:text-slate-900 hover:bg-slate-200/50"
+                className={`relative rounded-full px-4 py-2 text-[15px] font-semibold transition-colors cursor-pointer ${
+                  isActive ? "text-ink" : "text-ink-soft hover:text-ink"
                 }`}
               >
-                {/* Visual Active Dot Indicator */}
-                {isActive && (
-                  <span className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-indigo-600" />
-                )}
                 {item.label}
+                <span
+                  aria-hidden
+                  className={`absolute left-4 right-4 -bottom-0.5 h-[3px] rounded-full bg-ember transition-transform duration-300 origin-left ${
+                    isActive ? "scale-x-100" : "scale-x-0"
+                  }`}
+                />
               </button>
             );
           })}
         </nav>
 
-        {/* External Action Links (GitHub & Resume) */}
-        <div className="flex items-center gap-2 font-mono text-xs shrink-0">
+        <div className="flex items-center gap-2">
           <a
-
             href="https://github.com/Amon-mamon"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-slate-200 bg-white text-slate-700 hover:text-slate-900 hover:border-slate-300 hover:bg-slate-50 transition-all duration-200 shadow-2xs"
-            aria-label="GitHub Profile"
+            aria-label="GitHub profile"
+            className="hidden sm:inline-flex h-10 w-10 items-center justify-center rounded-full text-ink hover:bg-ink/5 transition-colors"
           >
-            <VscGithub className="text-sm text-slate-800" />
-            <span className="hidden md:inline font-medium">GitHub</span>
+            <VscGithub className="text-xl" />
           </a>
-
-           <a
-           href="/DAVID_VINCE_STEPHEN_CV.pdf"
-           download
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium transition-all duration-200 shadow-2xs hover:shadow-xs"
+          <a
+            href="/DAVID_VINCE_STEPHEN_CV.pdf"
+            download
+            className="inline-flex items-center gap-2 rounded-full bg-ink hover:bg-ember-deep px-4 py-2.5 text-sm font-semibold text-white transition-colors"
           >
-            <VscFilePdf className="text-sm" />
-            <span>Resume</span>
+            <VscFilePdf />
+            Resume
           </a>
+          <button
+            onClick={() => setMenuOpen((o) => !o)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-full text-ink hover:bg-ink/5 cursor-pointer"
+          >
+            {menuOpen ? <VscClose className="text-xl" /> : <VscMenu className="text-xl" />}
+          </button>
         </div>
       </div>
+
+      {menuOpen && (
+        <nav className="md:hidden mx-auto max-w-6xl px-5 sm:px-6 pt-3 pb-4 flex flex-col animate-in fade-in slide-in-from-top-2 duration-200">
+          {NAV_ITEMS.map((item) => (
+            <button
+              key={item.href}
+              onClick={() => scrollToSection(item.href)}
+              className="py-3 text-left text-lg font-semibold text-ink cursor-pointer"
+            >
+              {item.label}
+            </button>
+          ))}
+        </nav>
+      )}
     </header>
   );
 }

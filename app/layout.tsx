@@ -1,28 +1,7 @@
 import { Metadata } from "next";
-import { Geist, Geist_Mono, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import Particles from "@/components/ui/background-particles";
-import { SmoothCursor } from "@/components/ui/smooth-cursor";
 import { ThemeOnboardingProvider } from "@/components/ThemeOnboardProvider";
-import NotFound from "./not-found";
 import QueryProvider from "@/components/provider/QueryClientProvider";
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-jetbrains-mono", // exposes it as a CSS variable
-  weight: ["400", "500", "700"], // pick whichever weights you'll actually use
-});
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 
 export const metadata: Metadata = {
   title: "Vince | Web Developer", // Global title

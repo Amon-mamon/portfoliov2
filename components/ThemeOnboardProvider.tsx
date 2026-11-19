@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { WelcomeModal } from "./WelcomeModal"
 import { MinimalistWelcomeModal } from "./MinimalistModal"
 import { VscodeWelcomeModal } from "./VscodeModal"
+import { isThemeMode, writeThemeCookie } from "@/lib/themeCookie"
 
 export function ThemeOnboardingProvider({ children }: { children: React.ReactNode }) {
   const [activeModal, setActiveModal] = useState<"selection" | "minimalist" | "vscode" | null>(null)
@@ -19,11 +20,13 @@ export function ThemeOnboardingProvider({ children }: { children: React.ReactNod
       setActiveModal("selection")
     } else {
       setCurrentTheme(savedTheme)
+      if (isThemeMode(savedTheme)) writeThemeCookie(savedTheme)
     }
   }, [])
 
   const handleSelect = (mode: "vscode" | "minimalist") => {
     localStorage.setItem("portfolio_theme_mode", mode)
+    writeThemeCookie(mode)
     setCurrentTheme(mode)
 
     if (mode === "minimalist") {
@@ -76,9 +79,9 @@ export function ThemeOnboardingProvider({ children }: { children: React.ReactNod
       {currentTheme && !activeModal && (
         <button
           onClick={toggleTheme}
-          className={`fixed bottom-5 right-5 z-50 flex items-center gap-2 rounded-md border   px-3 py-2 text-xs font-mono  shadow-2xl backdrop-blur transition-all ]  cursor-pointer ${currentTheme === "vscode" ? "bg-[#1e1e1e]/90 text-[#d4d4d4] hover:text-[#ffffff] hover:bg-[#252526] border-[#3c3c3c]" : "bg-white text-black hover:bg-gray-200 border-gray-300"}`}
+          className={`fixed bottom-5 right-5 z-50 flex items-center gap-2 rounded-md border   px-3 py-2 text-xs font-mono  shadow-2xl backdrop-blur transition-all ]  cursor-pointer ${currentTheme === "vscode" ? "bg-[#1e1e1e]/90 text-[#d4d4d4] hover:text-[#ffffff] hover:bg-[#252526] border-[#3c3c3c]" : "bg-ink text-white hover:bg-ember-deep border-transparent"}`}
         >
-          <span className={` ${currentTheme === "vscode" ? "h-2 w-2 rounded-full bg-emerald-500 animate-pulse" : "h-2 w-2 rounded-full bg-indigo-600 text-black animate-pulse"}`} />
+          <span className={` ${currentTheme === "vscode" ? "h-2 w-2 rounded-full bg-emerald-500 animate-pulse" : "h-2 w-2 rounded-full bg-ember animate-pulse"}`} />
           Switch to {currentTheme === "vscode" ? "Minimalist SPA" : "VS Code IDE"}
         </button>
       )}
