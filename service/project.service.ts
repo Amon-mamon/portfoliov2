@@ -6,7 +6,11 @@ type UpdateProjectInput = ProjectFormValues & {
   files: File[];
 };
 export async function getProjects():Promise<ProjectItem[]> {
-    const response = await fetch("/api/project")
+    const base = typeof window === "undefined" ? process.env.NEXT_PUBLIC_SITE_URL : "";
+    const response = await fetch(`${base}/api/project`, {
+        cache: "no-store"
+    });
+      console.log("getProjects:", base, response.status);
 
     if(!response.ok) {
         throw new Error ("Failed to fetch projects.")

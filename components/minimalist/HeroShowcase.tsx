@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useId } from "react";
 import useSWR from "swr";
 import { VscArrowRight } from "react-icons/vsc";
 import { ProjectItem } from "@/types/project";
@@ -14,8 +13,16 @@ const delay = (ms: number) => ({ ["--mv-delay" as string]: `${ms}ms` }) as React
 /* ─────────────────────────── Availability stamp ─────────────────────────── */
 
 /** Rotating circular "open to work" stamp. */
-export function AvailabilityStamp({ onClick, className = "" }: { onClick: () => void; className?: string }) {
-  const pathId = useId();
+export function AvailabilityStamp({
+  onClick,
+  className = "",
+  idSuffix,
+}: {
+  onClick: () => void;
+  className?: string;
+  idSuffix: string;
+}) {
+  const pathId = `stamp-path-${idSuffix}`;
   const text = "OPEN TO WORK • FULL-TIME & CONTRACTS • ";
   return (
     <button
@@ -25,14 +32,20 @@ export function AvailabilityStamp({ onClick, className = "" }: { onClick: () => 
       className={`group relative block cursor-pointer ${className}`}
     >
       {/* solid backing disc so the stamp reads clearly on top of screenshots */}
-      <span aria-hidden className="absolute inset-[6%] rounded-full bg-paper shadow-[0_12px_30px_-12px_rgba(22,19,15,0.45)]" />
+      <span
+        aria-hidden
+        className="absolute inset-[6%] rounded-full bg-paper shadow-[0_12px_30px_-12px_rgba(22,19,15,0.45)]"
+      />
       <svg
         viewBox="0 0 200 200"
         aria-hidden
         className="absolute inset-0 h-full w-full animate-[spin_18s_linear_infinite] group-hover:[animation-duration:6s] motion-reduce:animate-none"
       >
         <defs>
-          <path id={pathId} d="M100,100 m-72,0 a72,72 0 1,1 144,0 a72,72 0 1,1 -144,0" />
+          <path
+            id={pathId}
+            d="M100,100 m-72,0 a72,72 0 1,1 144,0 a72,72 0 1,1 -144,0"
+          />
         </defs>
         <text className="fill-ink text-[15px] font-bold tracking-[0.16em]">
           <textPath href={`#${pathId}`}>{text}</textPath>
@@ -75,8 +88,15 @@ export function ProjectStack({
 
   if (cards.length === 0) {
     return (
-      <div className="mv-rise flex h-full items-center justify-center" style={delay(400)}>
-        <AvailabilityStamp onClick={onStampClick} className="h-56 w-56" />
+      <div
+        className="mv-rise flex h-full items-center justify-center"
+        style={delay(400)}
+      >
+        <AvailabilityStamp
+          idSuffix="stack"
+          onClick={onStampClick}
+          className="h-56 w-56"
+        />
       </div>
     );
   }
@@ -115,14 +135,24 @@ export function ProjectStack({
           .reverse()}
 
         {/* Caption on the front card */}
-        <span className="mv-rise absolute bottom-[-4%] right-[8%] z-40 inline-flex items-center gap-2 rounded-full bg-ink px-4 py-2.5 text-sm font-semibold text-paper shadow-lg transition-colors group-hover/stack:bg-ember-deep" style={delay(900)}>
+        <span
+          className="mv-rise absolute bottom-[-4%] right-[8%] z-40 inline-flex items-center gap-2 rounded-full bg-ink px-4 py-2.5 text-sm font-semibold text-paper shadow-lg transition-colors group-hover/stack:bg-ember-deep"
+          style={delay(900)}
+        >
           Latest: {latest.project_title}
           <VscArrowRight className="transition-transform group-hover/stack:translate-x-1" />
         </span>
       </button>
 
-      <div className="mv-rise absolute -left-10 bottom-6 z-40" style={delay(1000)}>
-        <AvailabilityStamp onClick={onStampClick} className="h-36 w-36 xl:h-40 xl:w-40" />
+      <div
+        className="mv-rise absolute -left-10 bottom-6 z-40"
+        style={delay(1000)}
+      >
+        <AvailabilityStamp
+          idSuffix="stack"
+          onClick={onStampClick}
+          className="h-36 w-36 xl:h-40 xl:w-40"
+        />
       </div>
     </div>
   );
@@ -130,37 +160,69 @@ export function ProjectStack({
 
 /* ─────────────────────────── Proof numbers ─────────────────────────── */
 
+/* ─────────────────────────── Proof numbers ─────────────────────────── */
+
 type GitHubSummary = { totalContributions?: number };
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
-/** Real numbers only: project count, GitHub contributions (live), technologies. */
-export function HeroStats({ projectCount }: { projectCount: number }) {
+export type HeroStat = {
+  key: string;
+  value: number;
+  suffix: string;
+  label: string;
+};
+
+/** Shared data: any page can call this and style the result however it wants. */
+export function useHeroStats(projectCount: number): HeroStat[] {
   // Same SWR key as GitHubActivityMinimalist, so this is a single shared request.
-  const { data } = useSWR<GitHubSummary>(`/api/github?username=${GITHUB_USER}`, fetcher, {
-    revalidateOnFocus: false,
-    dedupingInterval: 60000,
-  });
+  const { data } = useSWR<GitHubSummary>(
+    `/api/github?username=${GITHUB_USER}`,
+    fetcher,
+    {
+      revalidateOnFocus: false,
+      dedupingInterval: 60000,
+    },
+  );
   const contributions = data?.totalContributions;
 
-  const stats = [
-    projectCount > 0 && { value: projectCount, suffix: "", label: "Projects shipped" },
-    typeof contributions === "number" && contributions > 0 && {
-      value: contributions,
-      suffix: "+",
-      label: "GitHub contributions this year",
+  return [
+    typeof contributions === "number" &&
+      contributions > 0 && {
+        key: "contributions",
+        value: contributions,
+        suffix: "+",
+        label: "GitHub contributions this year",
+      },
+    {
+      key: "technologies",
+      value: TECH_COUNT,
+      suffix: "",
+      label: "Technologies in my stack",
     },
-    { value: TECH_COUNT, suffix: "", label: "Technologies in my stack" },
-  ].filter(Boolean) as { value: number; suffix: string; label: string }[];
+    {
+      key: "projects",
+      value: projectCount,
+      suffix: "",
+      label: "Projects shipped",
+    },
+  ].filter(Boolean) as HeroStat[];
+}
+
+/** Minimalist design (unchanged look). */
+export function HeroStats({ projectCount }: { projectCount: number }) {
+  const stats = useHeroStats(projectCount);
 
   return (
     <dl className="flex flex-wrap gap-x-10 gap-y-6">
       {stats.map((s) => (
-        <div key={s.label} className="min-w-[7rem]">
+        <div key={s.key} className="min-w-[7rem]">
           <dd className="text-4xl font-bold tracking-tight text-ink">
             <CountUp value={s.value} />
             <span className="text-ember">{s.suffix}</span>
           </dd>
-          <dt className="mt-1 max-w-[10rem] text-sm font-medium leading-snug text-stone-warm">{s.label}</dt>
+          <dt className="mt-1 max-w-[10rem] text-sm font-medium leading-snug text-stone-warm">
+            {s.label}
+          </dt>
         </div>
       ))}
     </dl>

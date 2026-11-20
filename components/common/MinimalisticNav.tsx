@@ -22,7 +22,8 @@ export default function MinimalisticNav() {
   useEffect(() => {
     const scroller = document.getElementById(MV_SCROLL_ID);
     const target: HTMLElement | Window = scroller ?? window;
-    const handleScroll = () => setScrolled((scroller?.scrollTop ?? window.scrollY) > 20);
+    const handleScroll = () =>
+      setScrolled((scroller?.scrollTop ?? window.scrollY) > 20);
     handleScroll();
     target.addEventListener("scroll", handleScroll, { passive: true });
 
@@ -32,7 +33,7 @@ export default function MinimalisticNav() {
           if (entry.isIntersecting) setActiveSection(entry.target.id);
         });
       },
-      { rootMargin: "-40% 0px -55% 0px", threshold: 0 }
+      { rootMargin: "-40% 0px -55% 0px", threshold: 0 },
     );
     ["home", ...NAV_ITEMS.map((i) => i.href)].forEach((id) => {
       const el = document.getElementById(id);
@@ -54,7 +55,9 @@ export default function MinimalisticNav() {
   return (
     <header
       className={`fixed top-0 inset-x-0 z-50 transition-[background-color,box-shadow,padding] duration-300 ${
-        scrolled || menuOpen ? "bg-paper shadow-[0_1px_0_rgba(22,19,15,0.08)] py-3" : "bg-transparent py-5"
+        scrolled || menuOpen
+          ? "bg-paper shadow-[0_1px_0_rgba(22,19,15,0.08)] py-3"
+          : "bg-transparent py-5"
       }`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 sm:px-6">
@@ -99,21 +102,27 @@ export default function MinimalisticNav() {
           >
             <VscGithub className="text-xl" />
           </a>
-          <a
-            href="/DAVID_VINCE_STEPHEN_CV.pdf"
-            download
-            className="inline-flex items-center gap-2 rounded-full bg-ink hover:bg-ember-deep px-4 py-2.5 text-sm font-semibold text-white transition-colors"
+          <button
+            onClick={() => scrollToSection("contact")}
+            className="group cursor-pointer relative overflow-hidden bg-ink  px-4 py-2.5 text-white text-sm font-medium transition-colors duration-400 rounded-full"
           >
-            <VscFilePdf />
-            Resume
-          </a>
+            <span className="relative z-10">Hire me</span>
+            <span
+              aria-hidden="true"
+              className="absolute inset-0 origin-left scale-x-0  bg-ember-deep transition-transform duration-300 ease-out group-hover:scale-x-100"
+            ></span>
+          </button>
           <button
             onClick={() => setMenuOpen((o) => !o)}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
             className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-full text-ink hover:bg-ink/5 cursor-pointer"
           >
-            {menuOpen ? <VscClose className="text-xl" /> : <VscMenu className="text-xl" />}
+            {menuOpen ? (
+              <VscClose className="text-xl" />
+            ) : (
+              <VscMenu className="text-xl" />
+            )}
           </button>
         </div>
       </div>
