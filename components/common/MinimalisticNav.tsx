@@ -60,7 +60,7 @@ export default function MinimalisticNav() {
           : "bg-transparent py-5"
       }`}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 sm:px-6">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 sm:px-6">
         <button
           onClick={() => scrollToSection("home")}
           className="text-xl font-bold tracking-tight text-ink cursor-pointer"

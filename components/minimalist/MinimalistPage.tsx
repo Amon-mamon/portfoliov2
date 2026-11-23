@@ -88,7 +88,7 @@ export default function MinimalistPage({ initialProjects }: { initialProjects: P
         {/* ───────────── HERO ───────────── */}
         <section
           id="home"
-          className="mx-auto max-w-6xl px-5 sm:px-6 pt-28 pb-12 sm:pt-36 sm:pb-18 lg:pb-40"
+          className="mx-auto max-w-7xl px-5 sm:px-6 pt-28 pb-12 sm:pt-36 sm:pb-18 lg:pb-40"
         >
           <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
             {/* Left: who I am */}
@@ -185,7 +185,7 @@ export default function MinimalistPage({ initialProjects }: { initialProjects: P
         {/* ───────────── ABOUT ───────────── */}
         <section
           id="about"
-          className="mx-auto max-w-6xl px-5 sm:px-6 py-12 sm:py-14 lg:py-16"
+          className="mx-auto max-w-7xl px-5 sm:px-6 py-12 sm:py-14 lg:py-16"
         >
           <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
             <div className="lg:col-span-7">
@@ -260,7 +260,7 @@ export default function MinimalistPage({ initialProjects }: { initialProjects: P
 
         {/* ───────────── SKILLS ───────────── */}
         <section id="skills">
-          <div className="mx-auto max-w-6xl px-5 sm:px-6 py-12 sm:py-14 lg:py-16">
+          <div className="mx-auto max-w-7xl px-5 sm:px-6 py-12 sm:py-14 lg:py-16">
             <SectionHeading
               label="Skills"
               title="Tools I use to build and ship."
@@ -276,7 +276,7 @@ export default function MinimalistPage({ initialProjects }: { initialProjects: P
         {/* ───────────── PROJECTS ───────────── */}
         <section
           id="projects"
-          className="mx-auto max-w-6xl px-5 sm:px-6 py-12 sm:py-14 lg:py-16"
+          className="mx-auto max-w-7xl px-5 sm:px-6 py-12 sm:py-14 lg:py-16"
         >
           <SectionHeading
             label="Projects"
