@@ -46,7 +46,7 @@ export function DemoButton({ url }: { url?: string | null }) {
         title="Client / proprietary build: no public demo"
       >
         <VscLock />
-        Private client project
+        Private
       </span>
     );
   }
